@@ -20,13 +20,12 @@
 
 ## 3. 出力ファイル（プロンプトの最終生成物）
 
-以下の 3 ファイルを生成してください。
+以下の 2 ファイルを生成してください。
 
 | パス | 内容 |
 |---|---|
 | `/tmp/today.json` | `morning-brief/SCHEMA.md` の日次スキーマに準拠した JSON |
 | `/tmp/brief.html` | `morning-brief/templates/email-brief.html` の `{{PLACEHOLDER}}` を全置換した HTML |
-| `/tmp/brief-tts.txt` | 音声化用のプレーンテキスト（HTML タグ・絵文字除外、3〜5 分／約 1500〜2500 字） |
 
 ## 4. 🧠 STEP -1: メモリ読み込み（Phase 1 では簡易版）
 
@@ -110,16 +109,7 @@
 - すべての参照ソース URL を実リンクとして埋め込む
 - **置換後に未解決の `{{...}}` が残ってはならない**
 
-## 9. STEP 3: TTS テキスト生成
-
-`/tmp/brief-tts.txt` に **HTML タグ・URL・絵文字を含まないプレーンテキスト** を書き出してください。
-
-- 文体は丁寧体（です・ます調）
-- 構成: 「おはようございます。今日 {{DATE}} の朝刊です」→ 天気 → 相場 → 主要トピック → 競合 → AI → ひとことまとめ
-- 1500〜2500 字（読み上げで 3〜5 分）
-- 数値は読み上げやすく整形（例: `13,450` → 「1万3450」、`152.30` → 「152円30銭」）
-
-## 10. STEP 4: スキーマ準拠 JSON 生成
+## 9. STEP 3: スキーマ準拠 JSON 生成
 
 `morning-brief/SCHEMA.md` の日次スキーマに **完全準拠** した JSON を `/tmp/today.json` に書き出してください。
 
@@ -132,7 +122,7 @@
 - `kpi.*` は Phase 1 では基本 `null`（Phase 7 で Sheets 連携時に値が入る）
 - `subagent_meta` の各 status は ok / partial / failed のいずれか
 
-## 11. STEP 5: 保存・検証
+## 10. STEP 4: 保存・検証
 
 順に Bash 実行：
 
@@ -143,25 +133,24 @@ python3 scripts/validate-bundle.py --json /tmp/today.json --html /tmp/brief.html
 
 どちらかが失敗した場合は **必ず停止** してエラー内容を報告してください（メール送信に進まない）。
 
-## 12. STEP 6: ワークフロー側で送信
+## 11. STEP 5: ワークフロー側で送信
 
-メール送信・音声生成・Git コミットは `.github/workflows/morning-brief.yml` が後段で実行します。**プロンプト側で send-resend.py を直接呼ばないこと。** 必要なファイル（`/tmp/today.json`, `/tmp/brief.html`, `/tmp/brief-tts.txt`）と保存済みの `morning-brief/data/YYYY/MM/DD.json` を整えるところまでがあなたの責務です。
+メール送信・Git コミットは `.github/workflows/morning-brief.yml` が後段で実行します。**プロンプト側で send-resend.py を直接呼ばないこと。** 必要なファイル（`/tmp/today.json`, `/tmp/brief.html`）と保存済みの `morning-brief/data/YYYY/MM/DD.json` を整えるところまでがあなたの責務です。
 
-## 13. 品質チェックリスト
+## 12. 品質チェックリスト
 
 完了前に以下をすべて確認：
 
 - [ ] `/tmp/today.json` がスキーマ検証を通過した
 - [ ] `/tmp/brief.html` に未解決プレースホルダが残っていない
 - [ ] `/tmp/brief.html` のサイズが 2KB 以上
-- [ ] `/tmp/brief-tts.txt` が 1500〜2500 字
 - [ ] 金 / プラチナ / 銀 / USDJPY / 日経のいずれも値またはソース付き null
 - [ ] 大阪の天気（最高 / 最低 / 降水確率）が入っている
 - [ ] すべてのトピックにソース URL がある
 - [ ] すべてのトピックに「メグル買取への影響」が明記されている
 - [ ] 1 週間以上前のニュースを最新として扱っていない
 
-## 14. 注意事項
+## 13. 注意事項
 
 - 推測・憶測で数値を書かない（取得不能なら null）
 - 政治・宗教・センシティブ個別案件への踏み込みは避ける（経営判断と関係ある場合のみ簡潔に）

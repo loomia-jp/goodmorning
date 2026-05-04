@@ -91,7 +91,6 @@ jobs:
           完了条件:
             - /tmp/today.json がスキーマ検証を通過している
             - /tmp/brief.html に未解決プレースホルダが残っていない
-            - /tmp/brief-tts.txt が存在し、1500〜2500 字程度
             - morning-brief/data/YYYY/MM/DD.json が memory-saver.py によって保存されている
           失敗した場合は理由を明示して終了してください（メール送信は後段ステップが行います）。
           EOF
@@ -106,7 +105,7 @@ jobs:
       - name: Verify generated artifacts
         run: |
           set -e
-          for f in /tmp/today.json /tmp/brief.html /tmp/brief-tts.txt; do
+          for f in /tmp/today.json /tmp/brief.html; do
             if [ ! -s "$f" ]; then
               echo "::error::missing or empty artifact: $f"
               exit 1
@@ -114,31 +113,12 @@ jobs:
           done
           python3 scripts/validate-bundle.py --json /tmp/today.json --html /tmp/brief.html
 
-      - name: Generate TTS audio (mp3)
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: |
-          python3 scripts/tts-generate.py \
-            --input-file /tmp/brief-tts.txt \
-            --output-file /tmp/brief.mp3 \
-            --voice alloy \
-            --instructions "Read in calm professional Japanese. Slightly slow pace for morning listening."
-          if [ -s /tmp/brief.mp3 ]; then
-            echo "MP3_ATTACH=/tmp/brief.mp3" >> "$GITHUB_ENV"
-          else
-            echo "::warning::TTS skipped or failed; sending email without audio attachment."
-          fi
-
       - name: Send email via Resend
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           TO_EMAIL: ${{ secrets.TO_EMAIL }}
           FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
         run: |
-          ATTACH_ARG=""
-          if [ -n "${MP3_ATTACH:-}" ] && [ -s "${MP3_ATTACH}" ]; then
-            ATTACH_ARG="--attach ${MP3_ATTACH}"
-          fi
           FROM_ARG=""
           if [ -n "${FROM_EMAIL:-}" ]; then
             FROM_ARG="--from ${FROM_EMAIL}"
@@ -148,8 +128,7 @@ jobs:
             --subject "[朝刊] メグル Brief ${TODAY_DATE_JP}" \
             --html-file /tmp/brief.html \
             --to "${TO_EMAIL}" \
-            ${FROM_ARG} \
-            ${ATTACH_ARG}
+            ${FROM_ARG}
 
       - name: Commit daily snapshot
         run: |

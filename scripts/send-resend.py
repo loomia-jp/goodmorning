@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
-"""Send HTML email (with optional attachments) via the Resend API.
+"""Send HTML email via the Resend API.
 
 Usage:
     python3 scripts/send-resend.py \
         --subject "朝刊 Brief 2026-05-05" \
         --html-file /tmp/brief.html \
         --to "loomia.jp@gmail.com" \
-        [--attach /tmp/brief.mp3] \
         [--from "brief@example.com"]
 
 Reads RESEND_API_KEY from env. Exits non-zero on failure with a stderr message
@@ -15,9 +14,7 @@ suitable for surfacing in GitHub Actions logs.
 from __future__ import annotations
 
 import argparse
-import base64
 import json
-import mimetypes
 import os
 import pathlib
 import sys
@@ -37,29 +34,6 @@ def build_payload(args: argparse.Namespace, html: str) -> dict:
     }
     if args.reply_to:
         payload["reply_to"] = args.reply_to
-
-    attachments = []
-    for path in args.attach or []:
-        p = pathlib.Path(path)
-        if not p.exists():
-            print(f"[send-resend] WARN: attachment not found, skipping: {p}", file=sys.stderr)
-            continue
-        size = p.stat().st_size
-        # Resend hard limit is 40MB; warn over 30MB so we have headroom for base64 expansion.
-        if size > 30 * 1024 * 1024:
-            print(
-                f"[send-resend] WARN: attachment {p.name} is {size/1024/1024:.1f}MB, skipping (>30MB)",
-                file=sys.stderr,
-            )
-            continue
-        ctype, _ = mimetypes.guess_type(str(p))
-        attachments.append({
-            "filename": p.name,
-            "content": base64.b64encode(p.read_bytes()).decode("ascii"),
-            "content_type": ctype or "application/octet-stream",
-        })
-    if attachments:
-        payload["attachments"] = attachments
     return payload
 
 
@@ -91,7 +65,6 @@ def main() -> int:
     parser.add_argument("--to", required=True, help="Comma-separated recipient list")
     parser.add_argument("--from", dest="from_addr", default=None)
     parser.add_argument("--reply-to", default=None)
-    parser.add_argument("--attach", action="append", help="Attachment path (repeatable)")
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
 
@@ -110,11 +83,6 @@ def main() -> int:
 
     if args.dry_run:
         preview = {**payload, "html": f"<{len(html)} chars omitted>"}
-        if "attachments" in preview:
-            preview["attachments"] = [
-                {**a, "content": f"<{len(a['content'])} b64 chars omitted>"}
-                for a in preview["attachments"]
-            ]
         print(json.dumps(preview, ensure_ascii=False, indent=2))
         return 0
 
