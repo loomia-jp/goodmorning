@@ -1,0 +1,198 @@
+name: morning-brief
+
+# 毎朝 08:00 JST = 23:00 UTC（前日）に起動。
+# cron は UTC で書かれている点に注意。
+on:
+  schedule:
+    - cron: "0 23 * * *"
+  workflow_dispatch:
+    inputs:
+      target_date:
+        description: "対象日 (YYYY-MM-DD, 空欄なら今日 JST)"
+        required: false
+        type: string
+
+concurrency:
+  group: morning-brief
+  cancel-in-progress: false
+
+permissions:
+  contents: write   # data/ を自動コミットするため
+
+jobs:
+  brief:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      TZ: Asia/Tokyo
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Claude Code CLI
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Compute date variables (JST)
+        id: vars
+        run: |
+          INPUT_DATE="${{ inputs.target_date }}"
+          if [ -n "$INPUT_DATE" ]; then
+            TODAY_DATE="$INPUT_DATE"
+          else
+            TODAY_DATE="$(date +%Y-%m-%d)"
+          fi
+          # 日本語曜日付き: 2026-05-04（月）
+          WEEKDAY_EN="$(date -d "$TODAY_DATE" +%a)"
+          case "$WEEKDAY_EN" in
+            Mon) WD_JP="月" ;; Tue) WD_JP="火" ;; Wed) WD_JP="水" ;;
+            Thu) WD_JP="木" ;; Fri) WD_JP="金" ;; Sat) WD_JP="土" ;; Sun) WD_JP="日" ;;
+          esac
+          TODAY_DATE_JP="${TODAY_DATE}（${WD_JP}）"
+          {
+            echo "TODAY_DATE=$TODAY_DATE"
+            echo "TODAY_DATE_JP=$TODAY_DATE_JP"
+            echo "TODAY_WEEKDAY=$WEEKDAY_EN"
+          } >> "$GITHUB_ENV"
+          {
+            echo "today_date=$TODAY_DATE"
+            echo "today_date_jp=$TODAY_DATE_JP"
+            echo "today_weekday=$WEEKDAY_EN"
+          } >> "$GITHUB_OUTPUT"
+          echo "Generating brief for $TODAY_DATE_JP"
+
+      - name: Run Claude Code (generate brief artifacts)
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          TODAY_DATE: ${{ env.TODAY_DATE }}
+          TODAY_DATE_JP: ${{ env.TODAY_DATE_JP }}
+          TODAY_WEEKDAY: ${{ env.TODAY_WEEKDAY }}
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp
+          PROMPT="$(cat <<'EOF'
+          あなたは morning-brief/PROMPT.md に書かれた朝刊エディターです。
+          そこに書かれた STEP -1 から STEP 5 まですべて遂行してください。
+
+          環境変数で渡されている TODAY_DATE / TODAY_DATE_JP / TODAY_WEEKDAY を必ず使用すること。
+          完了条件:
+            - /tmp/today.json がスキーマ検証を通過している
+            - /tmp/brief.html に未解決プレースホルダが残っていない
+            - /tmp/brief-tts.txt が存在し、1500〜2500 字程度
+            - morning-brief/data/YYYY/MM/DD.json が memory-saver.py によって保存されている
+          失敗した場合は理由を明示して終了してください（メール送信は後段ステップが行います）。
+          EOF
+          )"
+
+          claude --print \
+            --permission-mode acceptEdits \
+            --allowed-tools "Read,Write,Edit,Bash,WebSearch,WebFetch,Task,Glob,Grep" \
+            --max-turns 60 \
+            "$PROMPT" 2>&1 | tee /tmp/claude.log
+
+      - name: Verify generated artifacts
+        run: |
+          set -e
+          for f in /tmp/today.json /tmp/brief.html /tmp/brief-tts.txt; do
+            if [ ! -s "$f" ]; then
+              echo "::error::missing or empty artifact: $f"
+              exit 1
+            fi
+          done
+          python3 scripts/validate-bundle.py --json /tmp/today.json --html /tmp/brief.html
+
+      - name: Generate TTS audio (mp3)
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          python3 scripts/tts-generate.py \
+            --input-file /tmp/brief-tts.txt \
+            --output-file /tmp/brief.mp3 \
+            --voice alloy \
+            --instructions "Read in calm professional Japanese. Slightly slow pace for morning listening."
+          if [ -s /tmp/brief.mp3 ]; then
+            echo "MP3_ATTACH=/tmp/brief.mp3" >> "$GITHUB_ENV"
+          else
+            echo "::warning::TTS skipped or failed; sending email without audio attachment."
+          fi
+
+      - name: Send email via Resend
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          TO_EMAIL: ${{ secrets.TO_EMAIL }}
+          FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
+        run: |
+          ATTACH_ARG=""
+          if [ -n "${MP3_ATTACH:-}" ] && [ -s "${MP3_ATTACH}" ]; then
+            ATTACH_ARG="--attach ${MP3_ATTACH}"
+          fi
+          FROM_ARG=""
+          if [ -n "${FROM_EMAIL:-}" ]; then
+            FROM_ARG="--from ${FROM_EMAIL}"
+          fi
+          # shellcheck disable=SC2086
+          python3 scripts/send-resend.py \
+            --subject "[朝刊] メグル Brief ${TODAY_DATE_JP}" \
+            --html-file /tmp/brief.html \
+            --to "${TO_EMAIL}" \
+            ${FROM_ARG} \
+            ${ATTACH_ARG}
+
+      - name: Commit daily snapshot
+        run: |
+          set -e
+          git config user.name "meguru-bi-bot"
+          git config user.email "bot@meguru-kaitori.local"
+          git add morning-brief/data/
+          if git diff --cached --quiet; then
+            echo "no data changes to commit"
+            exit 0
+          fi
+          git commit -m "chore(data): ${TODAY_DATE} daily snapshot [skip ci]"
+          for attempt in 1 2 3 4; do
+            if git push origin HEAD; then
+              echo "push ok on attempt $attempt"
+              exit 0
+            fi
+            sleep $((2 ** attempt))
+          done
+          echo "::error::git push failed after retries"
+          exit 1
+
+      - name: Failure notification (best-effort)
+        if: failure()
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          TO_EMAIL: ${{ secrets.TO_EMAIL }}
+          FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
+        run: |
+          set +e
+          mkdir -p /tmp
+          {
+            echo "<h2>[ALERT] morning-brief failed</h2>"
+            echo "<p>Date: ${TODAY_DATE:-unknown}</p>"
+            echo "<p>Run: <a href=\"https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\">${{ github.run_id }}</a></p>"
+            echo "<pre style='font-size:12px;background:#f4f5f7;padding:12px;border-radius:6px;white-space:pre-wrap;'>"
+            tail -c 60000 /tmp/claude.log 2>/dev/null | sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g'
+            echo "</pre>"
+          } > /tmp/alert.html
+          FROM_ARG=""
+          if [ -n "${FROM_EMAIL:-}" ]; then FROM_ARG="--from ${FROM_EMAIL}"; fi
+          python3 scripts/send-resend.py \
+            --subject "[ALERT] morning-brief failed (${TODAY_DATE:-?})" \
+            --html-file /tmp/alert.html \
+            --to "${TO_EMAIL}" \
+            ${FROM_ARG} || true
