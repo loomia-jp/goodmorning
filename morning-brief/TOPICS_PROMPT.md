@@ -28,7 +28,7 @@
 | パス | 内容 |
 |---|---|
 | `/tmp/topics.json` | 構造化された話題データ（後述スキーマ） |
-| `/tmp/topics.html` | メール本文 HTML（`topics-brief/templates/email-topics.html` の `{{PLACEHOLDER}}` を全置換） |
+| `/tmp/topics.html` | メール本文 HTML（`morning-brief/templates/email-topics.html` の `{{PLACEHOLDER}}` を全置換） |
 
 ## 4. STEP 0: 並列 Subagent 実行（**3 並列**）
 
@@ -219,7 +219,7 @@
 
 ## 7. STEP 3: HTML 生成
 
-`topics-brief/templates/email-topics.html` を Read し、以下のプレースホルダをすべて置換して `/tmp/topics.html` に書き出してください。
+`morning-brief/templates/email-topics.html` を Read し、以下のプレースホルダをすべて置換して `/tmp/topics.html` に書き出してください。
 
 | プレースホルダ | 内容 |
 |---|---|

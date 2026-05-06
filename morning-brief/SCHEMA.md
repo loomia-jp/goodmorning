@@ -251,9 +251,10 @@
 
 ---
 
-## 2. 話のネタ便スナップショット（Phase 3 予定 / topics-brief schema 1.0）
+## 2. 話のネタ便スナップショット（Phase 3 / topics schema 1.0）
 
-**保存先**: `topics-brief/data/YYYY/MM/DD.json`（Phase 3 ワークフロー化時に自動生成）
+**保存先**: Phase 3 では `/tmp/topics.json` を生成しメール送信に使うのみ。データアーカイブは未実装。
+将来必要なら `morning-brief/data/topics/YYYY/MM/DD.json` を採用予定。
 
 ```jsonc
 {

@@ -1,0 +1,195 @@
+name: morning-topics
+
+# 毎朝 07:00 JST = 22:00 UTC（前日）に起動。
+# 朝刊 Brief（08:00 JST）の 1 時間前に「話のネタ便」を配信。
+on:
+  schedule:
+    - cron: "0 22 * * *"
+  workflow_dispatch:
+    inputs:
+      target_date:
+        description: "対象日 (YYYY-MM-DD, 空欄なら今日 JST)"
+        required: false
+        type: string
+
+concurrency:
+  group: morning-topics
+  cancel-in-progress: false
+
+permissions:
+  contents: write   # keep-alive のための空コミット用
+
+jobs:
+  topics:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      TZ: Asia/Tokyo
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Claude Code CLI
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Compute date variables (JST)
+        id: vars
+        run: |
+          INPUT_DATE="${{ inputs.target_date }}"
+          if [ -n "$INPUT_DATE" ]; then
+            TODAY_DATE="$INPUT_DATE"
+          else
+            TODAY_DATE="$(date +%Y-%m-%d)"
+          fi
+          WEEKDAY_EN="$(date -d "$TODAY_DATE" +%a)"
+          case "$WEEKDAY_EN" in
+            Mon) WD_JP="月" ;; Tue) WD_JP="火" ;; Wed) WD_JP="水" ;;
+            Thu) WD_JP="木" ;; Fri) WD_JP="金" ;; Sat) WD_JP="土" ;; Sun) WD_JP="日" ;;
+          esac
+          TODAY_DATE_JP="${TODAY_DATE}（${WD_JP}）"
+          {
+            echo "TODAY_DATE=$TODAY_DATE"
+            echo "TODAY_DATE_JP=$TODAY_DATE_JP"
+            echo "TODAY_WEEKDAY=$WEEKDAY_EN"
+          } >> "$GITHUB_ENV"
+          echo "Generating topics for $TODAY_DATE_JP"
+
+      - name: Run Claude Code (generate topics artifacts)
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          TODAY_DATE: ${{ env.TODAY_DATE }}
+          TODAY_DATE_JP: ${{ env.TODAY_DATE_JP }}
+          TODAY_WEEKDAY: ${{ env.TODAY_WEEKDAY }}
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp
+          PROMPT="$(cat <<'EOF'
+          あなたは morning-brief/TOPICS_PROMPT.md に書かれた「話のネタ便」エディターです。
+          そこに書かれた STEP 0 から品質チェックリストまでをすべて遂行してください。
+
+          環境変数で渡されている TODAY_DATE / TODAY_DATE_JP / TODAY_WEEKDAY を必ず使用すること。
+          完了条件:
+            - /tmp/topics.json が話のネタ便スキーマ（topics schema 1.0）に準拠している
+            - /tmp/topics.html に未解決プレースホルダが残っていない
+            - 顧客向け / 経営者向け / スタッフ向け 各 5 件以上
+          失敗した場合は理由を明示して終了してください（メール送信は後段ステップが行います）。
+          EOF
+          )"
+
+          claude --print \
+            --permission-mode acceptEdits \
+            --allowed-tools "Read,Write,Edit,Bash,WebSearch,WebFetch,Task,Glob,Grep" \
+            --max-turns 50 \
+            "$PROMPT" 2>&1 | tee /tmp/topics-claude.log
+
+      - name: Verify generated artifacts
+        run: |
+          set -e
+          for f in /tmp/topics.json /tmp/topics.html; do
+            if [ ! -s "$f" ]; then
+              echo "::error::missing or empty artifact: $f"
+              exit 1
+            fi
+          done
+          # /tmp/topics.html に未解決の {{...}} が残っていないか軽量チェック
+          if grep -E '\{\{[A-Z_]+\}\}' /tmp/topics.html >/dev/null; then
+            echo "::error::unresolved placeholders left in /tmp/topics.html"
+            grep -nE '\{\{[A-Z_]+\}\}' /tmp/topics.html | head -10
+            exit 1
+          fi
+          # JSON の形式と必須カテゴリの件数チェック（スキーマバリデータがまだ未整備のため簡易版）
+          python3 - <<'PY'
+          import json, sys
+          d = json.load(open("/tmp/topics.json", encoding="utf-8"))
+          for k in ("customer_topics", "executive_topics", "staff_topics"):
+              v = d.get(k, [])
+              if not isinstance(v, list) or len(v) < 5:
+                  print(f"::error::{k}: must have >=5 items, got {len(v) if isinstance(v, list) else 'non-list'}")
+                  sys.exit(2)
+              for i, item in enumerate(v):
+                  if not item.get("one_liner"):
+                      print(f"::error::{k}[{i}]: one_liner is required")
+                      sys.exit(2)
+          print("[verify] topics.json OK")
+          PY
+
+      - name: Send topics email via Resend
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          TO_EMAIL: ${{ secrets.TO_EMAIL }}
+          FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
+        run: |
+          FROM_ARG=""
+          if [ -n "${FROM_EMAIL:-}" ]; then
+            FROM_ARG="--from ${FROM_EMAIL}"
+          fi
+          # shellcheck disable=SC2086
+          python3 scripts/send-resend.py \
+            --subject "[話のネタ便] メグル ${TODAY_DATE_JP}" \
+            --html-file /tmp/topics.html \
+            --to "${TO_EMAIL}" \
+            ${FROM_ARG}
+
+      - name: Keep-alive (touch repo activity if quiet >50d)
+        if: github.event_name == 'schedule'
+        run: |
+          set -e
+          # GitHub は 60 日間 default branch にコミットがないと scheduled workflow を自動停止する。
+          # 念のため 50 日経過していたら空コミットで触る。
+          LAST_COMMIT_TS="$(git log -1 --format=%ct)"
+          NOW_TS="$(date +%s)"
+          AGE=$(( NOW_TS - LAST_COMMIT_TS ))
+          if [ "$AGE" -gt 4320000 ]; then
+            git config user.name "meguru-bi-bot"
+            git config user.email "bot@meguru-kaitori.local"
+            git commit --allow-empty -m "chore: keep-alive ping (morning-topics) [skip ci]"
+            for attempt in 1 2 3 4; do
+              if git push origin HEAD; then
+                echo "keep-alive push ok on attempt $attempt"
+                exit 0
+              fi
+              sleep $((2 ** attempt))
+            done
+            echo "::warning::keep-alive push failed after retries"
+          else
+            echo "repo recently active ($AGE seconds ago) — keep-alive not needed"
+          fi
+
+      - name: Failure notification (best-effort)
+        if: failure()
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          TO_EMAIL: ${{ secrets.TO_EMAIL }}
+          FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
+        run: |
+          set +e
+          mkdir -p /tmp
+          {
+            echo "<h2>[ALERT] morning-topics failed</h2>"
+            echo "<p>Date: ${TODAY_DATE:-unknown}</p>"
+            echo "<p>Run: <a href=\"https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\">${{ github.run_id }}</a></p>"
+            echo "<pre style='font-size:12px;background:#f4f5f7;padding:12px;border-radius:6px;white-space:pre-wrap;'>"
+            tail -c 60000 /tmp/topics-claude.log 2>/dev/null | sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g'
+            echo "</pre>"
+          } > /tmp/topics-alert.html
+          FROM_ARG=""
+          if [ -n "${FROM_EMAIL:-}" ]; then FROM_ARG="--from ${FROM_EMAIL}"; fi
+          python3 scripts/send-resend.py \
+            --subject "[ALERT] morning-topics failed (${TODAY_DATE:-?})" \
+            --html-file /tmp/topics-alert.html \
+            --to "${TO_EMAIL}" \
+            ${FROM_ARG} || true
