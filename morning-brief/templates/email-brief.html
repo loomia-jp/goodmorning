@@ -7,26 +7,38 @@
 </head>
 <body style="margin:0;padding:0;background:#f4f5f7;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Sans','Yu Gothic UI',sans-serif;color:#1f2937;">
 <!--
-  Email-safe HTML template.
-  - Uses table-based layout for Gmail iOS/Android/Web compatibility.
-  - All styles inline; no external CSS, no <style> blocks reliance.
+  Email-safe HTML template (schema v1.2).
+  - Table-based layout for Gmail iOS/Android/Web compatibility.
+  - All styles inline; no external CSS, no <style> blocks.
+  - Impact badges 🔴 🟡 🟢 are inline-styled spans for visual scanning.
   - PROMPT.md fills these placeholders before sending:
-    {{DATE}}                e.g. 2026-05-05（火）
-    {{HEADLINE}}            1行のキャッチーな今日の総括
-    {{WEATHER_BLOCK}}       大阪の天気サマリー（HTMLフラグメント可）
-    {{MARKET_TABLE}}        相場テーブル（<table>フラグメント）
-    {{HIGHLIGHTS_BLOCK}}    主要トピック一覧（<ul>または<table>）
-    {{ALERTS_BLOCK}}        警告（無ければ空文字）
-    {{AI_BLOCK}}            AI/テック動向
-    {{COMPETITOR_BLOCK}}    競合動向
-    {{AUCTIONS_BLOCK}}      古物市場トップ3
-    {{SUBSIDY_BLOCK}}       補助金（30日以内締切）
-    {{CLOSING_NOTE}}        代表向け一言まとめ
-    {{GENERATED_AT}}        ISO8601 JST
+    {{DATE}}                 e.g. 2026-05-06（水）
+    {{HEADLINE}}             1行のキャッチーな今日の総括
+    {{WEATHER_BLOCK}}        大阪の天気サマリー（HTMLフラグメント可）
+    {{MARKET_TABLE}}         相場テーブル（貴金属・為替・国内株・海外指数・暗号資産・コモディティ）
+    {{BRANDS_BLOCK}}         ブランド国際相場・新作・廃番（5〜7件）
+    {{HIGHLIGHTS_BLOCK}}     主要トピック一覧（5件以上）
+    {{ALERTS_BLOCK}}         警告（無ければ空文字）
+    {{AI_BLOCK}}             AI動向（5〜7件、サブセクション分割）
+    {{TECH_BLOCK}}           半導体・GPU / 量子・宇宙 / ロボ・自動運転（合計3〜5件）
+    {{COMPETITOR_BLOCK}}     競合動向（5件以上、当日アクション併記）
+    {{SECONDHAND_BLOCK}}     メルカリ・ヤフオク高額落札TOP5
+    {{REUSE_MARKET_BLOCK}}   骨董/楽器カメラ時計/中古車バイク/越境EC（合計3〜5件）
+    {{AUCTIONS_BLOCK}}       業者間オークションTOP3
+    {{WELFARE_BLOCK}}        福祉・介護・終活（独立セクション、7件以上）
+    {{LIFESTYLE_BLOCK}}      社会トレンド・ライフスタイル（5件以上）
+    {{SUBSIDY_BLOCK}}        補助金（30日以内締切）
+    {{CLOSING_NOTE}}         代表向け一言まとめ
+    {{GENERATED_AT}}         ISO8601 JST
+
+  Recommended badge styles (PROMPT で使用):
+    🔴 high:   <span style="display:inline-block;padding:2px 8px;font-size:11px;font-weight:700;color:#ffffff;background:#dc2626;border-radius:4px;">🔴 高</span>
+    🟡 medium: <span style="display:inline-block;padding:2px 8px;font-size:11px;font-weight:700;color:#ffffff;background:#ca8a04;border-radius:4px;">🟡 中</span>
+    🟢 low:    <span style="display:inline-block;padding:2px 8px;font-size:11px;font-weight:700;color:#ffffff;background:#16a34a;border-radius:4px;">🟢 低</span>
 -->
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f5f7;padding:24px 0;">
   <tr><td align="center">
-    <table role="presentation" width="640" cellpadding="0" cellspacing="0" style="max-width:640px;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.06);">
+    <table role="presentation" width="680" cellpadding="0" cellspacing="0" style="max-width:680px;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.06);">
 
       <!-- Header -->
       <tr><td style="background:linear-gradient(135deg,#0f172a,#1e3a8a);padding:24px 28px;color:#ffffff;">
@@ -37,47 +49,85 @@
 
       <!-- Weather -->
       <tr><td style="padding:20px 28px 8px 28px;">
-        <div style="font-size:12px;color:#64748b;letter-spacing:0.08em;">大阪の天気</div>
+        <div style="font-size:12px;color:#64748b;letter-spacing:0.08em;font-weight:700;">大阪の天気</div>
         <div style="margin-top:6px;font-size:15px;line-height:1.7;color:#1f2937;">{{WEATHER_BLOCK}}</div>
       </td></tr>
 
-      <!-- Market -->
+      <!-- Market (貴金属・為替・国内株・海外指数・暗号資産・コモディティ) -->
       <tr><td style="padding:8px 28px 8px 28px;">
-        <div style="font-size:12px;color:#64748b;letter-spacing:0.08em;margin-top:8px;">相場（{{GENERATED_AT}} 時点）</div>
+        <div style="font-size:12px;color:#64748b;letter-spacing:0.08em;font-weight:700;margin-top:8px;">相場（{{GENERATED_AT}} 時点 / 前日比・トレンド併記）</div>
+        <div style="font-size:11px;color:#94a3b8;margin-top:2px;">貴金属・為替・国内株・海外指数・暗号資産・コモディティ</div>
         <div style="margin-top:8px;">{{MARKET_TABLE}}</div>
       </td></tr>
 
+      <!-- Brand intelligence -->
+      <tr><td style="padding:16px 28px 4px 28px;border-top:1px solid #e2e8f0;">
+        <div style="font-size:12px;color:#64748b;letter-spacing:0.08em;font-weight:700;">ブランド情報（新作 / 廃番 / 国際相場）</div>
+        <div style="margin-top:8px;font-size:14px;line-height:1.75;">{{BRANDS_BLOCK}}</div>
+      </td></tr>
+
       <!-- Highlights -->
-      <tr><td style="padding:16px 28px 4px 28px;">
-        <div style="font-size:12px;color:#64748b;letter-spacing:0.08em;">本日のハイライト</div>
-        <div style="margin-top:8px;font-size:15px;line-height:1.75;">{{HIGHLIGHTS_BLOCK}}</div>
+      <tr><td style="padding:16px 28px 4px 28px;border-top:1px solid #e2e8f0;">
+        <div style="font-size:12px;color:#64748b;letter-spacing:0.08em;font-weight:700;">本日のハイライト</div>
+        <div style="margin-top:8px;font-size:14px;line-height:1.75;">{{HIGHLIGHTS_BLOCK}}</div>
       </td></tr>
 
       <!-- Alerts -->
       <tr><td style="padding:8px 28px 4px 28px;">{{ALERTS_BLOCK}}</td></tr>
 
-      <!-- AI / Tech -->
-      <tr><td style="padding:16px 28px 4px 28px;">
-        <div style="font-size:12px;color:#64748b;letter-spacing:0.08em;">AI・テクノロジー</div>
-        <div style="margin-top:8px;font-size:15px;line-height:1.75;">{{AI_BLOCK}}</div>
+      <!-- AI / Tech (split block) -->
+      <tr><td style="padding:16px 28px 4px 28px;border-top:1px solid #e2e8f0;">
+        <div style="font-size:12px;color:#64748b;letter-spacing:0.08em;font-weight:700;">AI 動向（主要企業 / 規制 / ベンチマーク / 業界活用）</div>
+        <div style="margin-top:8px;font-size:14px;line-height:1.75;">{{AI_BLOCK}}</div>
+      </td></tr>
+
+      <tr><td style="padding:12px 28px 4px 28px;">
+        <div style="font-size:12px;color:#64748b;letter-spacing:0.08em;font-weight:700;">テクノロジー（半導体・GPU / 量子・宇宙 / ロボ・自動運転）</div>
+        <div style="margin-top:8px;font-size:14px;line-height:1.75;">{{TECH_BLOCK}}</div>
       </td></tr>
 
       <!-- Competitors -->
-      <tr><td style="padding:16px 28px 4px 28px;">
-        <div style="font-size:12px;color:#64748b;letter-spacing:0.08em;">競合動向</div>
-        <div style="margin-top:8px;font-size:15px;line-height:1.75;">{{COMPETITOR_BLOCK}}</div>
+      <tr><td style="padding:16px 28px 4px 28px;border-top:1px solid #e2e8f0;">
+        <div style="font-size:12px;color:#64748b;letter-spacing:0.08em;font-weight:700;">競合動向（5社以上 / 当日アクション）</div>
+        <div style="margin-top:8px;font-size:14px;line-height:1.75;">{{COMPETITOR_BLOCK}}</div>
       </td></tr>
 
-      <!-- Auctions -->
+      <!-- Mercari / Yahoo Auction TOP5 -->
       <tr><td style="padding:16px 28px 4px 28px;">
-        <div style="font-size:12px;color:#64748b;letter-spacing:0.08em;">古物市場トップ3</div>
-        <div style="margin-top:8px;font-size:15px;line-height:1.75;">{{AUCTIONS_BLOCK}}</div>
+        <div style="font-size:12px;color:#64748b;letter-spacing:0.08em;font-weight:700;">メルカリ・ヤフオク 高額落札 TOP5</div>
+        <div style="margin-top:8px;font-size:14px;line-height:1.75;">{{SECONDHAND_BLOCK}}</div>
+      </td></tr>
+
+      <!-- Reuse market sub-segments -->
+      <tr><td style="padding:16px 28px 4px 28px;">
+        <div style="font-size:12px;color:#64748b;letter-spacing:0.08em;font-weight:700;">リユース市場（骨董・楽器カメラ時計・中古車バイク・越境EC）</div>
+        <div style="margin-top:8px;font-size:14px;line-height:1.75;">{{REUSE_MARKET_BLOCK}}</div>
+      </td></tr>
+
+      <!-- Industry auctions -->
+      <tr><td style="padding:16px 28px 4px 28px;">
+        <div style="font-size:12px;color:#64748b;letter-spacing:0.08em;font-weight:700;">業者間オークション TOP3</div>
+        <div style="margin-top:8px;font-size:14px;line-height:1.75;">{{AUCTIONS_BLOCK}}</div>
+      </td></tr>
+
+      <!-- Welfare / 終活 (独立セクション・黄背景) -->
+      <tr><td style="padding:18px 28px 6px 28px;border-top:2px solid #fde68a;background:#fffbeb;">
+        <div style="font-size:12px;color:#92400e;letter-spacing:0.08em;font-weight:700;">福祉・介護・終活業界</div>
+        <div style="font-size:11px;color:#b45309;margin-top:2px;">制度 / 施設・在宅 / 研究 / 市場・相続 / 新サービス（7件以上、集客機会評価付き）</div>
+        <div style="margin-top:8px;font-size:14px;line-height:1.75;color:#1f2937;">{{WELFARE_BLOCK}}</div>
+      </td></tr>
+
+      <!-- Lifestyle / 社会トレンド -->
+      <tr><td style="padding:16px 28px 4px 28px;border-top:1px solid #e2e8f0;">
+        <div style="font-size:12px;color:#64748b;letter-spacing:0.08em;font-weight:700;">社会トレンド・ライフスタイル</div>
+        <div style="font-size:11px;color:#94a3b8;margin-top:2px;">50〜70代 / Z世代 / 家族・地域 / 健康 / 大阪・近畿</div>
+        <div style="margin-top:8px;font-size:14px;line-height:1.75;">{{LIFESTYLE_BLOCK}}</div>
       </td></tr>
 
       <!-- Subsidy -->
       <tr><td style="padding:16px 28px 4px 28px;">
-        <div style="font-size:12px;color:#64748b;letter-spacing:0.08em;">補助金・助成金（30日以内締切）</div>
-        <div style="margin-top:8px;font-size:15px;line-height:1.75;">{{SUBSIDY_BLOCK}}</div>
+        <div style="font-size:12px;color:#64748b;letter-spacing:0.08em;font-weight:700;">補助金・助成金（30日以内締切）</div>
+        <div style="margin-top:8px;font-size:14px;line-height:1.75;">{{SUBSIDY_BLOCK}}</div>
       </td></tr>
 
       <!-- Closing -->
