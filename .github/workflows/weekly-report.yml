@@ -1,0 +1,213 @@
+name: weekly-report
+
+# 毎週日曜 09:00 JST = 日曜 00:00 UTC に起動。
+# 1 週間の市場・競合・予測・KPI を統合した週報を配信。
+on:
+  schedule:
+    - cron: "0 0 * * 0"
+  workflow_dispatch:
+    inputs:
+      week_end:
+        description: "週末日 (YYYY-MM-DD = 日曜, 空欄なら今日 JST)"
+        required: false
+        type: string
+      weekly_visits:
+        description: "今週の訪問件数（手動入力）"
+        required: false
+        type: string
+      weekly_deals:
+        description: "今週の成約件数（手動入力）"
+        required: false
+        type: string
+      weekly_revenue_jpy:
+        description: "今週の売上（円、手動入力）"
+        required: false
+        type: string
+      weekly_notes:
+        description: "代表からの自由記述メモ"
+        required: false
+        type: string
+
+concurrency:
+  group: weekly-report
+  cancel-in-progress: false
+
+permissions:
+  contents: write   # keep-alive のための空コミット用
+
+jobs:
+  weekly:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      TZ: Asia/Tokyo
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Claude Code CLI
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Compute week range (JST, ISO week)
+        id: vars
+        run: |
+          INPUT_END="${{ inputs.week_end }}"
+          if [ -n "$INPUT_END" ]; then
+            WEEK_END="$INPUT_END"
+          else
+            WEEK_END="$(date +%Y-%m-%d)"
+          fi
+          # 週初は 6 日前（=月曜想定）
+          WEEK_START="$(date -d "$WEEK_END -6 days" +%Y-%m-%d)"
+          ISO_WEEK="$(date -d "$WEEK_END" +%G-W%V)"
+          WEEK_RANGE="$(date -d "$WEEK_START" +%Y-%m-%d)（月）〜 $(date -d "$WEEK_END" +%Y-%m-%d)（日）"
+          {
+            echo "WEEK_END=$WEEK_END"
+            echo "WEEK_START=$WEEK_START"
+            echo "ISO_WEEK=$ISO_WEEK"
+            echo "WEEK_RANGE=$WEEK_RANGE"
+          } >> "$GITHUB_ENV"
+          echo "Generating weekly report for $ISO_WEEK ($WEEK_RANGE)"
+
+      - name: Run Claude Code (generate weekly artifacts)
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          WEEK_START: ${{ env.WEEK_START }}
+          WEEK_END: ${{ env.WEEK_END }}
+          ISO_WEEK: ${{ env.ISO_WEEK }}
+          WEEK_RANGE: ${{ env.WEEK_RANGE }}
+          WEEKLY_VISITS: ${{ inputs.weekly_visits }}
+          WEEKLY_DEALS: ${{ inputs.weekly_deals }}
+          WEEKLY_REVENUE_JPY: ${{ inputs.weekly_revenue_jpy }}
+          WEEKLY_NOTES: ${{ inputs.weekly_notes }}
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp
+          PROMPT="$(cat <<'EOF'
+          あなたは morning-brief/WEEKLY_PROMPT.md に書かれた「週報」エディターです。
+          そこに書かれた STEP 0 から品質チェックリストまでをすべて遂行してください。
+
+          環境変数で渡されている WEEK_START / WEEK_END / ISO_WEEK / WEEK_RANGE を必ず使用すること。
+          KPI 用の WEEKLY_VISITS / WEEKLY_DEALS / WEEKLY_REVENUE_JPY / WEEKLY_NOTES が
+          空文字 / 未定義の場合は「手動入力待ち」と表示し、推測で埋めないこと。
+
+          完了条件:
+            - /tmp/weekly.json が WEEKLY_PROMPT.md のスキーマに準拠している
+            - /tmp/weekly.html に未解決プレースホルダが残っていない
+            - 競合 5 件以上、来週予測 5 件以上
+          失敗した場合は理由を明示して終了してください（メール送信は後段ステップが行います）。
+          EOF
+          )"
+
+          claude --print \
+            --permission-mode acceptEdits \
+            --allowed-tools "Read,Write,Edit,Bash,WebSearch,WebFetch,Task,Glob,Grep" \
+            --max-turns 60 \
+            "$PROMPT" 2>&1 | tee /tmp/weekly-claude.log
+
+      - name: Verify generated artifacts
+        run: |
+          set -e
+          for f in /tmp/weekly.json /tmp/weekly.html; do
+            if [ ! -s "$f" ]; then
+              echo "::error::missing or empty artifact: $f"
+              exit 1
+            fi
+          done
+          if grep -E '\{\{[A-Z_]+\}\}' /tmp/weekly.html >/dev/null; then
+            echo "::error::unresolved placeholders left in /tmp/weekly.html"
+            grep -nE '\{\{[A-Z_]+\}\}' /tmp/weekly.html | head -10
+            exit 1
+          fi
+          python3 - <<'PY'
+          import json, sys
+          d = json.load(open("/tmp/weekly.json", encoding="utf-8"))
+          comp = d.get("competitor_recap", {}).get("items", [])
+          fcst = d.get("forecast", [])
+          if not isinstance(comp, list) or len(comp) < 5:
+              print(f"::error::competitor_recap.items: must have >=5, got {len(comp) if isinstance(comp, list) else 'non-list'}")
+              sys.exit(2)
+          if not isinstance(fcst, list) or len(fcst) < 5:
+              print(f"::error::forecast: must have >=5, got {len(fcst) if isinstance(fcst, list) else 'non-list'}")
+              sys.exit(2)
+          print("[verify] weekly.json OK")
+          PY
+
+      - name: Send weekly email via Resend
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          TO_EMAIL: ${{ secrets.TO_EMAIL }}
+          FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
+        run: |
+          FROM_ARG=""
+          if [ -n "${FROM_EMAIL:-}" ]; then
+            FROM_ARG="--from ${FROM_EMAIL}"
+          fi
+          # shellcheck disable=SC2086
+          python3 scripts/send-resend.py \
+            --subject "[週報] メグル ${ISO_WEEK} (${WEEK_RANGE})" \
+            --html-file /tmp/weekly.html \
+            --to "${TO_EMAIL}" \
+            ${FROM_ARG}
+
+      - name: Keep-alive (touch repo activity if quiet >50d)
+        if: github.event_name == 'schedule'
+        run: |
+          set -e
+          LAST_COMMIT_TS="$(git log -1 --format=%ct)"
+          NOW_TS="$(date +%s)"
+          AGE=$(( NOW_TS - LAST_COMMIT_TS ))
+          if [ "$AGE" -gt 4320000 ]; then
+            git config user.name "meguru-bi-bot"
+            git config user.email "bot@meguru-kaitori.local"
+            git commit --allow-empty -m "chore: keep-alive ping (weekly-report) [skip ci]"
+            for attempt in 1 2 3 4; do
+              if git push origin HEAD; then
+                echo "keep-alive push ok on attempt $attempt"
+                exit 0
+              fi
+              sleep $((2 ** attempt))
+            done
+            echo "::warning::keep-alive push failed after retries"
+          else
+            echo "repo recently active ($AGE seconds ago) — keep-alive not needed"
+          fi
+
+      - name: Failure notification (best-effort)
+        if: failure()
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          TO_EMAIL: ${{ secrets.TO_EMAIL }}
+          FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
+        run: |
+          set +e
+          mkdir -p /tmp
+          {
+            echo "<h2>[ALERT] weekly-report failed</h2>"
+            echo "<p>Week: ${ISO_WEEK:-unknown} (${WEEK_RANGE:-unknown})</p>"
+            echo "<p>Run: <a href=\"https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\">${{ github.run_id }}</a></p>"
+            echo "<pre style='font-size:12px;background:#f4f5f7;padding:12px;border-radius:6px;white-space:pre-wrap;'>"
+            tail -c 60000 /tmp/weekly-claude.log 2>/dev/null | sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g'
+            echo "</pre>"
+          } > /tmp/weekly-alert.html
+          FROM_ARG=""
+          if [ -n "${FROM_EMAIL:-}" ]; then FROM_ARG="--from ${FROM_EMAIL}"; fi
+          python3 scripts/send-resend.py \
+            --subject "[ALERT] weekly-report failed (${ISO_WEEK:-?})" \
+            --html-file /tmp/weekly-alert.html \
+            --to "${TO_EMAIL}" \
+            ${FROM_ARG} || true
