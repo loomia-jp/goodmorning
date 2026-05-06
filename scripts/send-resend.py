@@ -23,6 +23,10 @@ import urllib.request
 
 RESEND_ENDPOINT = "https://api.resend.com/emails"
 DEFAULT_FROM = "Meguru Brief <onboarding@resend.dev>"
+# Resend のエッジ (Cloudflare) は User-Agent ヘッダ不在 / Python-urllib デフォルト UA を
+# Access denied (code 1010) で 403 拒否する。明示的にシンプルなクライアント UA を設定する。
+# 参考: https://resend.com/docs/knowledge-base/403-error-1010
+USER_AGENT = "meguru-brief/1.0"
 
 
 def build_payload(args: argparse.Namespace, html: str) -> dict:
@@ -44,6 +48,8 @@ def send(payload: dict, api_key: str) -> dict:
         headers={
             "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
+            "Accept": "application/json",
+            "User-Agent": USER_AGENT,
         },
         method="POST",
     )
