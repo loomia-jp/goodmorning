@@ -1,0 +1,144 @@
+{
+  "schema_version": "1.0",
+  "date": "2026-05-06",
+  "weekday": "Wed",
+  "captured_at": "2026-05-06T12:06:05+09:00",
+  "market": {
+    "gold_jpy_g": 25139,
+    "platinum_jpy_g": 10699,
+    "silver_jpy_g": 389.4,
+    "usdjpy": 157.06,
+    "eurjpy": 184.08,
+    "nikkei": 59513.12,
+    "topix": 3728.73,
+    "valuence_9270": 2329,
+    "komehyo_2780": 5280,
+    "geo_2681": 1819
+  },
+  "weather_osaka": {
+    "main": "曇のち晴",
+    "temp_high": 23,
+    "temp_low": 14,
+    "rain_prob": 20
+  },
+  "kpi": {
+    "visits": null,
+    "deals": null,
+    "revenue_jpy": null
+  },
+  "highlights": [
+    {
+      "title": "インボイス経過措置縮小：2026-10-01より仕入税額控除80%→70%",
+      "impact": "high",
+      "source": "https://office-kitahama.jp/blog/taxknowledge/invoice_r8kaisei.html",
+      "summary": "10月以降、個人からの古物仕入れに係るインボイス経過措置が80%控除から70%に縮小。古物商特例は継続されるが、仕入先の登録状況管理と帳簿整備を今から見直す必要あり。メグル買取への影響: 実質的な仕入税負担が増す可能性。10月までに税理士と仕入先台帳を精査すること。"
+    },
+    {
+      "title": "コメ兵HD：川崎ルフロン新店＋シンガポールPLQモール出店を同日発表（2026-05-01）",
+      "impact": "medium",
+      "source": "https://komehyohds.com/ir/upload_file/tdnrelease/2780_20260501515777_P01_.pdf",
+      "summary": "コメ兵が国内（川崎）と海外（シンガポール）の同時出店を発表。アジア展開加速と国内多店舗化が続く。メグル買取への影響: 競合の認知度・集客力が全国/海外で拡大。大阪拠点の差別化（地域密着・出張対応）の強化が急務。"
+    },
+    {
+      "title": "バイセルTechnologies（7685）：2026-05-14に決算発表予定。3期連続過去最高益見込み",
+      "impact": "medium",
+      "source": "https://kabutan.jp/stock/news?code=7685&nmode=3",
+      "summary": "前期比41.4%増・経常利益120億円予測。出張買取×デジタルマーケで12期連続増収。メグル買取への影響: 業界全体の成長を示す好材料。バイセルの成功要因（マーケ投資・査定士育成）は自社戦略立案の参考に。"
+    },
+    {
+      "title": "住所変更登記義務化が2026-04-01より施行。違反は5万円以下の過料",
+      "impact": "medium",
+      "source": "https://www.gov-online.go.jp/article/202512/entry-10431.html",
+      "summary": "不動産所有者は住所・氏名変更から2年以内の登記変更が義務に。終活・相続文脈でシニア顧客と話せる最新ネタ。メグル買取への影響: 遺品整理・生前整理需要の掘り起こしトークとして活用可。「実家の名義大丈夫ですか？」が話の入り口に。"
+    },
+    {
+      "title": "シニアのSNS利用率：60代92%・70代78%（モバイル社会研究所 2026年1月調査）",
+      "impact": "low",
+      "source": "https://www.moba-ken.jp/project/seniors/20260413.html",
+      "summary": "LINEが全年代で最多。60代のInstagram利用が20%超に拡大。メグル買取への影響: シニア向けSNS発信（特にLINE公式・Instagram）の費用対効果が高まっている。コンテンツ強化の好機。"
+    }
+  ],
+  "alerts": [
+    {
+      "title": "⚠️ インボイス経過措置 2026-10-01より80%→70%控除へ縮小",
+      "severity": "warning",
+      "source": "https://office-kitahama.jp/blog/taxknowledge/invoice_r8kaisei.html",
+      "summary": "古物商がインボイス非登録個人から買い取る場合の仕入税額控除の経過措置が10月に縮小。古物商特例（帳簿保存で控除可）は継続されるが、控除割合は80%→70%。今から税理士・帳簿システムの見直しを行うこと。1事業者からの課税仕入合計1億円超分は特例対象外となる改正も同時施行に留意。"
+    }
+  ],
+  "ai_news": [
+    {
+      "title": "OpenAI・Anthropicが同日にエンタープライズ向けAIサービス合弁事業を発表（2026-05-04）",
+      "source": "https://techcrunch.com/2026/05/04/anthropic-and-openai-are-both-launching-joint-ventures-for-enterprise-ai-services/",
+      "summary": "OpenAIは40億ドル調達・評価額100億ドルのJVを、AnthropicはBlackstone等から15億ドル調達のJVを相次いで発表。中堅企業向け業種特化ワークフロー自動化が対象。6〜12か月以内に国内中小企業への波及が想定され、査定・在庫管理業務の自動化ソリューションが登場してくる可能性がある。"
+    },
+    {
+      "title": "Google Gemini Enterprise Agent Platform 発表（Google Cloud Next '26、2026-05-04）",
+      "source": "https://cloud.google.com/blog/products/ai-machine-learning/introducing-gemini-enterprise-agent-platform",
+      "summary": "エージェント構築・DevOps・ガバナンス・セキュリティを統合したエンタープライズAIプラットフォームをVertex AI後継として提供開始。大企業向けだが、将来的に中小向けSaaSとして展開される見込み。"
+    },
+    {
+      "title": "総務省・経産省 AIガイドライン v1.2 改訂（2026-03-28）：AIエージェントが規制対象に明記",
+      "source": "https://gvalaw.jp/blog/i20260303/",
+      "summary": "Claude Code・OpenAI Operatorなどのエージェント型AIが初めて規制対象として明記。ハルシネーション・RAGのプライバシーリスク対応も明確化。自社でAIツールを業務導入する際は社内規程の整備が必要。"
+    }
+  ],
+  "competitor_moves": [
+    {
+      "vendor": "コメ兵HD",
+      "title": "川崎ルフロン新店＋シンガポールPLQモール出店を同日発表（2026-05-01）",
+      "source": "https://komehyohds.com/ir/upload_file/tdnrelease/2780_20260501515777_P01_.pdf",
+      "summary": "国内（川崎）と海外（シンガポール）への同時出店。4月にも愛知・鎌倉・北千住への出店を相次ぎ発表。精力的な多店舗化とアジア展開が加速中。"
+    },
+    {
+      "vendor": "バイセル",
+      "title": "千葉・柏市にイオンタウン松ヶ崎店オープン（2026-04-24）。5/14決算発表予定",
+      "source": "https://buysell-technologies.com/pressrelease/202604145195/",
+      "summary": "グループ再編後「バイセル」ブランドで約150店舗体制を推進中。2026年12月期経常利益120億円予測（過去最高）。5月14日決算発表に要注目。"
+    },
+    {
+      "vendor": "大黒屋",
+      "title": "名古屋栄に買取センター新規オープン（2026-05-02）",
+      "source": "https://shop.e-daikoku.com/info/spot/detail?code=0000000399",
+      "summary": "東海地区への積極展開を継続。質営業も東大阪布施・福岡西新で拡大中。"
+    },
+    {
+      "vendor": "ザ・ゴールド",
+      "title": "全従業員一律月2万円ベースアップ実施（2026-04-01）。今年2度目の賃上げ",
+      "source": "https://www.maxguy.co.jp/topics/9047/",
+      "summary": "役員除く全従業員への月2万円ベースアップで人材確保・定着を強化。過去最多92名の新卒採用も実施。採用競争が激化している。"
+    }
+  ],
+  "auctions_top3": [
+    {
+      "name": "シンワオークション 西洋美術・Bags/Jewellery & Watches（2026-04-11）",
+      "price": null,
+      "source": "https://www.shinwa-auction.com/course/result2/"
+    },
+    {
+      "name": "毎日オークション 第848回 JEWELRY, WATCHES & LUXURY ACCESSORIES（2026-04-24）",
+      "price": null,
+      "source": "https://www.my-auction.co.jp/schedule/result"
+    },
+    {
+      "name": "SBIアートオークション 第79回 LIVE STREAM AUCTION（2026-04-10〜11）",
+      "price": null,
+      "source": "https://www.sbiartauction.co.jp/results/"
+    }
+  ],
+  "subsidies_deadline_within_30d": [
+    {
+      "name": "ものづくり・商業・サービス生産性向上促進補助金（第23次公募）",
+      "deadline": "2026-05-08",
+      "source": "https://hojyokin-portal.jp/columns/hojyokin-chusho-summary",
+      "summary": "設備投資・DX化・省力化を支援する中小企業向け補助金。AI査定ツール導入費用にも活用可能。第23次公募の電子申請は2026年4月3日受付開始。補助上限・率は枠により異なるため公募要領を確認のこと。"
+    }
+  ],
+  "subagent_meta": {
+    "agent_market_status": "partial",
+    "agent_industry_status": "partial",
+    "agent_ai_status": "ok",
+    "agent_society_status": "ok",
+    "notes": "市場データ（株価・為替・貴金属地金買取価格）は2026-05-01終値。田中貴金属のリサイクル買取価格のみ2026-05-06 09:30取得済み。オークション落札個別価格は業者間会員制のためnull。大阪市内の30日以内締切補助金は個別情報取得不能でnull。"
+  }
+}
