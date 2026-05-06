@@ -7,19 +7,22 @@
 </head>
 <body style="margin:0;padding:0;background:#f4f5f7;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Sans','Yu Gothic UI',sans-serif;color:#1f2937;">
 <!--
-  Email-safe HTML template.
+  Email-safe HTML template (schema v1.1).
   - Uses table-based layout for Gmail iOS/Android/Web compatibility.
   - All styles inline; no external CSS, no <style> blocks reliance.
   - PROMPT.md fills these placeholders before sending:
     {{DATE}}                e.g. 2026-05-05（火）
     {{HEADLINE}}            1行のキャッチーな今日の総括
     {{WEATHER_BLOCK}}       大阪の天気サマリー（HTMLフラグメント可）
-    {{MARKET_TABLE}}        相場テーブル（<table>フラグメント）
-    {{HIGHLIGHTS_BLOCK}}    主要トピック一覧（<ul>または<table>）
+    {{MARKET_TABLE}}        相場テーブル（前日比・週次トレンド併記）
+    {{BRANDS_BLOCK}}        ブランド国際相場・新作・廃番（5件以上）
+    {{HIGHLIGHTS_BLOCK}}    主要トピック一覧
     {{ALERTS_BLOCK}}        警告（無ければ空文字）
-    {{AI_BLOCK}}            AI/テック動向
-    {{COMPETITOR_BLOCK}}    競合動向
+    {{AI_BLOCK}}            AI/テック動向（5件以上＋規制・研究）
+    {{COMPETITOR_BLOCK}}    競合動向（3〜5件、当日アクション併記）
+    {{SECONDHAND_BLOCK}}    メルカリ・ヤフオク高額落札TOP5
     {{AUCTIONS_BLOCK}}      古物市場トップ3
+    {{WELFARE_BLOCK}}       福祉・介護・終活（独立セクション、6件以上）
     {{SUBSIDY_BLOCK}}       補助金（30日以内締切）
     {{CLOSING_NOTE}}        代表向け一言まとめ
     {{GENERATED_AT}}        ISO8601 JST
@@ -43,8 +46,14 @@
 
       <!-- Market -->
       <tr><td style="padding:8px 28px 8px 28px;">
-        <div style="font-size:12px;color:#64748b;letter-spacing:0.08em;margin-top:8px;">相場（{{GENERATED_AT}} 時点）</div>
+        <div style="font-size:12px;color:#64748b;letter-spacing:0.08em;margin-top:8px;">相場（{{GENERATED_AT}} 時点 / 前日比・週次トレンド併記）</div>
         <div style="margin-top:8px;">{{MARKET_TABLE}}</div>
+      </td></tr>
+
+      <!-- Brand intelligence -->
+      <tr><td style="padding:16px 28px 4px 28px;">
+        <div style="font-size:12px;color:#64748b;letter-spacing:0.08em;">ブランド情報（新作 / 廃番 / 国際相場）</div>
+        <div style="margin-top:8px;font-size:15px;line-height:1.75;">{{BRANDS_BLOCK}}</div>
       </td></tr>
 
       <!-- Highlights -->
@@ -58,20 +67,33 @@
 
       <!-- AI / Tech -->
       <tr><td style="padding:16px 28px 4px 28px;">
-        <div style="font-size:12px;color:#64748b;letter-spacing:0.08em;">AI・テクノロジー</div>
+        <div style="font-size:12px;color:#64748b;letter-spacing:0.08em;">AI・テクノロジー（規制・研究最前線含む）</div>
         <div style="margin-top:8px;font-size:15px;line-height:1.75;">{{AI_BLOCK}}</div>
       </td></tr>
 
       <!-- Competitors -->
       <tr><td style="padding:16px 28px 4px 28px;">
-        <div style="font-size:12px;color:#64748b;letter-spacing:0.08em;">競合動向</div>
+        <div style="font-size:12px;color:#64748b;letter-spacing:0.08em;">競合動向（当日アクション）</div>
         <div style="margin-top:8px;font-size:15px;line-height:1.75;">{{COMPETITOR_BLOCK}}</div>
       </td></tr>
 
-      <!-- Auctions -->
+      <!-- Mercari / Yahoo Auction TOP5 -->
       <tr><td style="padding:16px 28px 4px 28px;">
-        <div style="font-size:12px;color:#64748b;letter-spacing:0.08em;">古物市場トップ3</div>
+        <div style="font-size:12px;color:#64748b;letter-spacing:0.08em;">メルカリ・ヤフオク 高額落札 TOP5</div>
+        <div style="margin-top:8px;font-size:15px;line-height:1.75;">{{SECONDHAND_BLOCK}}</div>
+      </td></tr>
+
+      <!-- Industry auctions -->
+      <tr><td style="padding:16px 28px 4px 28px;">
+        <div style="font-size:12px;color:#64748b;letter-spacing:0.08em;">業者間オークション TOP3</div>
         <div style="margin-top:8px;font-size:15px;line-height:1.75;">{{AUCTIONS_BLOCK}}</div>
+      </td></tr>
+
+      <!-- Welfare / 終活 (独立セクション) -->
+      <tr><td style="padding:16px 28px 4px 28px;border-top:2px solid #fde68a;background:#fffbeb;">
+        <div style="font-size:12px;color:#92400e;letter-spacing:0.08em;font-weight:700;">福祉・介護・終活業界</div>
+        <div style="font-size:11px;color:#b45309;margin-top:2px;">集客機会・競合参入・法改正を独立トラッキング</div>
+        <div style="margin-top:8px;font-size:15px;line-height:1.75;color:#1f2937;">{{WELFARE_BLOCK}}</div>
       </td></tr>
 
       <!-- Subsidy -->
