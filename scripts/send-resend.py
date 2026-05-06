@@ -23,6 +23,10 @@ import urllib.request
 
 RESEND_ENDPOINT = "https://api.resend.com/emails"
 DEFAULT_FROM = "Meguru Brief <onboarding@resend.dev>"
+# Resend のエッジ (Cloudflare) は User-Agent ヘッダ不在の場合 403/1010 で拒否する。
+# Python の urllib のデフォルト UA (Python-urllib/X.Y) も WAF にブロックされるため、
+# 明示的に通常のクライアント UA を指定する必要がある。
+USER_AGENT = "meguru-morning-brief/1.0 (+https://github.com/loomia-jp/goodmorning)"
 
 
 def build_payload(args: argparse.Namespace, html: str) -> dict:
@@ -44,6 +48,8 @@ def send(payload: dict, api_key: str) -> dict:
         headers={
             "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
+            "Accept": "application/json",
+            "User-Agent": USER_AGENT,
         },
         method="POST",
     )
