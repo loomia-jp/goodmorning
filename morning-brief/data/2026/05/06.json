@@ -2,13 +2,13 @@
   "schema_version": "1.0",
   "date": "2026-05-06",
   "weekday": "Wed",
-  "captured_at": "2026-05-06T12:06:05+09:00",
+  "captured_at": "2026-05-06T12:38:53+09:00",
   "market": {
     "gold_jpy_g": 25139,
     "platinum_jpy_g": 10699,
     "silver_jpy_g": 389.4,
-    "usdjpy": 157.06,
-    "eurjpy": 184.08,
+    "usdjpy": 157.87,
+    "eurjpy": 184.58,
     "nikkei": 59513.12,
     "topix": 3728.73,
     "valuence_9270": 2329,
@@ -16,10 +16,10 @@
     "geo_2681": 1819
   },
   "weather_osaka": {
-    "main": "曇のち晴",
-    "temp_high": 23,
+    "main": "くもり",
+    "temp_high": 22,
     "temp_low": 14,
-    "rain_prob": 20
+    "rain_prob": 40
   },
   "kpi": {
     "visits": null,
@@ -28,100 +28,100 @@
   },
   "highlights": [
     {
-      "title": "インボイス経過措置縮小：2026-10-01より仕入税額控除80%→70%",
+      "title": "ものづくり補助金 第23次 締切2日後（2026-05-08）— 申請急務",
       "impact": "high",
-      "source": "https://office-kitahama.jp/blog/taxknowledge/invoice_r8kaisei.html",
-      "summary": "10月以降、個人からの古物仕入れに係るインボイス経過措置が80%控除から70%に縮小。古物商特例は継続されるが、仕入先の登録状況管理と帳簿整備を今から見直す必要あり。メグル買取への影響: 実質的な仕入税負担が増す可能性。10月までに税理士と仕入先台帳を精査すること。"
+      "source": "https://www.chusho.meti.go.jp/koukai/hojyokin/kobo/2026/260206001.html",
+      "summary": "設備投資・DX化・省力化を支援する中小企業向け補助金の第23次公募が5/8（金）に締切。AI査定ツール導入費用にも活用可能。メグル買取への影響: 申請期限まで残り2日。今日中に要件確認・電子申請（Jグランツ）の準備を。"
     },
     {
-      "title": "コメ兵HD：川崎ルフロン新店＋シンガポールPLQモール出店を同日発表（2026-05-01）",
+      "title": "OpenAI GPT-5.5 Instant リリース・ChatGPTデフォルトモデル更新（2026-05-05）",
       "impact": "medium",
-      "source": "https://komehyohds.com/ir/upload_file/tdnrelease/2780_20260501515777_P01_.pdf",
-      "summary": "コメ兵が国内（川崎）と海外（シンガポール）の同時出店を発表。アジア展開加速と国内多店舗化が続く。メグル買取への影響: 競合の認知度・集客力が全国/海外で拡大。大阪拠点の差別化（地域密着・出張対応）の強化が急務。"
+      "source": "https://techcrunch.com/2026/05/05/openai-releases-gpt-5-5-instant-a-new-default-model-for-chatgpt/",
+      "summary": "低遅延・高精度モデルがAPI提供開始。買取・査定チャットボットへの組み込みコストが低下。メグル買取への影響: AI査定ツール導入検討の好機。中小向けパッケージ化が加速する見込み。"
     },
     {
-      "title": "バイセルTechnologies（7685）：2026-05-14に決算発表予定。3期連続過去最高益見込み",
+      "title": "Anthropic 金融サービス向けAIエージェント10種発表・Claude Opus 4.7 登場（2026-05-05）",
       "impact": "medium",
-      "source": "https://kabutan.jp/stock/news?code=7685&nmode=3",
-      "summary": "前期比41.4%増・経常利益120億円予測。出張買取×デジタルマーケで12期連続増収。メグル買取への影響: 業界全体の成長を示す好材料。バイセルの成功要因（マーケ投資・査定士育成）は自社戦略立案の参考に。"
+      "source": "https://fortune.com/2026/05/05/anthropic-wall-street-financial-services-agents-jamie-dimon/",
+      "summary": "Goldman Sachs・Blackstoneとの15億ドルJVに続き金融業務向けエージェント10種を発表。MS365統合でExcel/Outlookと連携した査定補助ワークフローが現実的に。メグル買取への影響: 業務自動化の参考事例として注目。中小向け展開は6〜12か月後を想定。"
     },
     {
-      "title": "住所変更登記義務化が2026-04-01より施行。違反は5万円以下の過料",
+      "title": "コメ兵 ポッドキャスト「コメ子の部屋」開始（2026-05-01）— 採用・ブランド認知を強化",
       "impact": "medium",
-      "source": "https://www.gov-online.go.jp/article/202512/entry-10431.html",
-      "summary": "不動産所有者は住所・氏名変更から2年以内の登記変更が義務に。終活・相続文脈でシニア顧客と話せる最新ネタ。メグル買取への影響: 遺品整理・生前整理需要の掘り起こしトークとして活用可。「実家の名義大丈夫ですか？」が話の入り口に。"
+      "source": "https://www.ryutsuu.biz/strategy/s042872.html",
+      "summary": "Spotify・Apple Podcast等で毎週金曜7時更新。シーズン1（全14回）で現場リアル・鑑定士の苦労を発信し採用広報も兼ねる。メグル買取への影響: 競合のコンテンツ戦略が加速。自社SNS・動画コンテンツの差別化が急務。"
     },
     {
-      "title": "シニアのSNS利用率：60代92%・70代78%（モバイル社会研究所 2026年1月調査）",
+      "title": "デジタル終活の認識ギャップ——重要性認識89%・実践7.6%（2026年調査）",
       "impact": "low",
-      "source": "https://www.moba-ken.jp/project/seniors/20260413.html",
-      "summary": "LINEが全年代で最多。60代のInstagram利用が20%超に拡大。メグル買取への影響: シニア向けSNS発信（特にLINE公式・Instagram）の費用対効果が高まっている。コンテンツ強化の好機。"
+      "source": "https://okuribito-journal.com/syukatsu-digital/",
+      "summary": "デジタル遺品（SNS・ネット銀行・暗号資産）の相続トラブルが増加。家族と話し合った人はわずか7.6%。メグル買取への影響: 生前整理・遺品整理需要の掘り起こしトークに活用可。「デジタル終活、ご家族と話しましたか？」が入り口に。"
     }
   ],
   "alerts": [
     {
-      "title": "⚠️ インボイス経過措置 2026-10-01より80%→70%控除へ縮小",
+      "title": "ものづくり補助金 第23次 締切: 2026-05-08（残り2日）",
       "severity": "warning",
-      "source": "https://office-kitahama.jp/blog/taxknowledge/invoice_r8kaisei.html",
-      "summary": "古物商がインボイス非登録個人から買い取る場合の仕入税額控除の経過措置が10月に縮小。古物商特例（帳簿保存で控除可）は継続されるが、控除割合は80%→70%。今から税理士・帳簿システムの見直しを行うこと。1事業者からの課税仕入合計1億円超分は特例対象外となる改正も同時施行に留意。"
+      "source": "https://www.chusho.meti.go.jp/koukai/hojyokin/kobo/2026/260206001.html",
+      "summary": "設備投資・DX化・省力化を支援する中小企業向け補助金。AI査定ツール・業務システム導入費用にも活用可能。電子申請（Jグランツ）が必要なため、今日中に要件確認と申請準備を実施すること。"
     }
   ],
   "ai_news": [
     {
-      "title": "OpenAI・Anthropicが同日にエンタープライズ向けAIサービス合弁事業を発表（2026-05-04）",
-      "source": "https://techcrunch.com/2026/05/04/anthropic-and-openai-are-both-launching-joint-ventures-for-enterprise-ai-services/",
-      "summary": "OpenAIは40億ドル調達・評価額100億ドルのJVを、AnthropicはBlackstone等から15億ドル調達のJVを相次いで発表。中堅企業向け業種特化ワークフロー自動化が対象。6〜12か月以内に国内中小企業への波及が想定され、査定・在庫管理業務の自動化ソリューションが登場してくる可能性がある。"
+      "title": "OpenAI GPT-5.5 Instant リリース・ChatGPTデフォルトモデル更新（2026-05-05）",
+      "source": "https://techcrunch.com/2026/05/05/openai-releases-gpt-5-5-instant-a-new-default-model-for-chatgpt/",
+      "summary": "低遅延・高精度の新モデルがChatGPTのデフォルトに。API提供（chat-latest）で買取・査定チャットボットへの組み込みコスト低下が期待される。ChatGPT Images 2.0も同時投入。"
     },
     {
-      "title": "Google Gemini Enterprise Agent Platform 発表（Google Cloud Next '26、2026-05-04）",
-      "source": "https://cloud.google.com/blog/products/ai-machine-learning/introducing-gemini-enterprise-agent-platform",
-      "summary": "エージェント構築・DevOps・ガバナンス・セキュリティを統合したエンタープライズAIプラットフォームをVertex AI後継として提供開始。大企業向けだが、将来的に中小向けSaaSとして展開される見込み。"
+      "title": "Anthropic 金融サービス向けAIエージェント10種発表・Claude Opus 4.7（2026-05-05）",
+      "source": "https://fortune.com/2026/05/05/anthropic-wall-street-financial-services-agents-jamie-dimon/",
+      "summary": "Goldman Sachs・Blackstoneとの15億ドルJV（5/4）に続き金融業務向けエージェント10種を発表。MS365全製品との統合も同時発表。中小企業の業務自動化への波及が見込まれる。"
     },
     {
-      "title": "総務省・経産省 AIガイドライン v1.2 改訂（2026-03-28）：AIエージェントが規制対象に明記",
-      "source": "https://gvalaw.jp/blog/i20260303/",
-      "summary": "Claude Code・OpenAI Operatorなどのエージェント型AIが初めて規制対象として明記。ハルシネーション・RAGのプライバシーリスク対応も明確化。自社でAIツールを業務導入する際は社内規程の整備が必要。"
+      "title": "経産省・総務省「AI事業者ガイドライン v1.2」公表（2026-03-31）— AIエージェント規制が明確化",
+      "source": "https://www.meti.go.jp/shingikai/mono_info_service/ai_shakai_jisso/20260331_report.html",
+      "summary": "AIエージェントの外部アクション実行時にHuman-in-the-Loop義務を新設。買取業でAI査定・自動承認フローを導入する場合、金額確定など重要判断に人間の確認ステップが必要。"
     }
   ],
   "competitor_moves": [
     {
-      "vendor": "コメ兵HD",
-      "title": "川崎ルフロン新店＋シンガポールPLQモール出店を同日発表（2026-05-01）",
-      "source": "https://komehyohds.com/ir/upload_file/tdnrelease/2780_20260501515777_P01_.pdf",
-      "summary": "国内（川崎）と海外（シンガポール）への同時出店。4月にも愛知・鎌倉・北千住への出店を相次ぎ発表。精力的な多店舗化とアジア展開が加速中。"
+      "vendor": "コメ兵",
+      "title": "公式ポッドキャスト「コメ子の部屋」開始（2026-05-01）",
+      "source": "https://www.ryutsuu.biz/strategy/s042872.html",
+      "summary": "Spotify・Apple Podcast等で毎週金曜7時更新。シーズン1（5/1〜7/31・全14回）で現場リアルを発信し採用広報・ブランド認知強化を図る。大阪拠点の差別化コンテンツ発信が急務。"
+    },
+    {
+      "vendor": "ザ・ゴールド",
+      "title": "初夏の「時計買取祭」開催・銀座店10周年記念特別企画（2026-05月）",
+      "source": "https://www.the-gold.jp/",
+      "summary": "5月は時計カテゴリ特化の買取強化キャンペーンを全国展開。銀座店10周年記念企画と同時実施。時計査定の問い合わせが競合に流れるリスクあり。自社での時計強化訴求を検討すること。"
     },
     {
       "vendor": "バイセル",
-      "title": "千葉・柏市にイオンタウン松ヶ崎店オープン（2026-04-24）。5/14決算発表予定",
-      "source": "https://buysell-technologies.com/pressrelease/202604145195/",
-      "summary": "グループ再編後「バイセル」ブランドで約150店舗体制を推進中。2026年12月期経常利益120億円予測（過去最高）。5月14日決算発表に要注目。"
+      "title": "2026年Q1決算開示予定（5月中旬）— 3期連続過去最高益見込み",
+      "source": "https://buysell-technologies.com/en/ir/calendar/",
+      "summary": "2025年12月期Q3で売上高66%増・営業利益102%増。通期計画を3度上方修正し経常利益90億円へ。全国約150店舗体制で出張買取×デジタルマーケを推進。業界全体の成長と競合の攻勢を示す。"
     },
     {
       "vendor": "大黒屋",
       "title": "名古屋栄に買取センター新規オープン（2026-05-02）",
       "source": "https://shop.e-daikoku.com/info/spot/detail?code=0000000399",
-      "summary": "東海地区への積極展開を継続。質営業も東大阪布施・福岡西新で拡大中。"
-    },
-    {
-      "vendor": "ザ・ゴールド",
-      "title": "全従業員一律月2万円ベースアップ実施（2026-04-01）。今年2度目の賃上げ",
-      "source": "https://www.maxguy.co.jp/topics/9047/",
-      "summary": "役員除く全従業員への月2万円ベースアップで人材確保・定着を強化。過去最多92名の新卒採用も実施。採用競争が激化している。"
+      "summary": "東海地区への積極展開を継続。東大阪布施・福岡西新でも質営業を拡大中。大手各社の多店舗化が加速しており、地域密着・出張対応の差別化が重要性を増す。"
     }
   ],
   "auctions_top3": [
     {
-      "name": "シンワオークション 西洋美術・Bags/Jewellery & Watches（2026-04-11）",
+      "name": "シンワオークション（GW休業中・5/1〜5/6）— 当期間の開催なし",
       "price": null,
-      "source": "https://www.shinwa-auction.com/course/result2/"
+      "source": "https://www.shinwa-auction.com/news/holidays/"
     },
     {
-      "name": "毎日オークション 第848回 JEWELRY, WATCHES & LUXURY ACCESSORIES（2026-04-24）",
+      "name": "毎日オークション 第848回 JEWELRY, WATCHES & LUXURY ACCESSORIES（2026-04-24開催・直近）",
       "price": null,
       "source": "https://www.my-auction.co.jp/schedule/result"
     },
     {
-      "name": "SBIアートオークション 第79回 LIVE STREAM AUCTION（2026-04-10〜11）",
+      "name": "SBIアートオークション 第80回（次回: 2026-05-22〜23予定）",
       "price": null,
       "source": "https://www.sbiartauction.co.jp/results/"
     }
@@ -130,15 +130,21 @@
     {
       "name": "ものづくり・商業・サービス生産性向上促進補助金（第23次公募）",
       "deadline": "2026-05-08",
-      "source": "https://hojyokin-portal.jp/columns/hojyokin-chusho-summary",
-      "summary": "設備投資・DX化・省力化を支援する中小企業向け補助金。AI査定ツール導入費用にも活用可能。第23次公募の電子申請は2026年4月3日受付開始。補助上限・率は枠により異なるため公募要領を確認のこと。"
+      "source": "https://www.chusho.meti.go.jp/koukai/hojyokin/kobo/2026/260206001.html",
+      "summary": "設備投資・DX化・省力化を支援する中小企業向け補助金。AI査定ツール・業務システム導入費用にも活用可能。電子申請（Jグランツ）が必要。採択公表は2026年8月上旬予定。締切まで残り2日。"
+    },
+    {
+      "name": "デジタル化・AI導入補助金2026（第1次締切）",
+      "deadline": "2026-05-12",
+      "source": "https://it-shien.smrj.go.jp/schedule/",
+      "summary": "AIツール・ITシステム導入費用を補助。2026年度より名称変更しAI関連要件を明確化。第2次締切は6/15。買取業の在庫管理・査定システム導入にも活用可能。"
     }
   ],
   "subagent_meta": {
     "agent_market_status": "partial",
     "agent_industry_status": "partial",
-    "agent_ai_status": "ok",
-    "agent_society_status": "ok",
-    "notes": "市場データ（株価・為替・貴金属地金買取価格）は2026-05-01終値。田中貴金属のリサイクル買取価格のみ2026-05-06 09:30取得済み。オークション落札個別価格は業者間会員制のためnull。大阪市内の30日以内締切補助金は個別情報取得不能でnull。"
+    "agent_ai_status": "partial",
+    "agent_society_status": "partial",
+    "notes": "GW休暇（5/3〜5/5）の影響で金融データは2026-05-01終値（貴金属・株価）および2026-05-05終値（為替）を代用。大阪天気は予報値（くもり・最高22℃・最低14℃・降水確率40%）。オークション落札価格はGW期間中のため未開催または会員制ログイン必要につきnull。AI動向はOpenAI/Anthropicの5/4〜5/5発表が中心。"
   }
 }
