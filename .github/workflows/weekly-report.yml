@@ -1,10 +1,12 @@
 name: weekly-report
 
-# 毎週日曜 09:00 JST = 日曜 00:00 UTC に起動。
+# 毎週日曜 09:17 JST = 日曜 00:17 UTC に起動。
 # 1 週間の市場・競合・予測・KPI を統合した週報を配信。
+# 注：分を 0 にすると毎時 00 分の大量実行に巻き込まれて GitHub の scheduled 遅延が
+#     最大 9〜12 時間に達することがあるため、17 分を採用して負荷分散している。
 on:
   schedule:
-    - cron: "0 0 * * 0"
+    - cron: "17 0 * * 0"
   workflow_dispatch:
     inputs:
       week_end:

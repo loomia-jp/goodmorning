@@ -1,10 +1,12 @@
 name: morning-topics
 
-# 毎朝 07:00 JST = 22:00 UTC（前日）に起動。
-# 朝刊 Brief（08:00 JST）の 1 時間前に「話のネタ便」を配信。
+# 毎朝 07:07 JST = 22:07 UTC（前日）に起動。
+# 朝刊 Brief（08:07 JST）の 1 時間前に「話のネタ便」を配信。
+# 注：分を 0 にすると毎時 00 分の大量実行に巻き込まれて GitHub の scheduled 遅延が
+#     最大 9〜12 時間に達することがあるため、7 分を採用して負荷分散している。
 on:
   schedule:
-    - cron: "0 22 * * *"
+    - cron: "7 22 * * *"
   workflow_dispatch:
     inputs:
       target_date:

@@ -1,10 +1,12 @@
 name: morning-brief
 
-# 毎朝 08:00 JST = 23:00 UTC（前日）に起動。
+# 毎朝 08:07 JST = 23:07 UTC（前日）に起動。
+# 注：分を 0 にすると毎時 00 分の大量実行に巻き込まれて GitHub の scheduled 遅延が
+#     最大 9〜12 時間に達することがあるため、7 分を採用して負荷分散している。
 # cron は UTC で書かれている点に注意。
 on:
   schedule:
-    - cron: "0 23 * * *"
+    - cron: "7 23 * * *"
   workflow_dispatch:
     inputs:
       target_date:
