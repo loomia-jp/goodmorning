@@ -65,7 +65,10 @@ jobs:
 
       - name: Run Claude Code (generate monthly artifacts)
         env:
+          # CLI は CLAUDE_CODE_OAUTH_TOKEN を優先し、なければ ANTHROPIC_API_KEY を使う。
+          # どちらか一方が Secrets に登録されていれば動く（両方未設定だと失敗する）。
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           MONTH_TARGET: ${{ env.MONTH_TARGET }}
           MONTH_LABEL: ${{ env.MONTH_LABEL }}
         run: |

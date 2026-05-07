@@ -70,7 +70,10 @@ jobs:
 
       - name: Run Claude Code (generate topics artifacts)
         env:
+          # CLI は CLAUDE_CODE_OAUTH_TOKEN を優先し、なければ ANTHROPIC_API_KEY を使う。
+          # どちらか一方が Secrets に登録されていれば動く（両方未設定だと失敗する）。
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           TODAY_DATE: ${{ env.TODAY_DATE }}
           TODAY_DATE_JP: ${{ env.TODAY_DATE_JP }}
           TODAY_WEEKDAY: ${{ env.TODAY_WEEKDAY }}
