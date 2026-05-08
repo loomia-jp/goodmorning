@@ -26,7 +26,9 @@ permissions:
 jobs:
   brief:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    # 5 並列 Subagent + 重コンテンツ生成のため 60 分。詰まった場合は step-level
+    # timeout で Run Claude Code を 50 分で打ち切り、後段の通知ステップを残す。
+    timeout-minutes: 60
     env:
       TZ: Asia/Tokyo
 
@@ -54,18 +56,18 @@ jobs:
           echo "[sanity] required secrets present"
 
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: ${{ github.ref }}
           fetch-depth: 1
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: "20"
 
@@ -101,6 +103,7 @@ jobs:
           echo "Generating brief for $TODAY_DATE_JP"
 
       - name: Run Claude Code (generate brief artifacts)
+        timeout-minutes: 50   # job 60 分のうち 50 分を Claude に割り当て、残り 10 分で通知などを処理
         env:
           # CLI は CLAUDE_CODE_OAUTH_TOKEN を優先し、なければ ANTHROPIC_API_KEY を使う。
           # どちらか一方が Secrets に登録されていれば動く（両方未設定だと失敗する）。
