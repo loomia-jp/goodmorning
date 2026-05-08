@@ -26,11 +26,11 @@ permissions:
 jobs:
   brief:
     runs-on: ubuntu-latest
-    # 4 ワークフロー統一基準：job 60 分 / Run Claude Code step 30 分。
-    # 5/8 の実績では step=50 分で完走しているが、運用統一のため 30 分に揃える。
-    # もし step=30 で再びタイムアウトする場合は morning-brief だけ step=50 に
-    # 個別調整する（過去の chore(data) commit 履歴で実測時間を確認できる）。
-    timeout-minutes: 60
+    # 4 ワークフロー統一基準：job 80 分 / Run Claude Code step 50 分。
+    # 5/9 #17 が step=30 で 30:11 タイムアウトしたため引き上げた。
+    # 加えて「Run Claude Code が失敗しても /tmp/brief.html が使えるなら部分配信する」
+    # フォールバックを Decide send / Send email ステップで実装している。
+    timeout-minutes: 80
     env:
       TZ: Asia/Tokyo
 
@@ -105,7 +105,10 @@ jobs:
           echo "Generating brief for $TODAY_DATE_JP"
 
       - name: Run Claude Code (generate brief artifacts)
-        timeout-minutes: 30   # 4 ワークフロー統一：job 60 / step 30 分
+        id: claude
+        timeout-minutes: 50   # 4 ワークフロー統一：job 80 / step 50 分（5/9 #17 30min タイムアウト後の引き上げ）
+        # ★ 部分配信フォールバックのため失敗を許容して次ステップで判定する
+        continue-on-error: true
         env:
           # CLI は CLAUDE_CODE_OAUTH_TOKEN を優先し、なければ ANTHROPIC_API_KEY を使う。
           # どちらか一方が Secrets に登録されていれば動く（両方未設定だと失敗する）。
@@ -127,6 +130,10 @@ jobs:
             - /tmp/brief.html に未解決プレースホルダが残っていない
             - morning-brief/data/YYYY/MM/DD.json が memory-saver.py によって保存されている
           失敗した場合は理由を明示して終了してください（メール送信は後段ステップが行います）。
+
+          時間配分の目安：subagent 並列収集に最大 25 分、統合と HTML 生成に 10 分、
+          検証と保存に 5 分。万一一部 subagent が失敗したらその分は subagent_meta=failed
+          にして他で続行し、合計 5 件のうち 3 件成功すれば配信品質として許容する。
           EOF
           )"
 
@@ -136,18 +143,48 @@ jobs:
             --max-turns 60 \
             "$PROMPT" 2>&1 | tee /tmp/claude.log
 
-      - name: Verify generated artifacts
+      - name: Determine send decision (full / partial / abort)
+        id: decision
+        if: always()
         run: |
-          set -e
-          for f in /tmp/today.json /tmp/brief.html; do
-            if [ ! -s "$f" ]; then
-              echo "::error::missing or empty artifact: $f"
-              exit 1
+          set +e
+          DECISION="abort"
+          SUBJECT_PREFIX="[朝刊]"
+          REASON=""
+          size=0
+          unresolved=99
+          if [ -s /tmp/brief.html ]; then
+            size=$(stat -c%s /tmp/brief.html)
+            unresolved=$(grep -cE '\{\{[A-Z_]+\}\}' /tmp/brief.html || echo 99)
+          fi
+          claude_outcome="${{ steps.claude.outcome }}"
+          # full: Claude が完走 + validate-bundle.py で厳密検証通過
+          if [ "$claude_outcome" = "success" ] && [ -s /tmp/today.json ] && [ -s /tmp/brief.html ]; then
+            if python3 scripts/validate-bundle.py --json /tmp/today.json --html /tmp/brief.html >/tmp/validate.log 2>&1; then
+              DECISION="full"
+            else
+              REASON="validate-bundle.py failed; partial fallback evaluation"
             fi
-          done
-          python3 scripts/validate-bundle.py --json /tmp/today.json --html /tmp/brief.html
+          fi
+          # partial: HTML が実用可能（>=4KB, 未解決プレースホルダなし）であれば送る
+          if [ "$DECISION" = "abort" ] && [ "$size" -ge 4096 ] && [ "$unresolved" -eq 0 ]; then
+            DECISION="partial"
+            SUBJECT_PREFIX="[朝刊・部分]"
+            REASON="${REASON:-Claude Code did not finish cleanly}; HTML usable so sending partial brief"
+            echo "::warning::$REASON"
+          fi
+          echo "decision=$DECISION"          >> "$GITHUB_OUTPUT"
+          echo "subject_prefix=$SUBJECT_PREFIX" >> "$GITHUB_OUTPUT"
+          echo ""
+          echo "[decision] $DECISION (claude_outcome=$claude_outcome size=$size unresolved=$unresolved)"
+          if [ "$DECISION" = "abort" ]; then
+            echo "::error::no usable /tmp/brief.html (claude=$claude_outcome size=$size unresolved=$unresolved) — see /tmp/validate.log"
+            cat /tmp/validate.log 2>/dev/null || true
+            exit 1
+          fi
 
       - name: Send email via Resend
+        if: steps.decision.outputs.decision != 'abort'
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           TO_EMAIL: ${{ secrets.TO_EMAIL }}
@@ -159,12 +196,13 @@ jobs:
           fi
           # shellcheck disable=SC2086
           python3 scripts/send-resend.py \
-            --subject "[朝刊] メグル Brief ${TODAY_DATE_JP}" \
+            --subject "${{ steps.decision.outputs.subject_prefix }} メグル Brief ${TODAY_DATE_JP}" \
             --html-file /tmp/brief.html \
             --to "${TO_EMAIL}" \
             ${FROM_ARG}
 
       - name: Commit daily snapshot
+        if: steps.decision.outputs.decision == 'full'
         run: |
           set -e
           git config user.name "meguru-bi-bot"
