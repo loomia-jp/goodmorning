@@ -25,8 +25,8 @@ permissions:
 jobs:
   topics:
     runs-on: ubuntu-latest
-    # 3 並列 Subagent。20 分は実例で詰まることがあったので 30 分に拡張。
-    timeout-minutes: 30
+    # 4 ワークフロー統一基準：job 60 分 / Run Claude Code step 30 分。
+    timeout-minutes: 60
     env:
       TZ: Asia/Tokyo
 
@@ -95,7 +95,7 @@ jobs:
           echo "Generating topics for $TODAY_DATE_JP"
 
       - name: Run Claude Code (generate topics artifacts)
-        timeout-minutes: 22   # job 30 分のうち 22 分を Claude、残り 8 分で通知など
+        timeout-minutes: 30   # 4 ワークフロー統一：job 60 / step 30 分
         env:
           # CLI は CLAUDE_CODE_OAUTH_TOKEN を優先し、なければ ANTHROPIC_API_KEY を使う。
           # どちらか一方が Secrets に登録されていれば動く（両方未設定だと失敗する）。

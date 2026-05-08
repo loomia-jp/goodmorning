@@ -26,8 +26,10 @@ permissions:
 jobs:
   brief:
     runs-on: ubuntu-latest
-    # 5 並列 Subagent + 重コンテンツ生成のため 60 分。詰まった場合は step-level
-    # timeout で Run Claude Code を 50 分で打ち切り、後段の通知ステップを残す。
+    # 4 ワークフロー統一基準：job 60 分 / Run Claude Code step 30 分。
+    # 5/8 の実績では step=50 分で完走しているが、運用統一のため 30 分に揃える。
+    # もし step=30 で再びタイムアウトする場合は morning-brief だけ step=50 に
+    # 個別調整する（過去の chore(data) commit 履歴で実測時間を確認できる）。
     timeout-minutes: 60
     env:
       TZ: Asia/Tokyo
@@ -103,7 +105,7 @@ jobs:
           echo "Generating brief for $TODAY_DATE_JP"
 
       - name: Run Claude Code (generate brief artifacts)
-        timeout-minutes: 50   # job 60 分のうち 50 分を Claude に割り当て、残り 10 分で通知などを処理
+        timeout-minutes: 30   # 4 ワークフロー統一：job 60 / step 30 分
         env:
           # CLI は CLAUDE_CODE_OAUTH_TOKEN を優先し、なければ ANTHROPIC_API_KEY を使う。
           # どちらか一方が Secrets に登録されていれば動く（両方未設定だと失敗する）。

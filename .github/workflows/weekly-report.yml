@@ -41,8 +41,8 @@ permissions:
 jobs:
   weekly:
     runs-on: ubuntu-latest
-    # 4 並列 Subagent + 過去 7 日メモリ集計のため 45 分。Run Claude Code は step-level で 35 分に制限。
-    timeout-minutes: 45
+    # 4 ワークフロー統一基準：job 60 分 / Run Claude Code step 30 分。
+    timeout-minutes: 60
     env:
       TZ: Asia/Tokyo
 
@@ -110,7 +110,7 @@ jobs:
           echo "Generating weekly report for $ISO_WEEK ($WEEK_RANGE)"
 
       - name: Run Claude Code (generate weekly artifacts)
-        timeout-minutes: 35   # job 45 分のうち 35 分を Claude に割り当て、残り 10 分で通知など
+        timeout-minutes: 30   # 4 ワークフロー統一：job 60 / step 30 分
         env:
           # CLI は CLAUDE_CODE_OAUTH_TOKEN を優先し、なければ ANTHROPIC_API_KEY を使う。
           # どちらか一方が Secrets に登録されていれば動く（両方未設定だと失敗する）。
