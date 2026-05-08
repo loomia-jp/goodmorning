@@ -29,6 +29,28 @@ jobs:
       TZ: Asia/Tokyo
 
     steps:
+      - name: Sanity check (required secrets)
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          TO_EMAIL: ${{ secrets.TO_EMAIL }}
+        run: |
+          set -e
+          if [ -z "${CLAUDE_CODE_OAUTH_TOKEN:-}${ANTHROPIC_API_KEY:-}" ]; then
+            echo "::error::neither CLAUDE_CODE_OAUTH_TOKEN nor ANTHROPIC_API_KEY is set in Secrets"
+            exit 1
+          fi
+          if [ -z "${RESEND_API_KEY:-}" ]; then
+            echo "::error::RESEND_API_KEY is not set in Secrets"
+            exit 1
+          fi
+          if [ -z "${TO_EMAIL:-}" ]; then
+            echo "::error::TO_EMAIL is not set in Secrets"
+            exit 1
+          fi
+          echo "[sanity] required secrets present"
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
