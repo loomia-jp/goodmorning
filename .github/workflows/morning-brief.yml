@@ -15,8 +15,10 @@ on:
         type: string
 
 concurrency:
+  # 古い run がハングしたら新しい schedule で上書きキャンセル。
+  # cron は 1 日 1 回なので、進行中の正規 run と被ることは実質ない。
   group: morning-brief
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 permissions:
   contents: write   # data/ を自動コミットするため

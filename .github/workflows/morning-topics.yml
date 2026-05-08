@@ -15,8 +15,9 @@ on:
         type: string
 
 concurrency:
+  # 古い run がハングしたら新しい schedule で上書きキャンセル。
   group: morning-topics
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 permissions:
   contents: write   # keep-alive のための空コミット用

@@ -1,0 +1,110 @@
+name: unstick-queue
+
+# 詰まっている scheduled / 手動 run をまとめて API でキャンセルする緊急保守用ワークフロー。
+# - 手動実行（workflow_dispatch）専用、cron は持たない
+# - 全ワークフローの "queued" 状態の run を全部キャンセル
+# - 1 時間以上 "in_progress" のままの run（ハング疑い）も全部キャンセル
+# 実行後、次回の schedule から綺麗に走り直す。
+on:
+  workflow_dispatch:
+    inputs:
+      include_in_progress:
+        description: "1時間以上 in_progress の run もキャンセルするか"
+        required: false
+        default: "true"
+        type: choice
+        options: ["true", "false"]
+      stale_threshold_minutes:
+        description: "in_progress と判定する最低経過分数（既定 60 分）"
+        required: false
+        default: "60"
+        type: string
+
+permissions:
+  actions: write   # cancelWorkflowRun に必要
+  contents: read
+
+jobs:
+  unstick:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Cancel queued and stale-in-progress runs
+        uses: actions/github-script@v7
+        env:
+          INCLUDE_IN_PROGRESS: ${{ inputs.include_in_progress }}
+          STALE_MIN: ${{ inputs.stale_threshold_minutes }}
+        with:
+          script: |
+            const targetWorkflows = [
+              "morning-brief.yml",
+              "morning-topics.yml",
+              "weekly-report.yml",
+              "monthly-report.yml",
+            ];
+            const includeInProg = (process.env.INCLUDE_IN_PROGRESS || "true") === "true";
+            const staleMin = parseInt(process.env.STALE_MIN || "60", 10);
+            const cutoffMs = staleMin * 60 * 1000;
+            const now = Date.now();
+
+            let cancelled = 0;
+            for (const wf of targetWorkflows) {
+              core.info(`=== ${wf} ===`);
+
+              // 1) Cancel ALL queued runs
+              const queued = await github.paginate(github.rest.actions.listWorkflowRuns, {
+                owner: context.repo.owner,
+                repo:  context.repo.repo,
+                workflow_id: wf,
+                status: "queued",
+                per_page: 100,
+              });
+              for (const r of queued) {
+                core.info(`  cancel queued #${r.run_number} (id=${r.id}, created=${r.created_at})`);
+                try {
+                  await github.rest.actions.cancelWorkflowRun({
+                    owner: context.repo.owner,
+                    repo:  context.repo.repo,
+                    run_id: r.id,
+                  });
+                  cancelled++;
+                } catch (e) {
+                  core.warning(`    failed: ${e.message}`);
+                }
+              }
+
+              // 2) Cancel stale in_progress runs
+              if (includeInProg) {
+                const inprog = await github.paginate(github.rest.actions.listWorkflowRuns, {
+                  owner: context.repo.owner,
+                  repo:  context.repo.repo,
+                  workflow_id: wf,
+                  status: "in_progress",
+                  per_page: 100,
+                });
+                for (const r of inprog) {
+                  const ageMs = now - new Date(r.created_at).getTime();
+                  if (ageMs > cutoffMs) {
+                    core.info(`  cancel stale in_progress #${r.run_number} (id=${r.id}, age=${(ageMs/60000).toFixed(0)}min)`);
+                    try {
+                      await github.rest.actions.cancelWorkflowRun({
+                        owner: context.repo.owner,
+                        repo:  context.repo.repo,
+                        run_id: r.id,
+                      });
+                      cancelled++;
+                    } catch (e) {
+                      core.warning(`    failed: ${e.message}`);
+                    }
+                  } else {
+                    core.info(`  keep in_progress #${r.run_number} (id=${r.id}, age=${(ageMs/60000).toFixed(0)}min, < ${staleMin}min)`);
+                  }
+                }
+              }
+            }
+
+            core.notice(`Total cancelled: ${cancelled}`);
+            core.summary
+              .addHeading(`Unstick result`)
+              .addRaw(`Cancelled: **${cancelled}** runs`)
+              .write();
