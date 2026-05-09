@@ -1,27 +1,40 @@
 name: morning-brief
 
-# 毎朝 08:07 JST = 23:07 UTC（前日）に起動。
-# 注：分を 0 にすると毎時 00 分の大量実行に巻き込まれて GitHub の scheduled 遅延が
-#     最大 9〜12 時間に達することがあるため、7 分を採用して負荷分散している。
-# cron は UTC で書かれている点に注意。
+# 受信保証のため複数 schedule で発火する：いずれか 1 つが成功すれば
+# 残りは API 経由の冪等性チェックで早期スキップする。
+# - 08:07 JST = 23:07 UTC（前日）— 主時刻
+# - 08:47 JST = 23:47 UTC（前日）— +40 分のバックアップ
+# - 09:27 JST = 00:27 UTC（当日）— +80 分の最終バックアップ
+# 注：分を 0 にすると毎時 00 分の大量実行に巻き込まれて GitHub の
+#     scheduled 遅延が最大 9〜12 時間に達することがあるため、
+#     7/27/47 など中途半端な分数を使い負荷分散している。
 on:
   schedule:
     - cron: "7 23 * * *"
+    - cron: "47 23 * * *"
+    - cron: "27 0 * * *"
   workflow_dispatch:
     inputs:
       target_date:
         description: "対象日 (YYYY-MM-DD, 空欄なら今日 JST)"
         required: false
         type: string
+      force:
+        description: "冪等性チェックを無視して強制実行する"
+        required: false
+        default: "false"
+        type: choice
+        options: ["false", "true"]
 
 concurrency:
-  # 古い run がハングしたら新しい schedule で上書きキャンセル。
-  # cron は 1 日 1 回なので、進行中の正規 run と被ることは実質ない。
+  # バックアップ schedule は primary をキャンセルせずキューに並ぶ。
+  # primary が hang しても step timeout (50min) で自動失敗 → backup が走る。
   group: morning-brief
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 permissions:
   contents: write   # data/ を自動コミットするため
+  actions: read     # 冪等性チェックで自身の run 履歴を読むため
 
 jobs:
   brief:
@@ -35,7 +48,46 @@ jobs:
       TZ: Asia/Tokyo
 
     steps:
+      - name: Idempotency check (today already succeeded?)
+        id: idem
+        if: github.event_name == 'schedule' || inputs.force != 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // 今日 JST の 00:00 以降に同じワークフローで成功した run が
+            // あれば skip=true を返し、後続ステップを全部スキップする。
+            const now = new Date();
+            const jstOffsetMs = 9 * 60 * 60 * 1000;
+            const jstNow = new Date(now.getTime() + jstOffsetMs);
+            const jstY = jstNow.getUTCFullYear();
+            const jstM = String(jstNow.getUTCMonth() + 1).padStart(2, '0');
+            const jstD = String(jstNow.getUTCDate()).padStart(2, '0');
+            const jstMidnightUtc = new Date(`${jstY}-${jstM}-${jstD}T00:00:00+09:00`);
+            const sinceIso = jstMidnightUtc.toISOString();
+            core.info(`[idem] looking for successful runs of morning-brief.yml since ${sinceIso}`);
+
+            const { data } = await github.rest.actions.listWorkflowRuns({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'morning-brief.yml',
+              per_page: 30,
+              created: `>=${sinceIso}`,
+            });
+            const successfulOther = data.workflow_runs.filter(r =>
+              r.id !== context.runId &&
+              r.status === 'completed' &&
+              r.conclusion === 'success'
+            );
+            if (successfulOther.length > 0) {
+              core.notice(`[idem] today already succeeded in run #${successfulOther[0].run_number} (id=${successfulOther[0].id}) — skipping`);
+              core.setOutput('skip', 'true');
+            } else {
+              core.info(`[idem] no successful run today — proceeding`);
+              core.setOutput('skip', 'false');
+            }
+
       - name: Sanity check (required secrets)
+        if: steps.idem.outputs.skip != 'true'
         env:
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -58,26 +110,31 @@ jobs:
           echo "[sanity] required secrets present"
 
       - name: Checkout
+        if: steps.idem.outputs.skip != 'true'
         uses: actions/checkout@v5
         with:
           ref: ${{ github.ref }}
           fetch-depth: 1
 
       - name: Set up Python
+        if: steps.idem.outputs.skip != 'true'
         uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
       - name: Set up Node
+        if: steps.idem.outputs.skip != 'true'
         uses: actions/setup-node@v5
         with:
           node-version: "20"
 
       - name: Install Claude Code CLI
+        if: steps.idem.outputs.skip != 'true'
         run: npm install -g @anthropic-ai/claude-code
 
       - name: Compute date variables (JST)
         id: vars
+        if: steps.idem.outputs.skip != 'true'
         run: |
           INPUT_DATE="${{ inputs.target_date }}"
           if [ -n "$INPUT_DATE" ]; then
@@ -106,6 +163,7 @@ jobs:
 
       - name: Run Claude Code (generate brief artifacts)
         id: claude
+        if: steps.idem.outputs.skip != 'true'
         timeout-minutes: 50   # 4 ワークフロー統一：job 80 / step 50 分（5/9 #17 30min タイムアウト後の引き上げ）
         # ★ 部分配信フォールバックのため失敗を許容して次ステップで判定する
         continue-on-error: true
@@ -145,7 +203,7 @@ jobs:
 
       - name: Determine send decision (full / partial / abort)
         id: decision
-        if: always()
+        if: always() && steps.idem.outputs.skip != 'true'
         run: |
           set +e
           DECISION="abort"
@@ -184,7 +242,7 @@ jobs:
           fi
 
       - name: Send email via Resend
-        if: steps.decision.outputs.decision != 'abort'
+        if: steps.idem.outputs.skip != 'true' && steps.decision.outputs.decision != 'abort'
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           TO_EMAIL: ${{ secrets.TO_EMAIL }}
@@ -202,7 +260,7 @@ jobs:
             ${FROM_ARG}
 
       - name: Commit daily snapshot
-        if: steps.decision.outputs.decision == 'full'
+        if: steps.idem.outputs.skip != 'true' && steps.decision.outputs.decision == 'full'
         run: |
           set -e
           git config user.name "meguru-bi-bot"
@@ -224,7 +282,7 @@ jobs:
           exit 1
 
       - name: Failure notification (best-effort)
-        if: failure()
+        if: failure() && steps.idem.outputs.skip != 'true'
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           TO_EMAIL: ${{ secrets.TO_EMAIL }}
