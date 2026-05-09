@@ -1,26 +1,33 @@
 name: monthly-report
 
-# 毎月 1 日 10:17 JST = 1 日 01:17 UTC に起動。
-# 前月の総括 + 業界トレンド + 中長期戦略提言を含む月報を配信。
-# 注：分を 0 にすると毎時 00 分の大量実行に巻き込まれて GitHub の scheduled 遅延が
-#     最大 9〜12 時間に達することがあるため、17 分を採用して負荷分散している。
+# 受信保証のため毎月 1 日に複数 schedule で発火する：成功すれば後続は冪等性チェックでスキップ。
+# - 10:17 JST = 1 日 01:17 UTC — 主時刻
+# - 12:17 JST = 1 日 03:17 UTC — +2 時間のバックアップ
 on:
   schedule:
     - cron: "17 1 1 * *"
+    - cron: "17 3 1 * *"
   workflow_dispatch:
     inputs:
       month_target:
         description: "対象月 (YYYY-MM, 空欄なら前月 JST)"
         required: false
         type: string
+      force:
+        description: "冪等性チェックを無視して強制実行する"
+        required: false
+        default: "false"
+        type: choice
+        options: ["false", "true"]
 
 concurrency:
-  # 古い run がハングしたら新しい schedule で上書きキャンセル。
+  # バックアップ schedule は primary をキャンセルせずキューに並ぶ。
   group: monthly-report
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 permissions:
   contents: write   # keep-alive のための空コミット用
+  actions: read     # 冪等性チェックで自身の run 履歴を読むため
 
 jobs:
   monthly:
@@ -31,7 +38,42 @@ jobs:
       TZ: Asia/Tokyo
 
     steps:
+      - name: Idempotency check (this month already succeeded?)
+        id: idem
+        if: github.event_name == 'schedule' || inputs.force != 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // 月次の冪等性は「対象月」単位ではなく「実行月」単位で判定する：
+            // 1日 JST 00:00 以降に同じワークフローで成功した run があればスキップ。
+            const now = new Date();
+            const jstOffsetMs = 9 * 60 * 60 * 1000;
+            const jstNow = new Date(now.getTime() + jstOffsetMs);
+            const jstY = jstNow.getUTCFullYear();
+            const jstM = String(jstNow.getUTCMonth() + 1).padStart(2, '0');
+            const sinceIso = new Date(`${jstY}-${jstM}-01T00:00:00+09:00`).toISOString();
+            core.info(`[idem] looking for successful runs of monthly-report.yml since ${sinceIso}`);
+            const { data } = await github.rest.actions.listWorkflowRuns({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'monthly-report.yml',
+              per_page: 30,
+              created: `>=${sinceIso}`,
+            });
+            const ok = data.workflow_runs.filter(r =>
+              r.id !== context.runId &&
+              r.status === 'completed' &&
+              r.conclusion === 'success'
+            );
+            if (ok.length > 0) {
+              core.notice(`[idem] this month already succeeded in run #${ok[0].run_number} — skipping`);
+              core.setOutput('skip', 'true');
+            } else {
+              core.setOutput('skip', 'false');
+            }
+
       - name: Sanity check (required secrets)
+        if: steps.idem.outputs.skip != 'true'
         env:
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -54,26 +96,31 @@ jobs:
           echo "[sanity] required secrets present"
 
       - name: Checkout
+        if: steps.idem.outputs.skip != 'true'
         uses: actions/checkout@v5
         with:
           ref: ${{ github.ref }}
           fetch-depth: 1
 
       - name: Set up Python
+        if: steps.idem.outputs.skip != 'true'
         uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
       - name: Set up Node
+        if: steps.idem.outputs.skip != 'true'
         uses: actions/setup-node@v5
         with:
           node-version: "20"
 
       - name: Install Claude Code CLI
+        if: steps.idem.outputs.skip != 'true'
         run: npm install -g @anthropic-ai/claude-code
 
       - name: Compute target month (JST, default = previous month)
         id: vars
+        if: steps.idem.outputs.skip != 'true'
         run: |
           INPUT_MONTH="${{ inputs.month_target }}"
           if [ -n "$INPUT_MONTH" ]; then
@@ -90,6 +137,7 @@ jobs:
           echo "Generating monthly report for $MONTH_LABEL ($MONTH_TARGET)"
 
       - name: Run Claude Code (generate monthly artifacts)
+        if: steps.idem.outputs.skip != 'true'
         timeout-minutes: 50   # 4 ワークフロー統一：job 80 / step 50 分（5/9 #17 30min タイムアウト後の引き上げ）
         env:
           # CLI は CLAUDE_CODE_OAUTH_TOKEN を優先し、なければ ANTHROPIC_API_KEY を使う。
@@ -122,6 +170,7 @@ jobs:
             "$PROMPT" 2>&1 | tee /tmp/monthly-claude.log
 
       - name: Verify generated artifacts
+        if: steps.idem.outputs.skip != 'true'
         run: |
           set -e
           for f in /tmp/monthly.json /tmp/monthly.html; do
@@ -150,6 +199,7 @@ jobs:
           PY
 
       - name: Send monthly email via Resend
+        if: steps.idem.outputs.skip != 'true'
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           TO_EMAIL: ${{ secrets.TO_EMAIL }}
@@ -167,7 +217,7 @@ jobs:
             ${FROM_ARG}
 
       - name: Keep-alive (touch repo activity if quiet >50d)
-        if: github.event_name == 'schedule'
+        if: github.event_name == 'schedule' && steps.idem.outputs.skip != 'true'
         run: |
           set -e
           # 月次は実行頻度が低いので、特に keep-alive を入念にチェック。
@@ -191,7 +241,7 @@ jobs:
           fi
 
       - name: Failure notification (best-effort)
-        if: failure()
+        if: failure() && steps.idem.outputs.skip != 'true'
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           TO_EMAIL: ${{ secrets.TO_EMAIL }}
