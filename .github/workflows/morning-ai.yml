@@ -157,9 +157,9 @@ jobs:
             echo "MONTH=$MONTH"
             echo "DAY=$DAY"
           } >> "$GITHUB_ENV"
-          echo "Generating AI 通信 for $TODAY_DATE_JP (${MONTH}/${DAY})"
+          echo "Generating AI 実用通信 for $TODAY_DATE_JP (${MONTH}/${DAY})"
 
-      - name: Run Claude Code (generate AI 通信 artifacts)
+      - name: Run Claude Code (generate AI 実用通信 artifacts)
         if: steps.idem.outputs.skip != 'true'
         timeout-minutes: 50   # 4 ワークフロー統一：job 80 / step 50 分
         env:
@@ -176,34 +176,46 @@ jobs:
           set -euo pipefail
           mkdir -p /tmp
           PROMPT="$(cat <<'EOF'
-          あなたは大阪の出張買取業者（中古品・ブランド品・遺品整理）の経営者・偉吹（いぶき）さんに、
-          毎朝 4 時に AI の最新情報を届けるメディアのエディターです。専門用語は使わず、
-          経営・現場・生活に直結する視点で、熱量高く書いてください。
+          あなたは AI 情報を毎朝届けるプロのエディターです。読者は好奇心旺盛な経営者で、以下を求めています：
+            ・AI で実際に何ができるか（抽象論禁止）
+            ・世界で実際に起きていること（ハルシネーション禁止）
+            ・自分でも試せる具体的な使い方
+            ・自動化できる業務の具体例
+            ・最新の AI ツール情報
+
+          禁止事項：
+            ・特定業種（買取・不動産・古物商等）への限定
+            ・抽象的・ふわっとした説明
+            ・AI で創作したニュース（必ず実際の RSS から）
+            ・古い情報（24 時間以内のものを優先）
 
           morning-brief/AI_PROMPT.md に書かれた STEP 0 から品質チェックリストまでをすべて遂行してください。
 
           環境変数で渡されている TODAY_DATE / TODAY_DATE_JP / WEEKDAY_EN / WD_JP / MONTH / DAY を必ず使用すること。
 
           ⚠️ 最重要：
-          - 「🔥 今日の爆速ニュース」は必ず実 RSS / Web から取得したニュースを使い、出典 URL を末尾に記載
-          - 「💡 知らないと損する AI ツール」は実在ツールのみ、公式 URL と料金を必ず記載
+          - 12 本の RSS / Web を全部 fetch すること（Anthropic は WebFetch、それ以外は curl）
+          - 実用性・新規性・インパクト の 3 軸で各記事を 0〜5 点でスコアリングし上位 5 本を選ぶ
+          - セクション 1 / 2 / 4 / 6 / 7 すべてに **出典 URL** を末尾に必ず記載
+          - ツール紹介は実在ツールのみ、公式 URL と料金（無料/有料/フリーミアム + 月額）を必ず記載
           - 創作ニュース・架空ツールは絶対禁止
 
           完了条件:
             - /tmp/ai.html に未解決プレースホルダが残っていない（{{MONTH_DAY}} は ${MONTH}/${DAY} で置換）
-            - /tmp/ai.json が AI_PROMPT.md のスキーマ（schema_version 1.1）に準拠
+            - /tmp/ai.json が AI_PROMPT.md のスキーマ（schema_version 1.2）に準拠
             - 全体 1,500 字以内、7 セクション全部埋まっている
-            - セクション 5 のプロンプトが 3 本、テーマが散っている
+            - セクション 2 が 3 事例、各事例に会社名・業務・効果（数字）・ツール・URL がある
+            - セクション 5 のプロンプトが 3 本、テーマがバラバラ（仕事・生活・創作 等）
           失敗した場合は理由を明示して終了してください（メール送信は後段ステップが行います）。
 
-          時間配分の目安：RSS 取得・スコアリングに 5〜10 分、コンテンツ生成に 25 分、HTML 化と検証に 10 分。
+          時間配分の目安：12 本 RSS 取得・スコアリングに 10〜15 分、コンテンツ生成に 25 分、HTML 化と検証に 10 分。
           EOF
           )"
 
           claude --print \
             --permission-mode acceptEdits \
             --allowed-tools "Read,Write,Edit,Bash,WebSearch,WebFetch,Task,Glob,Grep" \
-            --max-turns 40 \
+            --max-turns 50 \
             "$PROMPT" 2>&1 | tee /tmp/ai-claude.log
 
       - name: Verify generated artifacts
@@ -226,23 +238,38 @@ jobs:
             echo "::error::/tmp/ai.html too small: ${size} bytes (<2048)"
             exit 1
           fi
-          # 出典 URL の存在チェック（big_news / tool に http(s) リンクが含まれるか）
+          # 出典 URL の存在チェック（big_news / tool / overseas / numbers / automation_cases に http(s) リンク）
           python3 - <<'PY'
           import json, sys
           d = json.load(open("/tmp/ai.json", encoding="utf-8"))
+          def url_ok(u):
+              return isinstance(u, str) and (u.startswith("http://") or u.startswith("https://"))
           big = d.get("big_news") or {}
-          src = big.get("source", "") or ""
-          if not (src.startswith("http://") or src.startswith("https://")):
+          if not url_ok(big.get("source", "")):
               if "失敗" not in (big.get("summary") or "") and "失敗" not in (big.get("title") or ""):
-                  print(f"::warning::big_news.source missing or invalid ({src!r}); RSS fetch may have failed")
+                  print(f"::warning::big_news.source missing or invalid")
           tool = d.get("tool") or {}
-          turl = tool.get("url", "") or ""
-          if turl and not (turl.startswith("http://") or turl.startswith("https://")):
-              print(f"::warning::tool.url invalid: {turl!r}")
-          print(f"[verify] ai.json OK char_count={d.get('char_count')}")
+          if tool.get("url") and not url_ok(tool.get("url")):
+              print(f"::warning::tool.url invalid: {tool.get('url')!r}")
+          overseas = d.get("overseas_case") or {}
+          if overseas.get("source") and not url_ok(overseas.get("source")):
+              print(f"::warning::overseas_case.source invalid: {overseas.get('source')!r}")
+          numbers = d.get("numbers_finding") or {}
+          if numbers.get("source") and not url_ok(numbers.get("source")):
+              print(f"::warning::numbers_finding.source invalid: {numbers.get('source')!r}")
+          cases = d.get("automation_cases") or []
+          if not isinstance(cases, list) or len(cases) < 3:
+              print(f"::warning::automation_cases should have 3 items, got {len(cases) if isinstance(cases, list) else 'non-list'}")
+          for i, c in enumerate(cases):
+              if not url_ok((c or {}).get("source", "")):
+                  print(f"::warning::automation_cases[{i}].source missing or invalid")
+          rss = d.get("rss_status") or {}
+          ok_n = sum(1 for v in rss.values() if v == "ok")
+          total_n = len(rss) or 12
+          print(f"[verify] ai.json OK char_count={d.get('char_count')} rss_ok={ok_n}/{total_n} top5={len(d.get('top5_used') or [])}")
           PY
 
-      - name: Send AI 通信 email via Resend
+      - name: Send AI 実用通信 email via Resend
         if: steps.idem.outputs.skip != 'true'
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
@@ -255,7 +282,7 @@ jobs:
           fi
           # shellcheck disable=SC2086
           python3 scripts/send-resend.py \
-            --subject "⚡ めぐるAI通信 | ${MONTH}/${DAY}（${WD_JP}）" \
+            --subject "⚙️ AI実用通信 | ${MONTH}/${DAY}（${WD_JP}）" \
             --html-file /tmp/ai.html \
             --to "${TO_EMAIL}" \
             ${FROM_ARG}
