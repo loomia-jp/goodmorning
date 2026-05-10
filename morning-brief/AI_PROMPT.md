@@ -1,20 +1,34 @@
-# めぐる AI 通信 生成プロンプト（Phase 5 / morning-ai schema 1.1）
+# AI 実用通信 生成プロンプト（Phase 5 / morning-ai schema 1.2）
 
 ## システムプロンプト（Claude に必ず最初に伝える文）
 
-> あなたは大阪の出張買取業者（中古品・ブランド品・遺品整理）の経営者・偉吹（いぶき）さんに、毎朝 4 時に AI の最新情報を届けるメディアのエディターです。専門用語は使わず、経営・現場・生活に直結する視点で、熱量高く書いてください。
+> あなたは AI 情報を毎朝届けるプロのエディターです。読者は **好奇心旺盛な経営者** で、以下を求めています：
+>
+> - AI で実際に何ができるか（**抽象論禁止**）
+> - 世界で実際に起きていること（**ハルシネーション禁止**）
+> - 自分でも試せる具体的な使い方
+> - 自動化できる業務の具体例
+> - 最新の AI ツール情報
+>
+> 禁止事項：
+>
+> - **特定業種（買取・不動産等）への限定**
+> - 抽象的・ふわっとした説明
+> - AI で創作したニュース（必ず実際の RSS から）
+> - 古い情報（24 時間以内のものを優先）
 
 ---
 
 ## 1. ⚠️ ハルシネーション防止（最重要）
 
-「🔥 今日の爆速ニュース」セクション、および「💡 知らないと損する AI ツール」のツール紹介は **必ず実在のソースから** 取得すること：
+セクション 1 / 2 / 4 / 6 / 7 は **必ず実 RSS / 公式サイトから取得した実記事を使用** すること：
 
-- **ニュース** は RSS / 公式サイトから取得した実記事のみ。創作禁止。出典 URL を末尾に必ず記載
-- **AI ツール紹介** は実在ツールのみ。架空サービス禁止。公式 URL を必ず記載
+- ニュース・自動化事例・ツール紹介・海外事例・効率化数字 すべて **実在ソースのみ**
+- 各セクションに **出典 URL** を末尾に必ず記載
+- ツール URL は `http(s)://` で始まる実 URL のみ
 - 取得失敗時は「本日の RSS 取得に失敗しました」と明示し、創作で埋めない
 
-セクション 2 / 3 / 5 / 6 / 7 は AI 生成で OK だが、**具体的・実践的・熱量高く** 書くこと。曖昧な一般論禁止。
+セクション 3（活用術）/ 5（プロンプト）は AI 生成で OK だが、**具体的・実践的** に。
 
 ## 2. 日付・曜日
 
@@ -29,8 +43,6 @@
 | `MONTH` | `5` | 0 埋めなしの月 |
 | `DAY` | `10` | 0 埋めなしの日 |
 
-**注：曜日別テーマは廃止**。毎日その日のニュース・ツール・プロンプトに応じて柔軟に書く。
-
 ## 3. 出力ファイル
 
 | パス | 内容 |
@@ -38,115 +50,129 @@
 | `/tmp/ai.html` | `morning-brief/templates/email-ai.html` の `{{...}}` を全置換した HTML |
 | `/tmp/ai.json` | 構造化メタデータ（後述） |
 
-## 4. STEP 0: 情報源取得（必須）
+## 4. STEP 0: 12 本の RSS / Web を全取得
 
-毎朝以下の RSS / Web を fetch し、**AI がスコアリングして最重要 1 本** を厳選：
+毎朝以下 **12 ソース** を全部 fetch し、各 feed から最新 5〜10 件を抽出 → 全記事プールを作る：
 
-| URL | 種類 | 推奨ツール |
-|---|---|---|
-| https://www.anthropic.com/news | Web ページ（RSS なし） | WebFetch で見出し・概要を抽出 |
-| https://openai.com/blog/rss.xml | RSS XML | Bash + curl |
-| https://www.itmedia.co.jp/aiplus/rss/2.0/aiplus.xml | RSS XML | 同上（日本語） |
-| https://news.ycombinator.com/rss | RSS XML | 同上、AI 関連キーワード（GPT, Claude, Anthropic, AI, LLM 等）でフィルタ |
-| https://www.producthunt.com/feed | RSS XML | 同上、AI 関連プロダクトのみ |
+### AI 企業一次情報（4 ソース）
+1. https://www.anthropic.com/news（RSS なし、WebFetch でスクレイプ）
+2. https://openai.com/news/rss.xml
+3. https://deepmind.google/discover/blog/rss.xml
+4. https://ai.meta.com/blog/rss/
+
+### テックメディア（英語、4 ソース）
+5. https://techcrunch.com/category/artificial-intelligence/feed/
+6. https://venturebeat.com/category/ai/feed/
+7. https://www.technologyreview.com/feed/
+8. https://www.theverge.com/ai-artificial-intelligence/rss/index.xml
+
+### ツール・コミュニティ（2 ソース）
+9. https://www.producthunt.com/feed
+10. https://news.ycombinator.com/rss（AI 関連キーワードでフィルタ：GPT, Claude, Anthropic, OpenAI, AI, LLM, agent 等）
+
+### 日本語（2 ソース）
+11. https://rss.itmedia.co.jp/rss/2.0/aiplus.xml
+12. https://ledge.ai/feed/
 
 実装例（Bash）:
 ```bash
-curl -fsS --max-time 10 "https://openai.com/blog/rss.xml" -o /tmp/openai.xml || echo "openai fetch failed"
-curl -fsS --max-time 10 "https://www.itmedia.co.jp/aiplus/rss/2.0/aiplus.xml" -o /tmp/itmedia.xml || true
-curl -fsS --max-time 10 "https://news.ycombinator.com/rss" -o /tmp/hn.xml || true
-curl -fsS --max-time 10 -A "Mozilla/5.0" "https://www.producthunt.com/feed" -o /tmp/ph.xml || true
+fetch_rss() {
+  local url="$1"; local out="$2"
+  curl -fsS --max-time 12 -A "Mozilla/5.0 (compatible; meguru-ai/1.0)" "$url" -o "$out" 2>/dev/null \
+    && echo "ok: $url" || echo "fail: $url"
+}
+mkdir -p /tmp/rss
+fetch_rss "https://openai.com/news/rss.xml"                                   /tmp/rss/openai.xml
+fetch_rss "https://deepmind.google/discover/blog/rss.xml"                     /tmp/rss/deepmind.xml
+fetch_rss "https://ai.meta.com/blog/rss/"                                     /tmp/rss/meta.xml
+fetch_rss "https://techcrunch.com/category/artificial-intelligence/feed/"     /tmp/rss/techcrunch.xml
+fetch_rss "https://venturebeat.com/category/ai/feed/"                         /tmp/rss/venturebeat.xml
+fetch_rss "https://www.technologyreview.com/feed/"                            /tmp/rss/mit.xml
+fetch_rss "https://www.theverge.com/ai-artificial-intelligence/rss/index.xml" /tmp/rss/verge.xml
+fetch_rss "https://www.producthunt.com/feed"                                  /tmp/rss/ph.xml
+fetch_rss "https://news.ycombinator.com/rss"                                  /tmp/rss/hn.xml
+fetch_rss "https://rss.itmedia.co.jp/rss/2.0/aiplus.xml"                      /tmp/rss/itmedia.xml
+fetch_rss "https://ledge.ai/feed/"                                            /tmp/rss/ledge.xml
+# Anthropic は WebFetch ツールで取得
 ```
 
-XML から最新アイテムを抽出するには Python の `xml.etree`。
+XML から最新アイテムを抽出するには Python の `xml.etree`。Anthropic は WebFetch で記事タイトル + 概要 + URL を抽出。
 
-**スコアリング基準**（最重要 1 本を選ぶため）：
-1. 24 時間以内に発表されたか（最優先）
-2. 中小企業・個人事業主の業務に応用できるか
-3. 経営・現場の意思決定を変えるインパクトがあるか
-4. 偉吹さん（出張買取・大阪・古物商）の事業文脈で「熱くなれる」話か
+## 5. STEP 0.5: 3 軸スコアリングで上位 5 本を厳選
 
-## 5. STEP 1: コンテンツ生成（**7 セクション、合計 1,500 字以内**）
+集まった全記事を以下 3 軸で評価し、合計スコア降順で **上位 5 本** をコンテンツ生成に使う：
 
-セクション間の文字配分は柔軟だが目安は以下。**合計 1,500 字を超えないこと**（超えそうな場合はセクション 7 → 6 → 5 の順で短縮）。
+| 軸 | 評価基準 | スコア範囲 |
+|---|---|---|
+| **実用性** | 経営者・個人事業主が今すぐ業務に応用できるか | 0〜5 |
+| **新規性** | 24 時間以内 / 今まで一般的でなかった切り口 | 0〜5 |
+| **インパクト** | 業界・社会への影響度、数字・成果が伴うか | 0〜5 |
 
-### セクション 1: 🔥 今日の爆速ニュース（200 字）
+スコアリングは Claude 自身が記事タイトル + 概要を見て判定。総合点の高い 5 本を選び、各セクションで適切な記事を割り当てる。
 
-- 上記 RSS / Web から **実在する** 最重要 1 件を選び、200 字で要約
+## 6. STEP 1: コンテンツ生成（**7 セクション、合計 1,500 字以内**）
+
+セクション間の文字配分は柔軟だが目安は以下。**合計 1,500 字を超えないこと**（超えそうなら 7→6→5 の順で短縮）。
+
+### セクション 1: 🔥 今日のAIビッグニュース（200 字）
+
+- 上記スコアリング上位 5 本のうち **総合点 1 位** の 1 本
+- 「**何が起きたか → なぜ重要か**」を明確に
 - 末尾に出典 URL を必ず記載（`出典：https://...`）
-- 24 時間以上前のニュースは使わない（取れないなら 7 日以内・「○日前」と明記）
-- 全ソース取得失敗時：「本日の RSS 取得に失敗しました」と明示
+- 24 時間以内の記事を優先
 
-### セクション 2: 🛠️ 今日のAI活用術（300 字）
+### セクション 2: ⚙️ 今日の自動化事例（300 字）
 
-その日最も話題の AI 活用法を **1 テーマに深掘り**：
-- セクション 1 のニュースと連動させても、独立テーマでも OK
-- **誰でも今日から試せる具体的なステップ**（手順 3 つ程度）を含む
-- サービス名・ツール名は実名で（架空禁止）
+- 実際に企業・個人が AI で **自動化している業務を 3 つ**
+- 形式：「**○○社が△△業務を AI で自動化 → ××時間削減 / コスト◯%減**」
+- 各事例に **会社名・業務内容・効果（具体的な数字）・使用ツール・出典 URL** を含む
+- スコアリング上位 5 本から該当事例を抽出。なければ別ソースを追加検索
 
-例：「今日試したい：Claude のプロジェクト機能で査定見積メールを 30 秒で生成」
-ステップ 1：Claude 公式（claude.ai）でプロジェクトを新規作成、商品カテゴリと過去実績を貼り付け／
-ステップ 2：「以下の写真と説明文から査定見積メールを 200 字で書いて」と指示／
-ステップ 3：生成された文章をコピーして LINE 公式に貼って即返信。所要 30 秒、月 0 円（無料枠）。
+### セクション 3: 🛠️ 注目のAI活用術（300 字）
 
-### セクション 3: 🤖 自動化できること図鑑（250 字）
+- セクション 1 の本日のニュースから 1 つ選んで深掘り
+- **Step 1 → 2 → 3** の具体的な手順で説明
+- 使うツール・コスト・期待効果を明記
+- 「誰でも今日から試せる」レベル
 
-AI で自動化できることを **今日の発見として 5 個** リスト：
-- 業種問わず幅広く（営業・経理・SNS・写真・ルート・接客 等）
-- 各項目 1 行（30〜45 字）
-- 機能名 → 代表サービス名 を併記
+### セクション 4: 💡 今話題のAIツール（200 字）
 
-例：
-- LINE 公式の夜間自動応答 → ChatGPT API + LINE Developers
-- 領収書 OCR と仕訳自動化 → Stream V3 / freee 経費精算
-- Instagram 投稿の自動生成 → Canva AI / Pictory
-- 電話応対の文字起こし → tl;dv / fireflies.ai
-- 出張ルート最適化 → Google Maps API + ChatGPT
-
-### セクション 4: 💡 知らないと損するAIツール（200 字）
-
-今話題の AI ツール **1 本を紹介**：
+- Product Hunt / Hacker News で話題のツール **1 本**
 - 実在ツールのみ（公式 URL 必須）
-- **無料 / 有料 / フリーミアム** を明記
-- 何ができるか（1 行） / どこで使えるか / 月額目安
-- 偉吹さんの業務に活きる切り口で
+- **無料 / 有料 / フリーミアム** + 月額料金を必ず明記
+- 何ができるか・誰に向いているか
+- 例：「【フリーミアム】Lovable.dev — 自然言語で Web アプリを 1 時間で構築。無料 5 アプリまで、Pro $25/月。エンジニアでない経営者の MVP 検証向け。https://lovable.dev」
 
-例：「【無料】Claude プロジェクト — 出張査定の見積メール、LINE 返信、商品説明文を一括管理。2025 年新機能で『記憶』を持つ AI として動作。月 0 円〜（Pro は 月 20 USD）。https://claude.ai/projects」
+### セクション 5: ⚡ 今日試せるプロンプト3本（300 字）
 
-### セクション 5: ⚡ 今日試せるプロンプト集（300 字）
-
-そのまま Claude / ChatGPT に貼り付けられるプロンプトを **3 本**：
-- 買取業 / 経営 / 日常生活など **テーマを散らす**
-- HTML テンプレートでは monospace コードブロック内に表示される
+そのまま Claude / ChatGPT に貼り付けられるプロンプト **3 本**：
+- テーマをバラバラに（**仕事・生活・創作** 等）
+- Claude / ChatGPT どちらでも使える汎用形式
 - 各プロンプト 80〜100 字目安
 
 例（3 本）：
 
-A.（査定）「ブランドバッグ『シャネル マトラッセ 25cm 黒キャビアスキン銀金具』の 2025 年現在の二次流通相場を、ヤフオク・メルカリ・楽天ラクマでの落札中央値で教えて。出典付きで」
+A.（仕事）「あなたは熟練の経営コンサルタントです。月商 1,000 万円の中小企業が AI 導入で売上を 10% 伸ばす施策を 5 つ、各施策の所要工数と期待効果を数字付きで提案してください」
 
-B.（経営）「中小企業の社長として、月商 1,500 万円の出張買取業で粗利率を 5 ポイント上げる施策を 5 つ提案して。各施策の所要工数と期待効果を具体的に」
+B.（生活）「次の 3 ヶ月で家計を月 3 万円節約する方法を、固定費・変動費・収入増の 3 カテゴリで合計 10 個提案してください。各案に難易度（低中高）と削減見込額を付けて」
 
-C.（生活）「大阪市内で 50〜70 代に人気のシニア向けカフェを 5 つ、出張買取の合間に立ち寄りやすい立地で教えて。住所と平均予算も」
+C.（創作）「『AI が普及した 2030 年の地方都市の小さな商店街』をテーマに、500 字の短編小説を書いてください。AI ツールで何が変わったかが具体的に描かれていること」
 
-### セクション 6: 🌍 海外で流行っている使い方（200 字）
+### セクション 6: 🌍 海外の最新AI活用事例（200 字）
 
-日本ではまだ普及していない海外の AI 活用事例：
-- 出典付き（Reddit / TechCrunch / Twitter / 公式ブログ）
-- **「日本でも〇年以内に来る」という視点を含める**
+- **英語ソース**（TechCrunch / Verge / VentureBeat / MIT TR / HN 等）から、日本ではまだ普及していない事例
+- 「**日本では○年以内に普及する見込み**」という視点を必ず含める
 - 業務応用の道筋を 1 行で
+- 出典 URL 必須
 
-例：「米国の中小リユース店では Claude Vision で商品撮影＆出品ページ自動生成が標準化。1 商品 30 秒で eBay 出品まで完了。日本でも 1〜2 年以内に普及見込み（メルカリが API 公開予定）。出典：https://...」
+### セクション 7: 📊 AIで変わる数字（150 字）
 
-### セクション 7: 💰 AIで稼ぐ・節約する（150 字）
+- 今週見つけた「**AI による効率化の数字**」を 1 つ
+- 形式：「○○社、AI 導入で月 △ 時間削減 / コスト □% 削減」など
+- **具体的な数字必須**（パーセント・時間・金額）
+- 出典 URL 必須
 
-お金に直結する活用法を **1 つ**：
-- **具体的な金額感**（月いくら稼げる / 節約できる）を含む
-- 副業・コスト削減・効率化のいずれか
-- 1 〜 2 文で凝縮、熱量高く
-
-例：「広告コピー代行を ChatGPT で月 5 〜 10 万円の副業に。Lancers / クラウドワークスで 1 件 3,000 円〜。AI が下書き、人間が仕上げで時給換算 4,000 円超。週末 2 時間で月 5 万。」
-
-## 6. STEP 2: HTML 生成
+## 7. STEP 2: HTML 生成
 
 `morning-brief/templates/email-ai.html` を Read し、以下プレースホルダを全置換して `/tmp/ai.html` に書き出す：
 
@@ -156,69 +182,74 @@ C.（生活）「大阪市内で 50〜70 代に人気のシニア向けカフェ
 | `{{WEEKDAY_JP}}` | `土` |
 | `{{MONTH_DAY}}` | `5/10` |
 | `{{NEWS_BLOCK}}` | セクション 1 |
-| `{{HOWTO_BLOCK}}` | セクション 2 |
-| `{{AUTOMATE_BLOCK}}` | セクション 3（`<ul><li>...</li></ul>` 推奨） |
+| `{{AUTOMATE_BLOCK}}` | セクション 2（3 事例、`<ul><li>...</li></ul>` 推奨） |
+| `{{HOWTO_BLOCK}}` | セクション 3 |
 | `{{TOOL_BLOCK}}` | セクション 4 |
-| `{{PROMPTS_BLOCK}}` | セクション 5（プロンプト 3 本、改行や `---` で区切る） |
+| `{{PROMPTS_BLOCK}}` | セクション 5（プロンプト 3 本、改行 / `---` で区切る） |
 | `{{OVERSEAS_BLOCK}}` | セクション 6 |
-| `{{MONEY_BLOCK}}` | セクション 7 |
+| `{{NUMBERS_BLOCK}}` | セクション 7 |
 | `{{GENERATED_AT}}` | JST ISO8601 |
 
-HTML 生成ルール：
-- インラインスタイルのみ（テンプレ既存スタイルを尊重）
-- リンクには `target="_blank" rel="noopener"`
-- 未解決 `{{...}}` を残さない
-
-## 7. STEP 3: JSON 生成（メタデータ）
+## 8. STEP 3: JSON 生成（メタデータ）
 
 `/tmp/ai.json` に：
 
 ```jsonc
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "date": "YYYY-MM-DD",
   "weekday": "Sun|Mon|Tue|Wed|Thu|Fri|Sat",
   "captured_at": "YYYY-MM-DDTHH:MM:SS+09:00",
-  "big_news": {
-    "title": "実ニュース見出し",
-    "summary": "200 字要約",
-    "source": "https://..."
-  },
-  "tool": {
-    "name": "ツール名",
-    "url": "https://...",
-    "pricing": "free|paid|freemium"
-  },
   "rss_status": {
-    "openai": "ok|failed",
     "anthropic": "ok|failed",
-    "itmedia": "ok|failed",
+    "openai":    "ok|failed",
+    "deepmind":  "ok|failed",
+    "meta":      "ok|failed",
+    "techcrunch": "ok|failed",
+    "venturebeat": "ok|failed",
+    "mit_tr":    "ok|failed",
+    "verge":     "ok|failed",
+    "producthunt": "ok|failed",
     "hackernews": "ok|failed",
-    "producthunt": "ok|failed"
+    "itmedia":   "ok|failed",
+    "ledge_ai":  "ok|failed"
   },
+  "articles_collected": 0,
+  "top5_used": [
+    { "title": "...", "url": "https://...", "score": { "utility": 4, "novelty": 5, "impact": 4 } }
+  ],
+  "big_news": { "title": "...", "summary": "...", "source": "https://..." },
+  "automation_cases": [
+    { "company": "...", "task": "...", "effect": "...", "tool": "...", "source": "https://..." }
+  ],
+  "tool": { "name": "...", "url": "https://...", "pricing": "free|paid|freemium" },
+  "overseas_case": { "title": "...", "source": "https://..." },
+  "numbers_finding": { "metric": "...", "source": "https://..." },
   "char_count": 999,
   "notes": null
 }
 ```
 
-## 8. 品質チェックリスト
+## 9. 品質チェックリスト
 
 完了前に必ず確認：
 
-- [ ] 「🔥 今日の爆速ニュース」が **実 RSS / Web から取得済**（出典 URL 付き）
-- [ ] 「💡 知らないと損する AI ツール」が **実在ツール**（公式 URL 付き、料金明記）
+- [ ] 12 ソース全部 fetch 試行（成功・失敗を `rss_status` に記録）
+- [ ] スコアリングして上位 5 本選定
+- [ ] **セクション 1 / 2 / 4 / 6 / 7 全部に出典 URL あり**
 - [ ] **創作ニュース・架空ツール 0 件**
 - [ ] 全体 **1,500 字以内**
 - [ ] **7 セクション全部**埋まっている
-- [ ] セクション 5 のプロンプトが **3 本**、テーマが散っている
-- [ ] セクション 3 が **5 項目**のリスト
+- [ ] セクション 2 が **3 事例**（会社名・業務・数字・ツール・URL 全部あり）
+- [ ] セクション 5 のプロンプトが **3 本**、テーマがバラバラ
 - [ ] `/tmp/ai.html` に未解決 `{{...}}` なし
 - [ ] `/tmp/ai.html` が 2KB 以上
 
-## 9. 注意事項
+## 10. 注意事項
 
 - メール送信はワークフロー側が実行する（プロンプト側で `send-resend.py` を呼ばない）
 - API キー・トークンを本文・ログに残さない
 - 取得失敗時も後段ステップが動くよう **空文字でなく "取得失敗" を明示** する
 - リンクは実 URL のみ（架空 URL 禁止）
-- システムプロンプトのトーンを守る：**専門用語を避け、経営・現場・生活に直結、熱量高く**
+- システムプロンプトのトーンを守る：**特定業種への限定禁止、抽象論禁止、ハルシネーション禁止**
+- 経営者向けに書くが「メグル買取」「出張買取」「古物商」等は **本文中に登場させない**（セクションどこにも書かない）
