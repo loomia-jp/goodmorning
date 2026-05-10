@@ -36,7 +36,6 @@ jobs:
   ai:
     runs-on: ubuntu-latest
     # 4 ワークフロー統一基準：job 80 分 / Run Claude Code step 50 分。
-    # AI 通信は RSS 取得 + 1200 字生成と軽量だが、念のため余裕を取る。
     timeout-minutes: 80
     env:
       TZ: Asia/Tokyo
@@ -121,7 +120,7 @@ jobs:
         if: steps.idem.outputs.skip != 'true'
         run: npm install -g @anthropic-ai/claude-code
 
-      - name: Compute date / weekday / theme (JST)
+      - name: Compute date / weekday / month-day (JST)
         id: vars
         if: steps.idem.outputs.skip != 'true'
         run: |
@@ -133,23 +132,21 @@ jobs:
           fi
           WEEKDAY_EN="$(date -d "$TODAY_DATE" +%a)"
           case "$WEEKDAY_EN" in
-            Mon) WD_JP="月"; AI_THEME="AIエージェント自動化" ;;
-            Tue) WD_JP="火"; AI_THEME="画像・動画生成AI" ;;
-            Wed) WD_JP="水"; AI_THEME="文章・営業・マーケAI" ;;
-            Thu) WD_JP="木"; AI_THEME="データ分析・予測AI" ;;
-            Fri) WD_JP="金"; AI_THEME="業務効率化・時短AI" ;;
-            Sat) WD_JP="土"; AI_THEME="AI副業・新収益化" ;;
-            Sun) WD_JP="日"; AI_THEME="今週の最先端トレンド" ;;
+            Mon) WD_JP="月" ;; Tue) WD_JP="火" ;; Wed) WD_JP="水" ;;
+            Thu) WD_JP="木" ;; Fri) WD_JP="金" ;; Sat) WD_JP="土" ;; Sun) WD_JP="日" ;;
           esac
+          MONTH="$(date -d "$TODAY_DATE" +%-m)"
+          DAY="$(date -d "$TODAY_DATE" +%-d)"
           TODAY_DATE_JP="${TODAY_DATE}（${WD_JP}）"
           {
             echo "TODAY_DATE=$TODAY_DATE"
             echo "TODAY_DATE_JP=$TODAY_DATE_JP"
             echo "WEEKDAY_EN=$WEEKDAY_EN"
             echo "WD_JP=$WD_JP"
-            echo "AI_THEME=$AI_THEME"
+            echo "MONTH=$MONTH"
+            echo "DAY=$DAY"
           } >> "$GITHUB_ENV"
-          echo "Generating AI 通信 for $TODAY_DATE_JP — テーマ: $AI_THEME"
+          echo "Generating AI 通信 for $TODAY_DATE_JP (${MONTH}/${DAY})"
 
       - name: Run Claude Code (generate AI 通信 artifacts)
         if: steps.idem.outputs.skip != 'true'
@@ -162,27 +159,33 @@ jobs:
           TODAY_DATE_JP: ${{ env.TODAY_DATE_JP }}
           WEEKDAY_EN: ${{ env.WEEKDAY_EN }}
           WD_JP: ${{ env.WD_JP }}
-          AI_THEME: ${{ env.AI_THEME }}
+          MONTH: ${{ env.MONTH }}
+          DAY: ${{ env.DAY }}
         run: |
           set -euo pipefail
           mkdir -p /tmp
           PROMPT="$(cat <<'EOF'
-          あなたは morning-brief/AI_PROMPT.md に書かれた「めぐるAI通信」エディターです。
-          そこに書かれた STEP 0 から品質チェックリストまでをすべて遂行してください。
+          あなたは大阪の出張買取業者（中古品・ブランド品・遺品整理）の経営者・偉吹（いぶき）さんに、
+          毎朝 4 時に AI の最新情報を届けるメディアのエディターです。専門用語は使わず、
+          経営・現場・生活に直結する視点で、熱量高く書いてください。
 
-          環境変数で渡されている TODAY_DATE / TODAY_DATE_JP / WEEKDAY_EN / WD_JP / AI_THEME を必ず使用すること。
+          morning-brief/AI_PROMPT.md に書かれた STEP 0 から品質チェックリストまでをすべて遂行してください。
 
-          ⚠️ 最重要：「🔥 昨日のAIビッグニュース」セクションは必ず実 RSS / 公式サイトから取得した
-          ニュースを使い、出典 URL を末尾に記載すること。創作ニュース禁止。
+          環境変数で渡されている TODAY_DATE / TODAY_DATE_JP / WEEKDAY_EN / WD_JP / MONTH / DAY を必ず使用すること。
+
+          ⚠️ 最重要：
+          - 「🔥 今日の爆速ニュース」は必ず実 RSS / Web から取得したニュースを使い、出典 URL を末尾に記載
+          - 「💡 知らないと損する AI ツール」は実在ツールのみ、公式 URL と料金を必ず記載
+          - 創作ニュース・架空ツールは絶対禁止
 
           完了条件:
-            - /tmp/ai.html に未解決プレースホルダが残っていない
-            - /tmp/ai.json が AI_PROMPT.md のスキーマに準拠している
-            - 全体 1,200 字以内、5 セクション全部埋まっている
-            - セクション 1 のニュースに出典 URL あり（または取得失敗の旨を明記）
+            - /tmp/ai.html に未解決プレースホルダが残っていない（{{MONTH_DAY}} は ${MONTH}/${DAY} で置換）
+            - /tmp/ai.json が AI_PROMPT.md のスキーマ（schema_version 1.1）に準拠
+            - 全体 1,500 字以内、7 セクション全部埋まっている
+            - セクション 5 のプロンプトが 3 本、テーマが散っている
           失敗した場合は理由を明示して終了してください（メール送信は後段ステップが行います）。
 
-          時間配分の目安：RSS 取得に 5〜10 分、コンテンツ生成に 20 分、HTML 化と検証に 10 分。
+          時間配分の目安：RSS 取得・スコアリングに 5〜10 分、コンテンツ生成に 25 分、HTML 化と検証に 10 分。
           EOF
           )"
 
@@ -212,20 +215,20 @@ jobs:
             echo "::error::/tmp/ai.html too small: ${size} bytes (<2048)"
             exit 1
           fi
-          # 出典 URL の存在チェック（big_news に http(s) リンクが含まれるか）
+          # 出典 URL の存在チェック（big_news / tool に http(s) リンクが含まれるか）
           python3 - <<'PY'
-          import json, sys, re
+          import json, sys
           d = json.load(open("/tmp/ai.json", encoding="utf-8"))
           big = d.get("big_news") or {}
           src = big.get("source", "") or ""
           if not (src.startswith("http://") or src.startswith("https://")):
               if "失敗" not in (big.get("summary") or "") and "失敗" not in (big.get("title") or ""):
                   print(f"::warning::big_news.source missing or invalid ({src!r}); RSS fetch may have failed")
-          theme = d.get("theme", "")
-          if not theme:
-              print("::error::theme is empty in /tmp/ai.json")
-              sys.exit(2)
-          print(f"[verify] ai.json OK theme={theme} char_count={d.get('char_count')}")
+          tool = d.get("tool") or {}
+          turl = tool.get("url", "") or ""
+          if turl and not (turl.startswith("http://") or turl.startswith("https://")):
+              print(f"::warning::tool.url invalid: {turl!r}")
+          print(f"[verify] ai.json OK char_count={d.get('char_count')}")
           PY
 
       - name: Send AI 通信 email via Resend
@@ -241,7 +244,7 @@ jobs:
           fi
           # shellcheck disable=SC2086
           python3 scripts/send-resend.py \
-            --subject "⚡ めぐるAI通信｜${WD_JP}のテーマ：${AI_THEME}" \
+            --subject "⚡ めぐるAI通信 | ${MONTH}/${DAY}（${WD_JP}）" \
             --html-file /tmp/ai.html \
             --to "${TO_EMAIL}" \
             ${FROM_ARG}
@@ -280,7 +283,7 @@ jobs:
           mkdir -p /tmp
           {
             echo "<h2>[ALERT] morning-ai failed</h2>"
-            echo "<p>Date: ${TODAY_DATE:-unknown} / Theme: ${AI_THEME:-unknown}</p>"
+            echo "<p>Date: ${TODAY_DATE:-unknown}</p>"
             echo "<p>Run: <a href=\"https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\">${{ github.run_id }}</a></p>"
             echo "<pre style='font-size:12px;background:#f4f5f7;padding:12px;border-radius:6px;white-space:pre-wrap;'>"
             tail -c 60000 /tmp/ai-claude.log 2>/dev/null | sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g'
