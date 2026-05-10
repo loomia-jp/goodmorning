@@ -131,7 +131,7 @@ jobs:
         if: steps.idem.outputs.skip != 'true'
         run: npm install -g @anthropic-ai/claude-code
 
-      - name: Compute date / weekday / month-day (JST)
+      - name: Compute date / weekday / agent-tool (JST)
         id: vars
         if: steps.idem.outputs.skip != 'true'
         run: |
@@ -142,9 +142,15 @@ jobs:
             TODAY_DATE="$(date +%Y-%m-%d)"
           fi
           WEEKDAY_EN="$(date -d "$TODAY_DATE" +%a)"
+          # 曜日別の対象ツール（セクション 7「AIエージェント・自動化ツール比較」用）
           case "$WEEKDAY_EN" in
-            Mon) WD_JP="月" ;; Tue) WD_JP="火" ;; Wed) WD_JP="水" ;;
-            Thu) WD_JP="木" ;; Fri) WD_JP="金" ;; Sat) WD_JP="土" ;; Sun) WD_JP="日" ;;
+            Mon) WD_JP="月"; AGENT_TOOL_TODAY="Zapier — 何ができる・料金・向いている人を深掘り" ;;
+            Tue) WD_JP="火"; AGENT_TOOL_TODAY="Make — 何ができる・料金・向いている人を深掘り" ;;
+            Wed) WD_JP="水"; AGENT_TOOL_TODAY="n8n — 何ができる・料金・向いている人を深掘り" ;;
+            Thu) WD_JP="木"; AGENT_TOOL_TODAY="Notion AI — 活用事例" ;;
+            Fri) WD_JP="金"; AGENT_TOOL_TODAY="Microsoft Copilot — 活用事例" ;;
+            Sat) WD_JP="土"; AGENT_TOOL_TODAY="新興 AI ツール（今週注目の 1 本を実在ツールから選定）" ;;
+            Sun) WD_JP="日"; AGENT_TOOL_TODAY="今週の自動化まとめ（過去 7 日のセクション 2 で紹介した事例の要点総括）" ;;
           esac
           MONTH="$(date -d "$TODAY_DATE" +%-m)"
           DAY="$(date -d "$TODAY_DATE" +%-d)"
@@ -156,8 +162,10 @@ jobs:
             echo "WD_JP=$WD_JP"
             echo "MONTH=$MONTH"
             echo "DAY=$DAY"
+            echo "AGENT_TOOL_TODAY=$AGENT_TOOL_TODAY"
           } >> "$GITHUB_ENV"
           echo "Generating AI 実用通信 for $TODAY_DATE_JP (${MONTH}/${DAY})"
+          echo "  AGENT_TOOL_TODAY = $AGENT_TOOL_TODAY"
 
       - name: Run Claude Code (generate AI 実用通信 artifacts)
         if: steps.idem.outputs.skip != 'true'
@@ -172,50 +180,59 @@ jobs:
           WD_JP: ${{ env.WD_JP }}
           MONTH: ${{ env.MONTH }}
           DAY: ${{ env.DAY }}
+          AGENT_TOOL_TODAY: ${{ env.AGENT_TOOL_TODAY }}
         run: |
           set -euo pipefail
           mkdir -p /tmp
           PROMPT="$(cat <<'EOF'
-          あなたは AI 情報を毎朝届けるプロのエディターです。読者は好奇心旺盛な経営者で、以下を求めています：
-            ・AI で実際に何ができるか（抽象論禁止）
-            ・世界で実際に起きていること（ハルシネーション禁止）
-            ・自分でも試せる具体的な使い方
-            ・自動化できる業務の具体例
-            ・最新の AI ツール情報
+          あなたは AI の実用情報を毎朝届けるプロのエディターです。読者は好奇心旺盛な経営者で、以下だけを求めています：
 
-          禁止事項：
-            ・特定業種（買取・不動産・古物商等）への限定
-            ・抽象的・ふわっとした説明
-            ・AI で創作したニュース（必ず実際の RSS から）
-            ・古い情報（24 時間以内のものを優先）
+          ✅ 求めていること：
+            ・AI で実際に何ができるか（具体的な事例のみ）
+            ・世界で実際に起きていること（ハルシネーション絶対禁止）
+            ・自分でも今日から試せる具体的な使い方
+            ・業務・生活・仕事が自動化できる具体例
+            ・最新の AI ツール（料金・使い方・URL 付き）
+            ・詳しい使い方の手順（ステップ形式）
+            ・海外で実際に使われている事例
+            ・AI で時間・お金を節約した具体的な数字
+
+          ❌ 禁止事項：
+            ・特定業種への限定（買取・不動産など禁止）
+            ・「〜かもしれません」「〜と思われます」などの曖昧表現
+            ・AI で創作したニュース（実際の RSS から取得したものだけ）
+            ・抽象的・理論的な説明（具体例のないものは書かない）
+            ・古い情報（48 時間以内を優先）
 
           morning-brief/AI_PROMPT.md に書かれた STEP 0 から品質チェックリストまでをすべて遂行してください。
 
-          環境変数で渡されている TODAY_DATE / TODAY_DATE_JP / WEEKDAY_EN / WD_JP / MONTH / DAY を必ず使用すること。
+          環境変数で渡されている TODAY_DATE / TODAY_DATE_JP / WEEKDAY_EN / WD_JP / MONTH / DAY / AGENT_TOOL_TODAY を必ず使用すること。
+          特にセクション 7「AIエージェント・自動化ツール比較」は AGENT_TOOL_TODAY の対象に厳密に従う。
 
           ⚠️ 最重要：
-          - 12 本の RSS / Web を全部 fetch すること（Anthropic は WebFetch、それ以外は curl）
+          - 14 本の RSS / Web を全部 fetch すること（Anthropic は WebFetch、それ以外は curl）
           - 実用性・新規性・インパクト の 3 軸で各記事を 0〜5 点でスコアリングし上位 5 本を選ぶ
-          - セクション 1 / 2 / 4 / 6 / 7 すべてに **出典 URL** を末尾に必ず記載
+          - セクション 1 / 2 / 6 / 8 すべてに **出典 URL** を末尾に必ず記載
           - ツール紹介は実在ツールのみ、公式 URL と料金（無料/有料/フリーミアム + 月額）を必ず記載
-          - 創作ニュース・架空ツールは絶対禁止
+          - 創作ニュース・架空ツール・曖昧表現は絶対禁止
 
           完了条件:
-            - /tmp/ai.html に未解決プレースホルダが残っていない（{{MONTH_DAY}} は ${MONTH}/${DAY} で置換）
-            - /tmp/ai.json が AI_PROMPT.md のスキーマ（schema_version 1.2）に準拠
-            - 全体 1,500 字以内、7 セクション全部埋まっている
-            - セクション 2 が 3 事例、各事例に会社名・業務・効果（数字）・ツール・URL がある
-            - セクション 5 のプロンプトが 3 本、テーマがバラバラ（仕事・生活・創作 等）
+            - /tmp/ai.html に未解決プレースホルダが残っていない
+            - /tmp/ai.json が AI_PROMPT.md のスキーマ（schema_version 1.3）に準拠
+            - 全体 2,000 字以内、8 セクション全部埋まっている
+            - セクション 2 が 5 事例（会社名・業務・効果数字・ツール・URL）
+            - セクション 5 のプロンプトが 5 本、テーマがバラバラ + 各「使い方のコツ」1 行付き
+            - セクション 7 が AGENT_TOOL_TODAY の対象に沿っている
           失敗した場合は理由を明示して終了してください（メール送信は後段ステップが行います）。
 
-          時間配分の目安：12 本 RSS 取得・スコアリングに 10〜15 分、コンテンツ生成に 25 分、HTML 化と検証に 10 分。
+          時間配分の目安：14 RSS 取得・スコアリングに 12〜18 分、コンテンツ生成に 25 分、HTML 化と検証に 10 分。
           EOF
           )"
 
           claude --print \
             --permission-mode acceptEdits \
             --allowed-tools "Read,Write,Edit,Bash,WebSearch,WebFetch,Task,Glob,Grep" \
-            --max-turns 50 \
+            --max-turns 60 \
             "$PROMPT" 2>&1 | tee /tmp/ai-claude.log
 
       - name: Verify generated artifacts
@@ -234,11 +251,11 @@ jobs:
             exit 1
           fi
           size=$(stat -c%s /tmp/ai.html)
-          if [ "$size" -lt 2048 ]; then
-            echo "::error::/tmp/ai.html too small: ${size} bytes (<2048)"
+          if [ "$size" -lt 3072 ]; then
+            echo "::error::/tmp/ai.html too small: ${size} bytes (<3072 = 3KB)"
             exit 1
           fi
-          # 出典 URL の存在チェック（big_news / tool / overseas / numbers / automation_cases に http(s) リンク）
+          # 出典 URL の存在チェック
           python3 - <<'PY'
           import json, sys
           d = json.load(open("/tmp/ai.json", encoding="utf-8"))
@@ -257,16 +274,19 @@ jobs:
           numbers = d.get("numbers_finding") or {}
           if numbers.get("source") and not url_ok(numbers.get("source")):
               print(f"::warning::numbers_finding.source invalid: {numbers.get('source')!r}")
+          agent = d.get("agent_tool") or {}
+          if agent.get("url") and not url_ok(agent.get("url")):
+              print(f"::warning::agent_tool.url invalid: {agent.get('url')!r}")
           cases = d.get("automation_cases") or []
-          if not isinstance(cases, list) or len(cases) < 3:
-              print(f"::warning::automation_cases should have 3 items, got {len(cases) if isinstance(cases, list) else 'non-list'}")
+          if not isinstance(cases, list) or len(cases) < 5:
+              print(f"::warning::automation_cases should have 5 items, got {len(cases) if isinstance(cases, list) else 'non-list'}")
           for i, c in enumerate(cases):
               if not url_ok((c or {}).get("source", "")):
                   print(f"::warning::automation_cases[{i}].source missing or invalid")
           rss = d.get("rss_status") or {}
           ok_n = sum(1 for v in rss.values() if v == "ok")
-          total_n = len(rss) or 12
-          print(f"[verify] ai.json OK char_count={d.get('char_count')} rss_ok={ok_n}/{total_n} top5={len(d.get('top5_used') or [])}")
+          total_n = len(rss) or 14
+          print(f"[verify] ai.json OK char_count={d.get('char_count')} rss_ok={ok_n}/{total_n} top5={len(d.get('top5_used') or [])} agent_tool={d.get('agent_tool_today')}")
           PY
 
       - name: Send AI 実用通信 email via Resend
