@@ -62,15 +62,26 @@ jobs:
               per_page: 30,
               created: `>=${sinceIso}`,
             });
-            const ok = data.workflow_runs.filter(r =>
-              r.id !== context.runId &&
-              r.status === 'completed' &&
-              r.conclusion === 'success'
-            );
+            // 短時間で終わった run は idempotency-skip による擬似 success の可能性が高いので除外する。
+            // 実 run は RSS 取得 + Claude 生成 + Resend 送信で最低 5 分以上かかるため、
+            // 60 秒未満の run は連鎖スキップ防止のため無視する。
+            const ok = data.workflow_runs.filter(r => {
+              if (r.id === context.runId) return false;
+              if (r.status !== 'completed') return false;
+              if (r.conclusion !== 'success') return false;
+              const durationSec = (new Date(r.updated_at) - new Date(r.created_at)) / 1000;
+              if (durationSec < 60) {
+                core.info(`[idem] excluding fast pseudo-success run #${r.run_number} (${durationSec.toFixed(0)}s, likely a skip)`);
+                return false;
+              }
+              return true;
+            });
             if (ok.length > 0) {
-              core.notice(`[idem] today already succeeded in run #${ok[0].run_number} — skipping`);
+              const r = ok[0];
+              core.notice(`[idem] today already succeeded in run #${r.run_number} (${r.html_url}) — skipping. force=true で再実行可能`);
               core.setOutput('skip', 'true');
             } else {
+              core.info(`[idem] no real (>60s) successful run today — proceeding`);
               core.setOutput('skip', 'false');
             }
 
