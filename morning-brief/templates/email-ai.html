@@ -3,82 +3,82 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>めぐる AI 通信 {{MONTH_DAY}}（{{WEEKDAY_JP}}）</title>
+<title>AI 実用通信 {{MONTH_DAY}}（{{WEEKDAY_JP}}）</title>
 </head>
 <body style="margin:0;padding:0;background:#f4f5f7;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Sans','Yu Gothic UI',sans-serif;color:#1f2937;">
 <!--
-  Email-safe HTML template for めぐる AI 通信 (morning-ai schema 1.1).
+  Email-safe HTML template for AI 実用通信 (morning-ai schema 1.2).
   AI_PROMPT.md fills these placeholders:
     {{DATE}}            e.g. 2026-05-10
     {{WEEKDAY_JP}}      e.g. 土
     {{MONTH_DAY}}       e.g. 5/10
-    {{NEWS_BLOCK}}      🔥 今日の爆速ニュース 200 字 + 出典 URL
-    {{HOWTO_BLOCK}}     🛠️ 今日のAI活用術 300 字（具体ステップ）
-    {{AUTOMATE_BLOCK}}  🤖 自動化できること図鑑 250 字（5 項目リスト）
-    {{TOOL_BLOCK}}      💡 知らないと損するAIツール 200 字（料金明記）
-    {{PROMPTS_BLOCK}}   ⚡ 今日試せるプロンプト集 300 字（3 本）
-    {{OVERSEAS_BLOCK}}  🌍 海外で流行っている使い方 200 字
-    {{MONEY_BLOCK}}     💰 AIで稼ぐ・節約する 150 字
+    {{NEWS_BLOCK}}      🔥 今日のAIビッグニュース 200 字 + 出典 URL
+    {{AUTOMATE_BLOCK}}  ⚙️ 今日の自動化事例 300 字（3 事例リスト + 出典 URL）
+    {{HOWTO_BLOCK}}     🛠️ 注目のAI活用術 300 字（Step 1→2→3 で深掘り）
+    {{TOOL_BLOCK}}      💡 今話題のAIツール 200 字（公式 URL + 料金）
+    {{PROMPTS_BLOCK}}   ⚡ 今日試せるプロンプト3本 300 字
+    {{OVERSEAS_BLOCK}}  🌍 海外の最新AI活用事例 200 字 + 出典 URL
+    {{NUMBERS_BLOCK}}   📊 AIで変わる数字 150 字 + 出典 URL
     {{GENERATED_AT}}    ISO8601 JST
 -->
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f5f7;padding:24px 0;">
   <tr><td align="center">
     <table role="presentation" width="640" cellpadding="0" cellspacing="0" style="max-width:640px;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.06);">
 
-      <!-- Header (electric purple gradient) -->
-      <tr><td style="background:linear-gradient(135deg,#1e1b4b,#7c3aed);padding:24px 28px;color:#ffffff;">
-        <div style="font-size:13px;letter-spacing:0.12em;color:#c4b5fd;">⚡ MEGURU AI 通信</div>
+      <!-- Header (deep slate to cyan gradient — practical / professional feel) -->
+      <tr><td style="background:linear-gradient(135deg,#0f172a,#06b6d4);padding:24px 28px;color:#ffffff;">
+        <div style="font-size:13px;letter-spacing:0.12em;color:#a5f3fc;">⚙️ AI 実用通信</div>
         <div style="font-size:24px;font-weight:700;margin-top:6px;">{{MONTH_DAY}}（{{WEEKDAY_JP}}）</div>
-        <div style="font-size:12px;color:#ddd6fe;margin-top:4px;">毎朝 4 時の AI 情報メディア</div>
+        <div style="font-size:12px;color:#cffafe;margin-top:4px;">経営者のためのAI情報メディア・毎朝 4 時配信</div>
       </td></tr>
 
-      <!-- Section 1: 🔥 今日の爆速ニュース -->
+      <!-- Section 1: 🔥 今日のAIビッグニュース -->
       <tr><td style="padding:18px 28px 6px 28px;">
-        <div style="font-size:13px;color:#dc2626;letter-spacing:0.04em;font-weight:700;">🔥 今日の爆速ニュース</div>
+        <div style="font-size:13px;color:#dc2626;letter-spacing:0.04em;font-weight:700;">🔥 今日のAIビッグニュース</div>
         <div style="margin-top:6px;font-size:14px;line-height:1.75;color:#1f2937;">{{NEWS_BLOCK}}</div>
       </td></tr>
 
-      <!-- Section 2: 🛠️ 今日のAI活用術 -->
-      <tr><td style="padding:14px 28px 6px 28px;border-top:1px solid #e2e8f0;">
-        <div style="font-size:13px;color:#0369a1;letter-spacing:0.04em;font-weight:700;">🛠️ 今日のAI活用術</div>
-        <div style="margin-top:6px;font-size:14px;line-height:1.75;color:#1f2937;">{{HOWTO_BLOCK}}</div>
-      </td></tr>
-
-      <!-- Section 3: 🤖 自動化できること図鑑 -->
+      <!-- Section 2: ⚙️ 今日の自動化事例 -->
       <tr><td style="padding:14px 28px 6px 28px;border-top:1px solid #e2e8f0;background:#f0fdf4;">
-        <div style="font-size:13px;color:#047857;letter-spacing:0.04em;font-weight:700;">🤖 自動化できること図鑑</div>
+        <div style="font-size:13px;color:#047857;letter-spacing:0.04em;font-weight:700;">⚙️ 今日の自動化事例（3 件）</div>
         <div style="margin-top:6px;font-size:14px;line-height:1.85;color:#1f2937;">{{AUTOMATE_BLOCK}}</div>
       </td></tr>
 
-      <!-- Section 4: 💡 知らないと損するAIツール -->
+      <!-- Section 3: 🛠️ 注目のAI活用術 -->
+      <tr><td style="padding:14px 28px 6px 28px;border-top:1px solid #e2e8f0;">
+        <div style="font-size:13px;color:#0369a1;letter-spacing:0.04em;font-weight:700;">🛠️ 注目のAI活用術（Step 1→2→3）</div>
+        <div style="margin-top:6px;font-size:14px;line-height:1.75;color:#1f2937;">{{HOWTO_BLOCK}}</div>
+      </td></tr>
+
+      <!-- Section 4: 💡 今話題のAIツール -->
       <tr><td style="padding:14px 28px 8px 28px;border-top:2px solid #fde68a;background:#fffbeb;">
-        <div style="font-size:13px;color:#92400e;letter-spacing:0.04em;font-weight:700;">💡 知らないと損するAIツール</div>
+        <div style="font-size:13px;color:#92400e;letter-spacing:0.04em;font-weight:700;">💡 今話題のAIツール</div>
         <div style="margin-top:6px;font-size:14px;line-height:1.75;color:#1f2937;">{{TOOL_BLOCK}}</div>
       </td></tr>
 
-      <!-- Section 5: ⚡ 今日試せるプロンプト集 -->
+      <!-- Section 5: ⚡ 今日試せるプロンプト3本 -->
       <tr><td style="padding:14px 28px 14px 28px;border-top:1px solid #e2e8f0;background:#f5f3ff;">
-        <div style="font-size:13px;color:#5b21b6;letter-spacing:0.04em;font-weight:700;">⚡ 今日試せるプロンプト集（3 本）</div>
+        <div style="font-size:13px;color:#5b21b6;letter-spacing:0.04em;font-weight:700;">⚡ 今日試せるプロンプト 3 本</div>
         <div style="margin-top:6px;font-size:13px;line-height:1.65;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#ffffff;border:1px solid #ddd6fe;border-radius:8px;padding:10px 12px;color:#1e1b4b;white-space:pre-wrap;word-break:break-word;">{{PROMPTS_BLOCK}}</div>
         <div style="margin-top:6px;font-size:11px;color:#6d28d9;">↑ そのままコピーして Claude / ChatGPT に貼り付けてください</div>
       </td></tr>
 
-      <!-- Section 6: 🌍 海外で流行っている使い方 -->
+      <!-- Section 6: 🌍 海外の最新AI活用事例 -->
       <tr><td style="padding:14px 28px 6px 28px;border-top:1px solid #e2e8f0;">
-        <div style="font-size:13px;color:#0d9488;letter-spacing:0.04em;font-weight:700;">🌍 海外で流行っている使い方</div>
+        <div style="font-size:13px;color:#0d9488;letter-spacing:0.04em;font-weight:700;">🌍 海外の最新AI活用事例</div>
         <div style="margin-top:6px;font-size:14px;line-height:1.75;color:#1f2937;">{{OVERSEAS_BLOCK}}</div>
       </td></tr>
 
-      <!-- Section 7: 💰 AIで稼ぐ・節約する -->
+      <!-- Section 7: 📊 AIで変わる数字 -->
       <tr><td style="padding:14px 28px 18px 28px;border-top:1px solid #e2e8f0;background:#fffbe6;">
-        <div style="font-size:13px;color:#a16207;letter-spacing:0.04em;font-weight:700;">💰 AIで稼ぐ・節約する</div>
-        <div style="margin-top:6px;font-size:14px;line-height:1.75;color:#1f2937;">{{MONEY_BLOCK}}</div>
+        <div style="font-size:13px;color:#a16207;letter-spacing:0.04em;font-weight:700;">📊 AIで変わる数字</div>
+        <div style="margin-top:6px;font-size:14px;line-height:1.75;color:#1f2937;">{{NUMBERS_BLOCK}}</div>
       </td></tr>
 
       <!-- Footer -->
       <tr><td style="padding:10px 28px 18px 28px;border-top:1px solid #e2e8f0;font-size:11px;color:#94a3b8;line-height:1.6;">
-        Generated by Meguru BI v2 / めぐる AI 通信 / {{GENERATED_AT}}<br>
-        ※「今日の爆速ニュース」「AI ツール」は RSS / 公式サイトから取得した実情報です（創作ではありません）
+        Generated by Meguru BI v2 / AI 実用通信 / {{GENERATED_AT}}<br>
+        ※ ニュース・自動化事例・ツール・海外事例・数字は 12 本の RSS / 公式サイトから取得した実情報です（創作なし）
       </td></tr>
     </table>
   </td></tr>
