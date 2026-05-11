@@ -1,4 +1,4 @@
-# AI 実用通信 生成プロンプト（Phase 5 / morning-ai schema 1.3）
+# AI 実用通信 生成プロンプト（Phase 5 / morning-ai schema 1.4）
 
 ## システムプロンプト（Claude に必ず最初に伝える文）
 
@@ -22,6 +22,15 @@
 > - 古い情報（48 時間以内を優先）
 
 ---
+
+## 0. ⚠️ 重要：書き出すのは JSON だけ（HTML テンプレ置換は別スクリプトが担当）
+
+**`/tmp/ai.html` は直接書かないこと**。あなたの責務は **`/tmp/ai.json` を 1 つだけ書く** こと。
+ワークフロー側の `scripts/render-ai-email.py` が `/tmp/ai.json` の `placeholders` サブ object と
+`morning-brief/templates/email-ai.html` テンプレートから `/tmp/ai.html` を機械的に置換生成する。
+
+これにより「Claude がテンプレ置換ステップを忘れて未置換のまま完了する」事故を防いでいる。
+**Read / Write でテンプレを操作する必要は無い**（テンプレを読む必要すらない）。
 
 ## 1. ⚠️ ハルシネーション防止（厳守）
 
@@ -51,10 +60,10 @@
 
 ## 3. 出力ファイル
 
-| パス | 内容 |
-|---|---|
-| `/tmp/ai.html` | `morning-brief/templates/email-ai.html` の `{{...}}` を全置換した HTML |
-| `/tmp/ai.json` | 構造化メタデータ（後述） |
+| パス | 内容 | 誰が書く |
+|---|---|---|
+| `/tmp/ai.json` | 構造化メタデータ + **placeholders サブ object**（後述） | **Claude（あなた）** |
+| `/tmp/ai.html` | テンプレを placeholders で置換した HTML | `render-ai-email.py`（ワークフロー側、自動） |
 
 ## 4. STEP 0: 14 本の RSS / Web を全取得
 
@@ -118,35 +127,33 @@ XML から最新アイテムを抽出するには Python の `xml.etree`。
 | **新規性** | 過去 7 日以内の情報か | 0〜5 |
 | **インパクト** | 読んで行動が変わるか | 0〜5 |
 
-スコアリングは Claude 自身が記事タイトル + 概要を見て判定。総合点の高い 5 本を選び、各セクションで適切な記事を割り当てる。
-
 ## 6. STEP 1: コンテンツ生成（**8 セクション、合計 2,000 字以内**）
 
 セクション間の文字配分は柔軟。**合計 2,000 字を超えないこと**（超えそうなら 8→7→5 の順で短縮）。
 
-### セクション 1: 🔥 今日のAIビッグニュース（250 字）
+各セクションの中身は **HTML フラグメント**として書く（後で `placeholders.XXX_BLOCK` に格納する）。
+リンクは `<a href="https://..." target="_blank" rel="noopener">...</a>` 形式。改行は `<br>`。
 
+### セクション 1: 🔥 今日のAIビッグニュース（250 字）
 - 上記スコアリング上位 5 本のうち **総合点 1 位** の 1 本
 - 「**何が起きた → なぜ重要か → 自分への影響**」の 3 点を明確に
-- 末尾に出典 URL を必ず記載
+- 末尾に出典 URL を必ず記載（`<a href="...">出典</a>`）
 - **48 時間以内の記事のみ**
 
 ### セクション 2: ⚙️ 実際に自動化されている業務 5 選（350 字）
-
 - 企業・個人が **実際に AI で自動化している業務を 5 つ**
 - 形式：「**○○社/○○さんが、△△ツールで□□を自動化 → 週 XX 時間削減・コスト YY% 削減**」
 - 具体的な数字・ツール名を必ず含む
 - 出典 URL 必須（5 件すべてに）
+- 推奨形式：`<ul><li>...</li>...</ul>`
 
 ### セクション 3: 🛠️ 今日のAI活用術・完全手順（400 字）
-
 セクション 1 のニュースから 1 つ選んで **超詳しく解説**：
 - 使うツール名・URL・料金を **最初に明示**
 - **Step 1 → 2 → 3 → 4** の完全手順
 - 「どんな人に向いているか」「注意点」も記載
 
 ### セクション 4: 💡 今話題のAIツール深掘り（250 字）
-
 - Product Hunt / Hacker News で話題のツール **1 本**
 - 実在ツールのみ（公式 URL 必須）
 - **無料 / 有料 / フリーミアム** + 月額料金を必ず明記
@@ -154,30 +161,20 @@ XML から最新アイテムを抽出するには Python の `xml.etree`。
 - 「似ているツールとの違い」を 1 行で
 
 ### セクション 5: ⚡ 今日試せるプロンプト 5 本（400 字）
-
 そのままコピペできるプロンプト **5 本**：
 - テーマは **毎日バラバラ**（仕事効率化・文章作成・データ分析・画像生成・自動化・学習・副業など）
 - Claude / ChatGPT どちらでも使える汎用形式
 - **各プロンプトに「使い方のコツ」1 行**を付ける
 - 各プロンプト 60〜80 字目安
-
-例：
-```
-A.（仕事効率化）「あなたは...」 — コツ：「200 字以内で」と長さ指定すると失敗しない
-B.（文章作成）「次の文章を...」 — コツ：トーン（敬語/カジュアル）を最後に指定
-C.（データ分析）「以下の数値から...」 — コツ：CSV を貼ると精度向上
-...
-```
+- monospace ボックス内に表示されるため、`<br>` で改行、プロンプトテキストはそのまま入れる
 
 ### セクション 6: 🌍 海外最新AI活用事例（250 字）
-
 - **英語ソース**（TechCrunch / Verge / VentureBeat / MIT TR / HN 等）から、**日本未上陸 / 未普及** の事例
 - **国名・企業名・具体的な成果**を含む
 - 「**日本でも○年以内に普及する理由**」を含める
 - 出典 URL 必須
 
 ### セクション 7: 🤖 AIエージェント・自動化ツール比較（200 字）
-
 **環境変数 `AGENT_TOOL_TODAY` の指示に従って書く**。曜日別の対象は以下：
 
 | 曜日 | 対象 | 観点 |
@@ -193,42 +190,40 @@ C.（データ分析）「以下の数値から...」 — コツ：CSV を貼る
 公式 URL 必須。具体的な数字（料金・ユーザー数等）含むこと。
 
 ### セクション 8: 📊 数字で見るAI効率化（150 字）
-
 - 今週見つけた「**AI による効率化の数字**」を 1 つ
 - 形式：「○○社、AI 導入で△△が□% 削減」
 - 具体的な数字必須（パーセント・時間・金額）
 - 出典 URL 必須
 
-## 7. STEP 2: HTML 生成
+## 7. STEP 2: `/tmp/ai.json` の生成（**唯一の出力ファイル**）
 
-`morning-brief/templates/email-ai.html` を Read し、以下プレースホルダを全置換して `/tmp/ai.html` に書き出す：
-
-| プレースホルダ | 内容 |
-|---|---|
-| `{{DATE}}` | `2026-05-10` |
-| `{{WEEKDAY_JP}}` | `土` |
-| `{{MONTH_DAY}}` | `5/10` |
-| `{{NEWS_BLOCK}}` | セクション 1 |
-| `{{AUTOMATE_BLOCK}}` | セクション 2（5 事例、`<ul><li>...</li></ul>`） |
-| `{{HOWTO_BLOCK}}` | セクション 3 |
-| `{{TOOL_BLOCK}}` | セクション 4 |
-| `{{PROMPTS_BLOCK}}` | セクション 5（5 本、改行 / `---` で区切る） |
-| `{{OVERSEAS_BLOCK}}` | セクション 6 |
-| `{{AGENT_TOOL_BLOCK}}` | セクション 7（AIエージェント・自動化ツール比較） |
-| `{{NUMBERS_BLOCK}}` | セクション 8 |
-| `{{GENERATED_AT}}` | JST ISO8601 |
-
-## 8. STEP 3: JSON 生成（メタデータ）
-
-`/tmp/ai.json` に：
+以下のスキーマで `/tmp/ai.json` を書き出す：
 
 ```jsonc
 {
-  "schema_version": "1.3",
+  "schema_version": "1.4",
   "date": "YYYY-MM-DD",
   "weekday": "Sun|Mon|Tue|Wed|Thu|Fri|Sat",
   "agent_tool_today": "Zapier|Make|n8n|Notion AI|Microsoft Copilot|...",
   "captured_at": "YYYY-MM-DDTHH:MM:SS+09:00",
+
+  // ★ 必須：テンプレ置換用プレースホルダ（12 個すべて非空必須）
+  "placeholders": {
+    "DATE":             "2026-05-10",
+    "WEEKDAY_JP":       "土",
+    "MONTH_DAY":        "5/10",
+    "NEWS_BLOCK":       "<p>セクション 1 の HTML フラグメント...</p>",
+    "AUTOMATE_BLOCK":   "<ul><li>...</li>...</ul>",
+    "HOWTO_BLOCK":      "<p>...Step 1...Step 4...</p>",
+    "TOOL_BLOCK":       "<p>...</p>",
+    "PROMPTS_BLOCK":    "A.（仕事効率化）「...」<br>— コツ：...<br><br>B.（...）「...」<br>...",
+    "OVERSEAS_BLOCK":   "<p>...</p>",
+    "AGENT_TOOL_BLOCK": "<p>...</p>",
+    "NUMBERS_BLOCK":    "<p>...</p>",
+    "GENERATED_AT":     "2026-05-10T04:17:00+09:00"
+  },
+
+  // メタデータ（運用監視・出典追跡用）
   "rss_status": {
     "anthropic":   "ok|failed",
     "openai":      "ok|failed",
@@ -249,35 +244,46 @@ C.（データ分析）「以下の数値から...」 — コツ：CSV を貼る
   "top5_used": [
     { "title": "...", "url": "https://...", "score": { "utility": 4, "novelty": 5, "impact": 4 } }
   ],
-  "big_news": { "title": "...", "summary": "...", "source": "https://..." },
-  "automation_cases": [
-    { "company": "...", "task": "...", "effect": "...", "tool": "...", "source": "https://..." }
-  ],
-  "tool": { "name": "...", "url": "https://...", "pricing": "free|paid|freemium" },
-  "overseas_case": { "title": "...", "country": "...", "company": "...", "source": "https://..." },
-  "agent_tool": { "name": "Zapier", "url": "https://zapier.com", "summary": "..." },
-  "numbers_finding": { "metric": "...", "source": "https://..." },
+  "big_news":         { "title": "...", "summary": "...", "source": "https://..." },
+  "automation_cases": [ { "company": "...", "task": "...", "effect": "...", "tool": "...", "source": "https://..." } ],
+  "tool":             { "name": "...", "url": "https://...", "pricing": "free|paid|freemium" },
+  "overseas_case":    { "title": "...", "country": "...", "company": "...", "source": "https://..." },
+  "agent_tool":       { "name": "Zapier", "url": "https://zapier.com", "summary": "..." },
+  "numbers_finding":  { "metric": "...", "source": "https://..." },
   "char_count": 999,
   "notes": null
 }
 ```
 
+**重要**：
+- `placeholders` の **12 キー全て非空** であること（`render-ai-email.py` が空をチェックして fail する）
+- HTML フラグメントは email 互換（インラインスタイル、外部 CSS なし）
+- **`/tmp/ai.html` を Claude が直接書かないこと**（後段のレンダラが上書きする）
+
+## 8. STEP 3: 終了
+
+`/tmp/ai.json` を書き終えたら終了する。Claude の作業はここまで。
+
+ワークフロー側で：
+1. `python3 scripts/render-ai-email.py` → `/tmp/ai.html` を生成
+2. Verify で `/tmp/ai.html` の未置換チェック・サイズ確認
+3. Send email で Resend 送信
+
 ## 9. 品質チェックリスト
 
-完了前に必ず確認：
+`/tmp/ai.json` を書く前に必ず確認：
 
 - [ ] **14 ソース全部** fetch 試行（成功・失敗を `rss_status` に記録）
 - [ ] スコアリングして上位 5 本選定
-- [ ] **セクション 1 / 2 / 6 / 8 全部に出典 URL あり**（セクション 4 / 7 のツール URL も）
+- [ ] **`placeholders` サブ object に 12 キー全て**入っている、非空
+- [ ] セクション 1 / 2 / 6 / 8 の各 BLOCK に **出典 URL あり**（セクション 4 / 7 のツール URL も）
 - [ ] **創作ニュース・架空ツール 0 件**
 - [ ] **曖昧表現禁止**（「〜かもしれません」「〜と思われます」を含まない）
-- [ ] 全体 **2,000 字以内**
-- [ ] **8 セクション全部**埋まっている
+- [ ] 全体 **2,000 字以内**（HTML タグ込みでなく日本語コンテンツ部分の合計）
 - [ ] セクション 2 が **5 事例**（会社名・業務・数字・ツール・URL 全部あり）
 - [ ] セクション 5 のプロンプトが **5 本**、テーマがバラバラ + 各プロンプトに「使い方のコツ」
 - [ ] セクション 7 が `AGENT_TOOL_TODAY` の対象に沿っている
-- [ ] `/tmp/ai.html` に未解決 `{{...}}` なし
-- [ ] `/tmp/ai.html` が 3KB 以上
+- [ ] `/tmp/ai.html` は **書いていない**（Claude の責務外）
 
 ## 10. 注意事項
 
