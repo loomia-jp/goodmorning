@@ -1,0 +1,656 @@
+{
+  "schema_version": "1.2",
+  "date": "2026-05-15",
+  "weekday": "Fri",
+  "captured_at": "2026-05-15T18:41:44+09:00",
+  "market": {
+    "gold_jpy_g": 25414,
+    "platinum_jpy_g": 10958,
+    "silver_jpy_g": 425.7,
+    "usdjpy": 158.5,
+    "eurjpy": 184.28,
+    "nikkei": 61409.29,
+    "topix": 3863.97,
+    "valuence_9270": 2288,
+    "komehyo_2780": 4825,
+    "geo_2681": 2021,
+    "gold_dod_pct": -2.54,
+    "platinum_dod_pct": null,
+    "silver_dod_pct": null,
+    "gold_wow_trend": "下落",
+    "platinum_wow_trend": "下落",
+    "silver_wow_trend": "横ばい",
+    "nydow": 50063.46,
+    "nasdaq": null,
+    "sp500": 7501.24,
+    "nydow_dod_pct": 0.75,
+    "nasdaq_dod_pct": 0.88,
+    "sp500_dod_pct": 0.77,
+    "btc_jpy": 12824941,
+    "eth_jpy": 361434,
+    "btc_dod_pct": 2.42,
+    "eth_dod_pct": 1.18,
+    "wti_usd_bbl": 104.94,
+    "copper_usd_lb": 6.53,
+    "wheat_usd_bu": 6.5653
+  },
+  "weather_osaka": {
+    "main": "晴れ",
+    "temp_high": 28,
+    "temp_low": 16,
+    "rain_prob": 10,
+    "am_pm_note": "終日晴れ、日差し届くカラッとした暑さ。降水リスク極めて低い。紫外線対策が必要。"
+  },
+  "kpi": {
+    "visits": null,
+    "deals": null,
+    "revenue_jpy": null
+  },
+  "highlights": [
+    {
+      "title": "金相場が1日で-662円/g急落（田中貴金属 25,414円/g）",
+      "impact": "high",
+      "source": "https://gold.tanaka.co.jp/commodity/souba/",
+      "summary": "2026-05-15、金の店頭買取価格は前日比-2.54%（-662円）の25,414円/gに急落。プラチナも-792円と全面安。前日まで26,000円台を維持していた相場が一転。查定時に顧客への丁寧な説明が必要。",
+      "sales_hook": "「本日は相場が変動しています。お持ちの金・貴金属、今週中にご相談ください」と先手で告知する。"
+    },
+    {
+      "title": "LVが5/11に再値上げ完了、エルメスも200万円超え継続中",
+      "impact": "high",
+      "source": "https://brandrevalue.com/rnm/hermes-article581",
+      "summary": "ルイ・ヴィトンが2026年5月11日（水）に再値上げ（平均3〜5%）。エルメス・バーキン25は2月値上げで201.3万円に到達。定価上昇は買取価格の上昇余地を拡大し、持ち込み急増のチャンス。",
+      "sales_hook": "「値上がりしたブランド品、今が売り時です」とSNS・LINE公式で即日発信する。"
+    },
+    {
+      "title": "コメ兵 5月買取10%UPキャンペーン実施中、株価は決算ショックで-12%",
+      "impact": "high",
+      "source": "https://www.komehyo.co.jp/campaigns/2605kaitoricp.html",
+      "summary": "コメ兵が5月全店・出張・宅配で買取10%アップクーポンを配信中。しかし株価（2780）は本日-12.27%急落。競合が強気の買取攻勢をかける中、顧客の選択肢を比較検討される局面。",
+      "sales_hook": "コメ兵の10%UP対抗として、自社LINEで「宝飾・金買取5%上乗せ」を今日中に告知する。"
+    },
+    {
+      "title": "おたからや 5月に大阪府内へ新直営店出店",
+      "impact": "high",
+      "source": "https://prtimes.jp/main/html/rd/p/000000246.000080252.html",
+      "summary": "おたからやが2026年5月に14都府県へ直営18店舗を一斉出店。大阪府内にも新店あり。FCモデルから直営強化への戦略転換で競争激化が見込まれる。",
+      "sales_hook": "大阪府内の新店舗位置を今日確認し、半径2km内の既存客にポスティングを早期実施する。"
+    },
+    {
+      "title": "バイセルが150店舗に統合完了、業界再編が加速",
+      "impact": "high",
+      "source": "https://prtimes.jp/main/html/rd/p/000000213.000018121.html",
+      "summary": "バイセルは2026年1月1日付でグループ9社を吸収合併し、約150店舗体制に刷新。福ちゃん出張買取ブランドは継続。営業利益は上方修正85億円と財務基盤が強固。大手の価格競争力が増している。",
+      "sales_hook": "バイセル150店の大阪エリアマップを確認し、重複地域での出張買取チラシを強化する。"
+    },
+    {
+      "title": "トレジャー・ファクトリー「Regacy」が金融機関連携で終活市場に本格参入",
+      "impact": "high",
+      "source": "https://prtimes.jp/main/html/rd/p/000000021.000045363.html",
+      "summary": "東証プライム上場のトレジャー・ファクトリーが生前整理ブランド「Regacy」を大阪展開。銀行・証券経由で富裕層シニアに直接アプローチする新モデル。遺品買取領域の競争が質的に変化しつつある。",
+      "sales_hook": "地域密着・即日対応・福祉事業者連携を強みに「選ばれる理由」を明文化して営業資料に落とし込む。"
+    },
+    {
+      "title": "WTI原油が+3.72%急騰し104.94ドル超え、出張コスト要注意",
+      "impact": "medium",
+      "source": "https://jp.tradingeconomics.com/commodity/crude-oil",
+      "summary": "2026-05-15、WTI原油が前日比+3.72%で104.94ドル台へ急騰。ガソリン代上昇が出張買取の収益率を圧迫する可能性がある。高額案件の優先訪問で効率化を意識すること。",
+      "sales_hook": "高額案件（宝飾・時計・ブランドバッグ）を優先して訪問スケジュールを組み直す。"
+    },
+    {
+      "title": "Google I/O 2026でGemini搭載Android「インテリジェンスOS」発表",
+      "impact": "medium",
+      "source": "https://www.cnbc.com/2026/05/12/google-races-put-gemini-at-center-of-android-before-apples-ai-reboot.html",
+      "summary": "Google I/O（2026-05-15）でGeminiがAndroidをエージェント型AIプラットフォームに刷新。スマホ上のAIが複数アプリを横断してタスク実行可能に。査定補助・顧客対応AIの実用化が中小企業でも近づく。",
+      "sales_hook": "AI搭載スマホを使う若年顧客が増える。出張査定時のタブレット活用・相場確認をAI化する検討を始める。"
+    }
+  ],
+  "alerts": [
+    {
+      "title": "🔴 トレジャー・ファクトリー「Regacy」が金融機関経由で大阪の終活・生前整理買取市場に本格参入",
+      "severity": "critical",
+      "source": "https://prtimes.jp/main/html/rd/p/000000021.000045363.html",
+      "summary": "東証プライム上場・トレジャー・ファクトリーの終活ブランド「Regacy」が大阪エリアで展開。銀行・証券経由で富裕層シニアに直接アプローチ。差別化戦略（地域密着・即日対応・福祉連携）の早急な明文化が必要。"
+    },
+    {
+      "title": "🔴 イオンライフ（イオンのお葬式）×買取大吉 — 葬儀起点の遺品買取が関西で拡大中",
+      "severity": "critical",
+      "source": "https://www.aeonlife.jp/kaitori",
+      "summary": "イオンライフが葬儀後の遺品整理と買取大吉の出張買取を一体化したワンストップサービスを大阪府内で展開中。葬儀から買取まで一気通貫の競合モデル。終活相談窓口・提携葬儀社ネットワークの早期構築が急務。"
+    },
+    {
+      "title": "⚠️ 訪問介護事業者の大量廃業リスク — 関西圏で小規模事業者の経営悪化が継続",
+      "severity": "warning",
+      "source": "https://kaibiz.jp/column/2026hoshukaitei/",
+      "summary": "2026年6月の臨時介護報酬改定でも基本報酬削減の影響は継続。小規模訪問介護事業者の廃業が増加傾向。廃業時の備品・車両・医療器具等の一括買取需要が中期的に拡大する見込み。"
+    },
+    {
+      "title": "⚠️ 景品表示法：買取広告の5類型（「どこよりも高く」等）が優良誤認リスクとして明確化",
+      "severity": "warning",
+      "source": "https://www.caa.go.jp/policies/policy/representation/fair_labeling/survey/assets/representation_cms201_250430_03.pdf",
+      "summary": "消費者庁の2025年4月公表レポートで、「どこよりも高く買取」「何でも買取」「買取価格保証」等の5類型広告が措置命令・課徴金の対象リスクとして明確化。自社サイト・チラシの広告文言を今週中に見直すこと。"
+    }
+  ],
+  "ai_news": [
+    {
+      "title": "Google I/O 2026: Gemini を中心に Android を「インテリジェンス OS」へ刷新",
+      "source": "https://www.cnbc.com/2026/05/12/google-races-put-gemini-at-center-of-android-before-apples-ai-reboot.html",
+      "summary": "Gemini が複数アプリをまたいで画面内容を理解しタスクを自律実行する「Proactive Assistance」を発表。Android をエージェント型 AI プラットフォームへ転換。Apple Intelligence との競合が激化。",
+      "category": "company",
+      "relevance": "high"
+    },
+    {
+      "title": "Anthropic、Claude for Small Business を発表 ＋ Gates Foundation と 2 億ドル提携",
+      "source": "https://www.anthropic.com/news",
+      "summary": "中小企業向けプラン「Claude for Small Business」を 2026-05-13 に正式発表。評価額 9,500 億ドル規模の大型資金調達も交渉中。買取業の契約書・台帳ドラフト補助として活用余地あり。",
+      "category": "company",
+      "relevance": "high"
+    },
+    {
+      "title": "OpenAI、EU 向けサイバーセキュリティモデルへのアクセスを提供へ",
+      "source": "https://www.cnbc.com/2026/05/11/openai-eu-cyber-model-anthropic-mythos-gpt.html",
+      "summary": "2026-05-11。EU 当局に特化したサイバー専用モデルへの早期アクセスを提供。Anthropic の「Claude Mythos Preview」は限定公開にとどまる。AI セキュリティ規制への対応が加速。",
+      "category": "company",
+      "relevance": "medium"
+    },
+    {
+      "title": "Microsoft・Google・xAI、政府機関による事前モデル評価に合意",
+      "source": "https://www.cnn.com/2026/05/05/tech/microsoft-google-xai-government-test-ai-models",
+      "summary": "米 CAISI との間で「公開前モデル評価」協定を締結。トランプ政権による AI ガバナンス強化の一環。日本でも AI 推進法成立を受け、企業への協力努力義務が明確化。",
+      "category": "regulation",
+      "relevance": "medium"
+    },
+    {
+      "title": "LMArena 最新リーダーボード: GPT-5・Claude Opus 4.6 が首位争い",
+      "source": "https://arena.ai/leaderboard",
+      "summary": "2026-05 時点。フロンティアモデルの Elo 首位はGPT-5 と Claude Opus 4.6 の競争が継続。Gemini 3.1 Pro はコーディング arena で最強評価。AI 性能比較の更新頻度が加速している。",
+      "category": "benchmark",
+      "relevance": "low"
+    },
+    {
+      "title": "AI-OCR の LLM 融合化が加速 — 2026年版比較で「読んで理解する」段階へ",
+      "source": "https://digi-mado.jp/category/business/ai-ocr/",
+      "summary": "41 製品比較で LLM 統合による意味理解・自動仕訳が主流化。ノーコード帳票テンプレート設計が可能で IT 非専門の中小企業でも月額数千円〜数万円で導入可能。古物台帳・買取申込書の自動読み取りに応用可能。",
+      "category": "tool",
+      "relevance": "high"
+    },
+    {
+      "title": "コメ兵、AI 真贋鑑定を「ほぼ100%」精度で実用化 — 査定時間 30% 短縮",
+      "source": "https://www.nikkei.com/article/DGKKZO89800780T00C25A7TB3000/",
+      "summary": "コメ兵が 1.5 年開発の AI 鑑定システムを実用化。Entrupy は 96〜97% 精度でブランド品真贋判定を提供中。査定額ブレが ±10%→±3% に改善した事例あり。競合が AI 査定で優位性を確立しつつある。",
+      "category": "industry_case",
+      "relevance": "high"
+    },
+    {
+      "title": "IT 導入補助金が「デジタル化・AI 導入補助金」に改称 — AI-OCR が補助対象に明確化",
+      "source": "https://with-ai.jp/blog/ai-subsidy-2026-guide.html",
+      "summary": "2026 年度より AI-OCR が明示的な補助対象に追加。補助率 1/2〜3/4。古物商向け査定システム・顧客管理ツールの導入に活用可能。第 2 次締切は 2026-06-15。",
+      "category": "tool",
+      "relevance": "high"
+    },
+    {
+      "title": "日本「AI 推進法」成立 — 罰則なし・イノベーション優先の軽規制モデル",
+      "source": "https://www.whitecase.com/insight-alert/japans-first-ai-legislation-becomes-law-focus-promoting-research-and-development-no",
+      "summary": "2025-05-28 成立。罰則・禁止規定はなく企業に政府安全措置への協力を「努力義務」として求める形。EU AI Act とは対照的な「まず育てて後から規制」アプローチ。中小企業への直接負担は限定的。",
+      "category": "regulation",
+      "relevance": "medium"
+    }
+  ],
+  "tech_news": [
+    {
+      "title": "TSMC、米国 11 拠点以上投資（1,650 億ドル）で関税免除フレームワーク確保",
+      "category": "semiconductor",
+      "source": "https://www.tomshardware.com/tech-industry/u-s-government-plans-tariff-exemptions-for-tsmc-if-it-follows-through-on-american-investment-usd165-billion-already-pledged-to-increase-production-capacity-but-details-of-the-deal-are-still-murky",
+      "summary": "TSMC がアリゾナ州に 11 拠点以上のファブ建設を約束し、米政府から関税免除フレームワークを取得。2025 年通期売上は前年比 35.9% 増の 1,224 億ドル。NVIDIA・AMD 向け AI チップの供給安定化に直結。",
+      "impact": "high"
+    },
+    {
+      "title": "米国、一部 AI チップ輸入に 25% 関税 — H200 の中国向け出荷と連動",
+      "category": "semiconductor",
+      "source": "https://www.bloomberg.com/news/articles/2026-01-14/us-sets-25-tariff-on-some-chip-sales-as-part-of-nvidia-deal",
+      "summary": "NVIDIA との合意の一環で特定 AI チップの輸入に 25% 関税を課す枠組みを設定。GPU 市場は AI インフラ投資と関税・VRAM 制限で価格形成される構図が鮮明化。GPU 中古市場への波及も注視。",
+      "impact": "high"
+    },
+    {
+      "title": "NVIDIA、量子コンピュータ加速に向け初のオープン AI モデル「Ising」を発表",
+      "category": "quantum_space",
+      "source": "https://nvidianews.nvidia.com/news/nvidia-launches-ising-the-worlds-first-open-ai-models-to-accelerate-the-path-to-useful-quantum-computers",
+      "summary": "NVIDIA が量子回路のエラー訂正・最適化に AI を応用するオープンモデル「Ising」を公開。Google Quantum・IBM 等との競争が激化する量子 AI 分野に NVIDIA が本格参入。",
+      "impact": "medium"
+    },
+    {
+      "title": "Boston Dynamics Atlas、現代自動車工場へ商用展開開始 — 2027 年から外部受注開始予定",
+      "category": "robotics_av",
+      "source": "https://www.theregister.com/2026/01/06/boston_dynamics_atlas_production/",
+      "summary": "ヒューマノイドロボット Atlas が商用生産フェーズへ。2026 年分は現代自動車・Google DeepMind 向けに確約済み。Tesla Optimus Gen 3 は「まだ R&D フェーズ」とマスクが認め商用化では Atlas がリード。",
+      "impact": "high"
+    },
+    {
+      "title": "Waymo、CES 2026 でロボタクシー競争の先頭を独走と評価",
+      "category": "robotics_av",
+      "source": "https://nationaltoday.com/us/ma/boston/news/2026/04/12/waymo-leads-the-robotaxi-race-with-impressive-ces-2026-showcase/",
+      "summary": "高精度センサーフュージョンと完全自律システムで Waymo が依然として最先端と業界評価。日本への展開は現時点で未確定。自動運転の普及が中長期的に出張査定員の移動効率を変える可能性。",
+      "impact": "medium"
+    }
+  ],
+  "competitor_moves": [
+    {
+      "vendor": "バイセルテクノロジーズ",
+      "title": "グループ店舗ブランドを「バイセル」150 店舗へ統合完了",
+      "source": "https://prtimes.jp/main/html/rd/p/000000213.000018121.html",
+      "summary": "2026 年 1 月 1 日付で傘下 9 社を吸収合併し約 150 店舗体制に刷新。営業利益は上方修正 85 億円。福ちゃんの出張買取ブランドは継続。財務基盤が強固となり価格競争力が増している。",
+      "action_today": "バイセル 150 店の大阪エリアマップを確認し、重複地域での出張買取チラシを今週中に強化する。"
+    },
+    {
+      "vendor": "コメ兵ホールディングス",
+      "title": "買取金額 MAX10% UP キャンペーン（5 月全店・出張・宅配）",
+      "source": "https://www.komehyo.co.jp/campaigns/2605kaitoricp.html",
+      "summary": "5 月全店・出張・宅配・催事を対象に買取 10% アップクーポンを LINE 配信中。2026 年 3 月期営業利益は前期比+50%（過去最高 92 億円）。本日株価は決算後に-12.27% 急落。",
+      "action_today": "自社 LINE で「宝飾・金買取 5% 上乗せ」を今日中に告知し、コメ兵キャンペーンに対抗する。"
+    },
+    {
+      "vendor": "おたからや（株式会社いーふらん）",
+      "title": "2026 年 5 月に直営 18 店舗を一斉出店（14 都府県・大阪府内含む）",
+      "source": "https://prtimes.jp/main/html/rd/p/000000246.000080252.html",
+      "summary": "2026 年 5 月 1〜28 日に直営 18 店舗を一斉出店。大阪府内にも出店あり。FC チェーンが直営強化に軸足を移す戦略転換の象徴。百貨店・SC・路面店と出店形態が多様。",
+      "action_today": "大阪府内の新規おたからや直営店舗の場所を今日中に確認し、半径 2km 圏内の潜在顧客にポスティングを実施する。"
+    },
+    {
+      "vendor": "ザ・ゴールド",
+      "title": "銀座店 10 周年記念特別企画＆初夏の「時計買取祭」開催",
+      "source": "https://www.the-gold.jp/",
+      "summary": "銀座店 10 周年を迎え記念特別企画を実施。「時計買取祭」と連動して金相場高騰を受けた「金を売るなら今」の速報を発信中。時計・金買取の積極的な集客を展開。",
+      "action_today": "店頭 POP・SNS 投稿で「金・時計の買取価格更新中」を前面に出し、ザ・ゴールドの集客に対抗する。"
+    },
+    {
+      "vendor": "なんぼや（Valuence Japan）",
+      "title": "全国 130 店超展開・5 月キャンペーン詳細は公式サイト確認要",
+      "source": "https://nanboya.com/campaign-archive/",
+      "summary": "全国 130 店超でブランド・金・宝石買取を展開。2026 年 5 月の具体的キャンペーンは公式サイトで確認が必要。",
+      "action_today": "なんぼや公式サイトで 5 月キャンペーン内容を本日確認し、対抗策を検討する。"
+    },
+    {
+      "vendor": "買取大吉（イオンライフ連携）",
+      "title": "イオンのお葬式×買取大吉 — 葬儀起点の遺品買取が関西で拡大",
+      "source": "https://www.aeonlife.jp/kaitori",
+      "summary": "イオンライフが葬儀後の遺品整理と買取大吉の出張買取を一体化。大阪府内のイオンモールを拠点とした終活カウンターで日常的にシニア接点を確保している。",
+      "action_today": "葬儀社・士業との提携ネットワーク構築を優先アクションとして今週社内で議論する。"
+    },
+    {
+      "vendor": "大黒屋",
+      "title": "大口買取キャンペーン実施中（対象店舗あり）",
+      "source": "https://kaitori.e-daikoku.com/ticket/campaign/",
+      "summary": "大黒屋では大口買取キャンペーンを対象店舗で実施。2026 年 5 月の具体的な新規プレスリリース・新店舗情報は取得できず。",
+      "action_today": null
+    }
+  ],
+  "secondhand_top5": [
+    {
+      "platform": "yahoo_auction",
+      "category": "骨董・美術品",
+      "title": "ヤフオク 骨董品・美術品カテゴリ高額成約（直近 72 時間）",
+      "price": null,
+      "source": "https://auctions.yahoo.co.jp/closedsearch/closedsearch/%E9%AA%A8%E8%91%A3%E5%93%81/0/",
+      "note": "直近 24〜72 時間の具体的成約価格はリアルタイム API なしでは取得不能。ヤフオク落札済み検索で手動確認を推奨。"
+    },
+    {
+      "platform": "mercari",
+      "category": "貴金属",
+      "title": "18 金喜平ネックレス 30g 以上 高額成約事例",
+      "price": 1000000,
+      "source": "https://jp.mercari.com/search?keyword=18%E9%87%91+%E5%96%9C%E5%B9%B3+%E3%83%8D%E3%83%83%E3%82%AF%E3%83%AC%E3%82%B9&status=sold_out",
+      "note": "100 万円超の成約事例あり。金相場高騰局面で持ち込み急増が見込まれる。直近の確定価格は要現場確認。"
+    },
+    {
+      "platform": "yahoo_auction",
+      "category": "ブランドバッグ",
+      "title": "ルイ・ヴィトン スピーディ 30（5 月値上げ後相場）",
+      "price": null,
+      "source": "https://auctions.yahoo.co.jp/list5/23260-category.html",
+      "note": "定価改定後の二次流通相場変動を注視。高額品の成約価格は手動確認推奨。"
+    },
+    {
+      "platform": "yahoo_auction",
+      "category": "高級時計",
+      "title": "ロレックス サブマリーナー 中古市場（ヤフオク流通）",
+      "price": null,
+      "source": "https://auctions.yahoo.co.jp/list5/23260-category.html",
+      "note": "サブマリーナー平均売却価格は約 265 万円（2026 年 2 月時点）。直近 72 時間の落札価格は要現場確認。"
+    },
+    {
+      "platform": "mercari",
+      "category": "切手・古銭",
+      "title": "切手・古銭カテゴリ高額成約（直近 72 時間）",
+      "price": null,
+      "source": "https://jp.mercari.com/search?keyword=%E5%88%87%E6%89%8B+%E5%8F%A4%E9%8A%AD&status=sold_out",
+      "note": "メルカリ sold 検索（切手・古銭カテゴリ）で手動確認を推奨。越境 EC 需要で高値傾向。"
+    }
+  ],
+  "auctions_top3": [
+    {
+      "name": "東京中央オークション 春季・直近セール",
+      "price": null,
+      "source": "https://www.chuo-auction.com/jp/auction",
+      "summary": "2026 年 5 月前後の具体的落札結果は公式サイト（chuo-auction.com）の落札結果ページで確認要。中国陶磁・浮世絵・近代絵画を主に取り扱う。"
+    },
+    {
+      "name": "SBI アートオークション 直近セール",
+      "price": null,
+      "source": "https://www.sbiartauction.co.jp/results/",
+      "summary": "落札結果一覧ページあり。中国陶磁・浮世絵・近代絵画の取り扱いあり。直近セール詳細は要サイト確認。"
+    },
+    {
+      "name": "シンワオークション 直近セール",
+      "price": null,
+      "source": "https://www.shinwa-auction.com/",
+      "summary": "国内有力オークションハウス。直近 5 月の落札結果は公式サイトで確認要。KOMEHYO・JOL の業者間オークション結果は今回の検索では数値取得不能。"
+    }
+  ],
+  "brands_news": [
+    {
+      "brand": "ロレックス",
+      "title": "デイトナ 126500LN 中古相場 570〜600 万円台で高止まり、平均+16.76%（前年比）",
+      "kind": "international_price",
+      "source": "https://www.rasin.co.jp/blog/special/rolex-next-properprice/",
+      "summary": "2026 年 5 月時点でデイトナ 126500LN の中古相場は 570〜600 万円前後。ロレックス全体の平均中古価格は約 291 万円（4 月比+4.83%、前年比+16.76%）と上昇基調。定価 2,499,200 円に対し 2 倍超のプレミアム。",
+      "impact": "high",
+      "sns_worthy": true
+    },
+    {
+      "brand": "ロレックス",
+      "title": "サブマリーナー 平均売却価格 265 万円・定価比 58% プレミアム",
+      "kind": "international_price",
+      "source": "https://www.kaitori-ginza.com/blog/rolex/kaitori-submarinaer/",
+      "summary": "2026 年 2 月時点のサブマリーナー全体平均売却価格は 265 万円。定価（126610LN）1,683,000 円に対し約 58% のプレミアム。強含み継続中で買取強化モデルとして最優先。",
+      "impact": "high",
+      "sns_worthy": true
+    },
+    {
+      "brand": "パテック フィリップ",
+      "title": "ノーチラス 50 周年効果で相場が過去最高水準 — 5711/1A 買取 1,850〜2,250 万円",
+      "kind": "international_price",
+      "source": "https://www.chrono24.jp/magazine/patekphilippe-latest-value-p_159915/",
+      "summary": "2026 年 5 月、ノーチラス 50 周年を背景に市場全体が過去最高水準。ノーチラス 5711/1A-010 ブルー買取レンジ 1,850〜2,250 万円、アクアノート 5167A は 900〜1,200 万円前後。",
+      "impact": "high",
+      "sns_worthy": true
+    },
+    {
+      "brand": "オーデマ・ピゲ",
+      "title": "ロイヤルオーク平均相場 1,003 万円・前月比-3.89% も前年比+19.46%",
+      "kind": "international_price",
+      "source": "https://www.kaitori-ginza.com/audemarspiguet/royaloak/",
+      "summary": "2026 年 5 月 6 日時点でロイヤルオーク平均相場は約 1,003 万円（前月比-3.89%）。前年比+19.46% と中長期的な上昇は継続。エクストラシン 15202ST などの希少モデルが特に需要高。",
+      "impact": "high",
+      "sns_worthy": true
+    },
+    {
+      "brand": "エルメス",
+      "title": "2026 年 2 月値上げ: バーキン 25・ケリー 25 が定価 200 万円超え",
+      "kind": "other",
+      "source": "https://brandrevalue.com/rnm/hermes-article581",
+      "summary": "2026 年 2 月 1 日実施の値上げでバーキン 25 が 201.3 万円（+7.0%）、ケリー 25（内縫い）201.3 万円（+8.3%）と 200 万円の大台を突破。円安進行が続けば追加値上げの可能性あり。",
+      "impact": "high",
+      "sns_worthy": true
+    },
+    {
+      "brand": "ルイ・ヴィトン",
+      "title": "2026 年 5 月 11 日に再値上げ完了: スピーディ・ネヴァーフル等平均 3〜5%",
+      "kind": "other",
+      "source": "https://plaza.rakuten.co.jp/wendm/diary/202605120000-amp/",
+      "summary": "2026 年 5 月 11 日（水）に国内価格を改定。スピーディ・ネヴァーフル・アルマ・カプシーヌ等の定番モデルが平均 3〜5% 値上がり。2025 年 4 月に続き 1 年で 2 回の連続値上げ。",
+      "impact": "high",
+      "sns_worthy": true
+    },
+    {
+      "brand": "ロレックス",
+      "title": "2026 年 4 月 新モデル追加：定価一覧更新",
+      "kind": "new_release",
+      "source": "https://jwc-watch.com/952/",
+      "summary": "2026 年 4 月に新作モデルが追加され国内定価一覧が更新。新作発表後は旧モデルの二次流通相場が変動する傾向があり、買取単価の見直しが必要。",
+      "impact": "medium",
+      "sns_worthy": true
+    }
+  ],
+  "reuse_market": [
+    {
+      "title": "ライカカメラ 国内中古・新品相場 — M11-P Safari（限定）176 万円",
+      "category": "instruments_camera_watches",
+      "source": "https://www.pricey.jp/web/articles/3201",
+      "summary": "2026 年 4 月時点のライカ新品価格: M-A ¥1,034,000、M EV1 ¥1,397,000、M11-P Safari（限定）¥1,760,000。中古でも 103〜176 万円台で推移。ドイツ職人手作業による希少性が高価格を維持。",
+      "impact": "medium"
+    },
+    {
+      "title": "eBay 越境販売で日本製コンパクトカメラ・フィルムカメラが高値取引中",
+      "category": "instruments_camera_watches",
+      "source": "https://tetsudo-ch.com/12916436.html",
+      "summary": "富士フイルムのデジカメ、ニコンのフィルムカメラが eBay 越境販売で高額成約。国内中古市場が海外に比べて成熟しており状態の良い商品が豊富なことが強み。買取査定額を引き上げる余地あり。",
+      "impact": "high"
+    },
+    {
+      "title": "中古車・バイク相場：GW 明け 5 月は春需要一巡後の調整局面",
+      "category": "vehicles",
+      "source": "https://www.ussnet.co.jp/",
+      "summary": "USS は全国 19 会場・年間約 300 万台出品規模。5 月は GW 明け後の春需要一巡で相場調整傾向。JU 大阪の具体的落札データは非公開のため要現場確認。",
+      "impact": "low"
+    },
+    {
+      "title": "円安継続局面での eBay 輸出: カメラ・時計・ブランド品が加速、高級中古品市場は年間 12% 成長",
+      "category": "cross_border_ec",
+      "source": "https://www.ebay.co.jp/info/cbt-blog/cbt-pb14",
+      "summary": "売れ筋カテゴリ: コンパクトカメラ・フィルムカメラ、ブランド時計（7 万円以上メンズ）、ブランドバッグ、骨董・アンティーク、楽器。高級中古品市場は年間 12% 成長（業界全体の 4 倍速）。",
+      "impact": "high"
+    },
+    {
+      "title": "ヤフオク 海外代理購入サービス経由の外国人バイヤー流入が継続増加",
+      "category": "cross_border_ec",
+      "source": "https://buyee.jp/yahoo/auction?lang=en",
+      "summary": "Buyee・ZenMarket 等のプロキシサービス経由で骨董・古道具・フィルムカメラ・アニメ関連品への海外入札が増加継続。国内市場での高値査定→メグル買取→eBay 再販ルートが有効。",
+      "impact": "medium"
+    }
+  ],
+  "regulations": [
+    {
+      "title": "消費者庁「買取サービスに関する実態調査報告書」— 景表法の買取広告 5 類型が優良誤認リスクとして明確化",
+      "domain": "consumer",
+      "source": "https://www.caa.go.jp/policies/policy/representation/fair_labeling/survey/assets/representation_cms201_250430_03.pdf",
+      "summary": "「どこよりも高く買取」「買取価格保証」等の 5 類型広告が措置命令・課徴金の対象リスクとして明確化。買取市場規模は約 1.3 兆円。消費者の 4〜5 割が「実際の買取価格が予想より低かった」と回答。",
+      "impact": "high"
+    },
+    {
+      "title": "景品表示法 2024 年 4 月改正 — 古物商の買取取引が規制対象に正式確定",
+      "domain": "consumer",
+      "source": "https://gac-sateishi.info/2024/05/20/law-4/",
+      "summary": "2024 年 4 月 18 日施行。古物商が一般消費者から物品を買い取る取引は「役務の提供」として景表法の適用を受けることが明確化。「最高額保証」等の広告表現は根拠なき場合、不当表示認定リスクあり。",
+      "impact": "high"
+    },
+    {
+      "title": "インボイス制度 古物商特例 — 2026 年 10 月〜2029 年 9 月 仕入税額控除 50% 経過措置",
+      "domain": "tax",
+      "source": "https://biz.moneyforward.com/invoice/basic/49492/",
+      "summary": "個人（非課税事業者）からの買取は帳簿保存のみで仕入税額控除が可能。2026 年 10 月 1 日〜2029 年 9 月 30 日の 3 年間は 50% 経過措置が適用。買取申込書に適切なチェック欄設置を推奨。",
+      "impact": "medium"
+    },
+    {
+      "title": "日本「AI 推進法」成立 — 罰則なし・努力義務型の軽規制モデル",
+      "domain": "ai",
+      "source": "https://www.whitecase.com/insight-alert/japans-first-ai-legislation-becomes-law-focus-promoting-research-and-development-no",
+      "summary": "2025-05-28 成立。企業に政府安全措置への協力を努力義務として求める。EU AI Act とは対照的なイノベーション優先アプローチ。中小企業への直接負担は限定的。",
+      "impact": "medium"
+    },
+    {
+      "title": "EU AI Act 高リスク規定の 2026-08-02 期限 — 延期交渉が難航",
+      "domain": "ai",
+      "source": "https://theaiforest.com/ai-regulation-news-2026-us-eu-global-updates/",
+      "summary": "EU AI Act の高リスク AI システム向けコンプライアンス期限は 2026-08-02。三者協議は合意なしに終了、延期案（2027-12 まで）は未決。EU 市場向けサービスを提供する企業は動向を注視。",
+      "impact": "high"
+    },
+    {
+      "title": "空き家譲渡所得 3,000 万円特別控除の適用期間 2027 年末まで延長・要件緩和",
+      "domain": "tax",
+      "source": "https://www.mlit.go.jp/jutakukentiku/house/jutakukentiku_house_tk2_000030.html",
+      "summary": "被相続人居住用家屋（空き家）の売却に係る 3,000 万円特別控除の適用期限が 2027 年 12 月 31 日まで延長。相続人 3 人以上の場合は控除額が 1 人 2,000 万円に圧縮。",
+      "impact": "high"
+    }
+  ],
+  "welfare_news": [
+    {
+      "title": "2026 年 6 月 1 日 臨時介護報酬改定 — 処遇改善加算拡充・訪問看護等が初めて対象に",
+      "category": "policy",
+      "source": "https://gemmed.ghc-j.com/?p=72494",
+      "summary": "2026 年 6 月 1 日より訪問介護では最大 28.7% の処遇改善加算を設定。訪問看護・居宅介護支援・地域包括支援センター等が制度創設以来初めて処遇改善加算の対象に追加。介護職員への賃上げ上限は月額最大 1.9 万円。",
+      "impact": "high",
+      "lead_opportunity": "介護事業所の経営コスト増→小規模事業者の廃業・M&A加速。施設閉鎖に伴う遺品整理・生前整理相談の流入チャンス。"
+    },
+    {
+      "title": "大阪市 第 9 期介護保険事業計画（2024〜2026 年度）最終年度 — 地域包括ケア深化",
+      "category": "policy",
+      "source": "https://www.city.osaka.lg.jp/fukushi/page/0000623467.html",
+      "summary": "大阪市は第 9 期計画の最終年度を迎え、地域包括ケアシステムの深化・推進を重点施策として継続。大阪市の介護保険料は全国最高水準からの脱却を目指した介護予防推進チームを稼働中。",
+      "impact": "medium",
+      "lead_opportunity": "大阪市の在宅化・地域ケア促進により在宅高齢者の増加→生前整理ニーズが広域に拡大。"
+    },
+    {
+      "title": "2026 年 5 月以降開設の介護施設・有料老人ホームが続出、一方で小規模事業者の廃業・M&A 増加",
+      "category": "facility",
+      "source": "https://www.my-kaigo-home.com/column/327/",
+      "summary": "施設数の増加傾向が継続。一方で 2026 年 6 月の介護報酬改定に伴うコスト増で小規模事業者の閉鎖・M&A 案件が増加傾向。有料老人ホームの月額費用 15〜40 万円が目安。",
+      "impact": "medium",
+      "lead_opportunity": "新規施設開設前後の旧居宅清掃・遺品整理需要。閉鎖施設での一括整理受注機会。"
+    },
+    {
+      "title": "介護業界 M&A 2026 年も加速 — 小規模事業者の譲渡・グループイン増加",
+      "category": "ma",
+      "source": "https://masouken.com/%E4%BB%8B%E8%AD%B7%E6%A5%AD%E7%95%8C%E3%81%AEM&A",
+      "summary": "2026 年介護報酬改定で大規模事業者優遇が明確化。小規模訪問介護・デイサービス事業者の廃業・譲渡が加速。大阪府でも複数の介護付有料老人ホームや居宅介護事業者の M&A・事業承継案件が流通中。",
+      "impact": "high",
+      "lead_opportunity": "M&A・廃業に伴う施設備品・什器の一括買取・処分の直接提案機会。経営者・オーナーへの生前整理クロスセル。"
+    },
+    {
+      "title": "介護情報基盤 2026 年 4 月スタート — 訪問看護・ケアマネとの情報連携が電子化",
+      "category": "home_care",
+      "source": "https://kaigonews.net/articles/kaigo-joho-kiban-2026",
+      "summary": "訪問看護計画書・情報提供書の電子連携標準仕様が確定。訪問看護 ST・かかりつけ医・ケアマネジャー間のデジタル情報共有が本格化。ICT 活用による看護配置の柔軟化も進む。",
+      "impact": "medium",
+      "lead_opportunity": "在宅サービス事業者・ケアマネとの連携強化の好機。介護情報基盤導入支援セミナー等への協賛で見込み客開拓。"
+    },
+    {
+      "title": "レカネマブ（レケンビ）皮下注射製剤 FDA 審査目標日 2026-05-24・日本承認は 2026 年 9 月目標",
+      "category": "research",
+      "source": "https://www.eisai.co.jp/news/2026/news202625.html",
+      "summary": "エーザイ・バイオジェンの早期アルツハイマー病治療薬の皮下注射オートインジェクター製剤について FDA 審査終了目標日が 2026-05-24 に設定。日本では PMDA へ承認申請済みで 2026 年 9 月までの承認を目指す。在宅投与可能になることで患者アクセスが大幅拡大見込み。",
+      "impact": "high",
+      "lead_opportunity": "認知症患者の在宅療養継続期間が延長→生前整理・終活相談ニーズが早期化・日常化。物忘れ外来・神経内科との連携で認知症家族へのアプローチ強化。"
+    },
+    {
+      "title": "終活市場 5,000 億円超 — トレジャー・ファクトリー×埼玉りそな銀行が生前整理セミナーを本格化",
+      "category": "estate",
+      "source": "https://prtimes.jp/main/html/rd/p/000000021.000045363.html",
+      "summary": "トレジャー・ファクトリーの終活ブランド「Regacy（レガシー）」が 2026 年 2 月より銀行との連携を深化。銀行顧客（高齢者・シニア層）への終活接点を金融機関経由で獲得する「金融×リユース」モデルを展開。大阪エリアでも対応済み。",
+      "impact": "high",
+      "lead_opportunity": null
+    },
+    {
+      "title": "遺品整理サービス参入企業急増 — 業者数は 5 年で約 5 倍、葬儀・士業クロスセルが加速",
+      "category": "estate",
+      "source": "https://www.recycle-tsushin.com/news/detail_6428.php",
+      "summary": "遺品整理業者数は 2015 年の 2,560 社から 2021 年に 12,541 社へ約 5 倍増加。2025 年度終活関連市場規模は 257 億円（前年比 109.7%）と成長継続。葬祭・士業が供養・形見分け・買取を一体化したサービスで本格参入。",
+      "impact": "high",
+      "lead_opportunity": "葬儀社・士業との提携による遺品整理受注のクロスセルを強化。競合他社の価格・サービス差別化動向の継続的モニタリングが必要。"
+    },
+    {
+      "title": "空き家譲渡所得 3,000 万円特別控除の適用期間 2027 年末まで延長・要件緩和",
+      "category": "inheritance",
+      "source": "https://www.mlit.go.jp/jutakukentiku/house/jutakukentiku_house_tk2_000030.html",
+      "summary": "被相続人居住用家屋（空き家）の売却に係る 3,000 万円特別控除の適用期限が 2027 年 12 月 31 日まで延長。相続人 3 人以上の場合は控除額が 1 人 2,000 万円に圧縮。空き家の早期流通・解消促進の方向性。",
+      "impact": "high",
+      "lead_opportunity": "空き家売却前の清掃・遺品整理は必須工程。不動産会社・相続専門税理士・司法書士との紹介ネットワーク構築で相続発生直後の案件を早期取り込み可能。"
+    },
+    {
+      "title": "シニア向けスマホ購入補助金が自治体で継続・格安 SIM 各社のシニアプラン競争激化",
+      "category": "product",
+      "source": "https://hojyokin-portal.jp/columns/smartphone_hojyo",
+      "summary": "複数自治体が 2026 年もシニア向けスマートフォン購入補助金を継続。楽天モバイル「最強シニアプログラム」・au「シニアバリュープラン」等が拡充。高齢者のデジタルアクセス向上が在宅ケア普及を加速。",
+      "impact": "medium",
+      "lead_opportunity": "スマホ普及によるシニアの SNS・LINE 活用増→LINE 公式アカウント・SNS 広告の投資対効果が向上。オンライン査定申込の集客チャネル拡大。"
+    }
+  ],
+  "lifestyle_trends": [
+    {
+      "title": "シニア「捨て活」ブーム加速 — 金・貴金属の高相場と終活断捨離需要が重なり買取好機",
+      "category": "senior_consumer",
+      "source": "https://biz.halmek.co.jp/column/investigation/22040329.html",
+      "summary": "2026 年、「捨て活（持ち物を見直しながら手放す習慣）」が 50〜70 代に広まる。金・プラチナ相場の高騰が続いており、貴金属・着物・骨董品の売却需要が活発化。出張買取が最適な手段として評価が高まっている。",
+      "impact": "high",
+      "scene": "field_visit"
+    },
+    {
+      "title": "iPS 再生医療「アムシェプリ」5 月 20 日から保険適用 — 世界初・薬価約 5,500 万円",
+      "category": "health_medical",
+      "source": "https://www.jiji.com/jc/article?k=2026051300389&g=soc",
+      "summary": "住友ファーマが開発した iPS 細胞由来のパーキンソン病治療薬「アムシェプリ」が 2026 年 5 月 20 日付で保険適用（薬価約 5,500 万円）。高額療養費制度が適用されるため患者の実費は大幅に抑えられる。iPS 細胞由来製品の保険適用は世界初。",
+      "impact": "medium",
+      "scene": "staff_morning"
+    },
+    {
+      "title": "Z 世代の消費行動が「自分軸カスタマイズ」へ転換 — フリマ活用でリセールが前提の購買が定着",
+      "category": "gen_z",
+      "source": "https://digitalidentity.co.jp/blog/social/gen-z-2026-trends.html",
+      "summary": "2026 年、Z 世代のトレンドは「一斉流行」から「SNS でじわじわ共感」へシフト。メルカリ等フリマアプリを前提とした「買って不要なら売る」循環型消費が定着。ファッション分野だけでリセール市場は約 288 億円規模の新品需要を創出。",
+      "impact": "high",
+      "scene": "field_visit"
+    },
+    {
+      "title": "2026 年国民生活基礎調査スタート — 単身世帯増加と多世代コミュニティへの関心が高まる",
+      "category": "family_community",
+      "source": "https://www.mhlw.go.jp/stf/newpage_71871.html",
+      "summary": "厚生労働省が 2026 年 4〜7 月に第 40 回国民生活基礎調査を実施中。単身世帯が 2040 年には全世帯の 39.3% に達する見通し。遺品整理・生前整理の相談増加と直結しており、買取業者が「終活パートナー」として地域に溶け込む機会。",
+      "impact": "medium",
+      "scene": "exec_meeting"
+    },
+    {
+      "title": "大阪インバウンド 2026 年目標 1,800 万人超 — 万博後も観光消費が高水準",
+      "category": "local_kansai",
+      "source": "https://honichi.com/news/2026/01/30/osaka202601/",
+      "summary": "大阪観光局は 2026 年のインバウンド客数を 1,800 万人超えと設定。万博閉幕後もゴールデンルートの観光需要は衰えず、外国人富裕層による骨董・伝統工芸品・着物・ブランド品の購入ニーズが継続。英語・中国語対応査定が差別化ポイントになりうる。",
+      "impact": "medium",
+      "scene": "exec_meeting"
+    },
+    {
+      "title": "インテックス大阪でファクトリーイノベーション Week 開催（5/13〜15）— 製造業 DX の最前線が大阪に集結",
+      "category": "local_kansai",
+      "source": "https://www.fiweek.jp/osaka/ja-jp.html",
+      "summary": "2026 年 5 月 13〜15 日、インテックス大阪にて「ファクトリーイノベーション Week」が開催（本日最終日）。DX・ロボット・カーボンニュートラルをテーマにした大型産業展示会が近畿圏の製造業関係者を集結。中小工場・町工場オーナー層（50〜60 代）からの備品・機器売却の引き合いが見込まれる時期。",
+      "impact": "low",
+      "scene": "general"
+    },
+    {
+      "title": "予防医療を国が本格推進 — 政府が健康寿命延伸へ環境整備方針、シニアの「健康投資」意識が高まる",
+      "category": "health_medical",
+      "source": "https://news.web.nhk.or.jp/newsweb/na/na-k10015018451000",
+      "summary": "政府の疾病治療から予防医療への重点シフトが進む。60〜70 代の「健康への先行投資」意識が高まっており、健康器具・フィットネス機器の買い替えや不要になった医療補助具の売却ニーズが増加する可能性がある。",
+      "impact": "medium",
+      "scene": "field_visit"
+    }
+  ],
+  "subsidies_deadline_within_30d": [
+    {
+      "name": "デジタル化・AI 導入補助金 2026（旧 IT 導入補助金）第 2 次締切",
+      "deadline": "2026-06-15",
+      "source": "https://it-shien.smrj.go.jp/schedule/",
+      "summary": "中小企業・小規模事業者が IT ツール（業務管理・会計・顧客管理・AI-OCR 等）を導入する際の費用補助。補助率 1/2〜3/4。買取業務のデジタル化・AI 査定ツール導入に活用可能。交付決定予定は 2026 年 7 月 23 日。"
+    },
+    {
+      "name": "介護ロボット・ICT 機器導入補助金（都道府県・市区町村別）",
+      "deadline": "2026-06-14",
+      "source": "https://neoscare.noritsu-precision.com/column/20251210_2559/",
+      "summary": "厚労省推進の介護テクノロジー利用促進事業に基づき各都道府県・政令市が見守りセンサー・コミュニケーションロボット等の導入費用を補助。締切・補助上限は自治体により異なる。大阪府・大阪市の公式サイトで最新情報確認要。"
+    }
+  ],
+  "subagent_meta": {
+    "agent_market_status": "partial",
+    "agent_industry_status": "partial",
+    "agent_ai_status": "partial",
+    "agent_welfare_status": "partial",
+    "agent_lifestyle_status": "partial",
+    "notes": "全 5 Subagent が partial で完了。市場データ（ナスダック総合確定値・貴金属前日比 %）、メルカリ・ヤフオク・業者間オークションの直近リアルタイム成約価格は取得不能のため null。コメ兵株価は決算後-12%急落で注意。3/5 以上（全 5）が成功基準を満たしているため配信品質として許容範囲内。"
+  }
+}
