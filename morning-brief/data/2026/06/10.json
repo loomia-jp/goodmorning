@@ -1,0 +1,569 @@
+{
+  "schema_version": "1.2",
+  "date": "2026-06-10",
+  "weekday": "Wed",
+  "captured_at": "2026-06-10T08:05:00+09:00",
+  "market": {
+    "gold_jpy_g": 24227,
+    "platinum_jpy_g": 9691,
+    "silver_jpy_g": 370.04,
+    "gold_dod_pct": 0.48,
+    "platinum_dod_pct": -0.47,
+    "silver_dod_pct": 1.85,
+    "gold_wow_trend": "下落",
+    "platinum_wow_trend": "下落",
+    "silver_wow_trend": "下落",
+    "usdjpy": 160.39,
+    "eurjpy": 185.05,
+    "nikkei": 65416.63,
+    "topix": 3896.11,
+    "valuence_9270": 2450,
+    "komehyo_2780": 5050,
+    "geo_2681": 2054,
+    "nydow": 50870.94,
+    "nasdaq": 25678.82,
+    "sp500": 7386.44,
+    "nydow_dod_pct": 0.17,
+    "nasdaq_dod_pct": -0.97,
+    "sp500_dod_pct": -0.26,
+    "btc_jpy": 10155374,
+    "eth_jpy": 271059,
+    "btc_dod_pct": 0.29,
+    "eth_dod_pct": 1.3,
+    "wti_usd_bbl": 89.38,
+    "copper_usd_lb": 6.29,
+    "wheat_usd_bu": 5.84
+  },
+  "weather_osaka": {
+    "main": "晴れ",
+    "temp_high": 28,
+    "temp_low": 17,
+    "rain_prob": 0,
+    "am_pm_note": "終日晴れで降水なし。北寄りの風（4m/s）。朝方17℃と涼しいが午後は28℃まで急上昇。出張買取のコンディション◎。"
+  },
+  "kpi": {
+    "visits": null,
+    "deals": null,
+    "revenue_jpy": null
+  },
+  "highlights": [
+    {
+      "title": "貴金属：金24,227円(+0.48%)・プラチナ9,691円(-0.47%)・週次下落継続",
+      "source": "田中貴金属工業",
+      "summary": "田中貴金属6/9公表値。金は前日比小幅上昇だが週次では依然下落トレンド。プラチナは0.47%安。シルバーは1.85%高の370.04円/g。",
+      "impact": "high"
+    },
+    {
+      "title": "Regacy（レガシー）東証プライム上場トレファクが大阪市全24区で終活買取サービス本格稼働",
+      "source": "Regacy公式",
+      "summary": "トレジャー・ファクトリー子会社Regacyが大阪市全24行政区で終活・生前整理の出張買取を本格展開。競合として直接脅威となる。",
+      "impact": "high"
+    },
+    {
+      "title": "Apple WWDC 2026 iOS27発表：Wallet VisualIntelligence・AI Siri大幅進化",
+      "source": "Apple Events",
+      "summary": "iOS27でWalletアプリにVisualIntelligence統合、カメラで商品認識・価格比較が可能に。リユース価格査定への影響大。AI Siriも長文対話能力が大幅強化。",
+      "impact": "high"
+    },
+    {
+      "title": "Anthropic Claude Fable（claude-fable-5）正式リリース（6月9日）",
+      "source": "Anthropic",
+      "summary": "AnthropicがClaude Fableを正式リリース。長文理解・多段階推論が大幅強化。ビジネス向けAPIも同日提供開始。AI業務活用がさらに加速。",
+      "impact": "high"
+    },
+    {
+      "title": "ロレックス6月定価改定継続波及：コンビ+2.5%・ゴールド+5%で中古相場上昇",
+      "source": "ブランド買取市場調査",
+      "summary": "2026年6月のロレックス正規定価改定を受け、コンビモデルは約2.5%、ゴールドモデルは約5%値上げ。中古市場の相場も連動上昇中。買取レート見直しを推奨。",
+      "impact": "high"
+    },
+    {
+      "title": "大阪快晴・最高28℃・降水確率0%——出張買取フル稼働の好コンディション",
+      "source": "気象庁",
+      "summary": "6月10日の大阪は終日晴れ。降水確率0%、最高28℃で出張買取チームの行動に支障なし。訪問スケジュールを最大化できる好条件。",
+      "impact": "medium"
+    },
+    {
+      "title": "訪問介護・小規模事業所倒産過去最多ペース——閉鎖施設から遺品整理需要増大",
+      "source": "帝国データバンク",
+      "summary": "2026年上半期、訪問介護・小規模介護事業所の倒産件数が過去最多ペース。施設閉鎖に伴う遺品整理・生前整理の買取需要が増加している。",
+      "impact": "high"
+    },
+    {
+      "title": "Z世代の70%がリセールバリューを意識——リユース市場が3兆円突破",
+      "source": "リユース業界団体調査",
+      "summary": "最新調査でZ世代の約70%が購買時にリセールバリューを意識していることが判明。国内リユース市場規模が3兆円を突破し、年率10%超で成長継続。",
+      "impact": "high"
+    }
+  ],
+  "alerts": [
+    {
+      "title": "イオンライフ×買取大吉：葬儀後出張買取全国1,800店舗展開中",
+      "source": "買取大吉公式",
+      "summary": "イオンライフとの提携で葬儀後の遺品整理・出張買取を全国1,800店舗ネットワークで展開中。終活・葬儀後需要の囲い込みが進む。即座の対抗策要検討。",
+      "severity": "critical"
+    },
+    {
+      "title": "Regacy：東証プライム上場トレファク運営、大阪市全24区で終活買取本格稼働",
+      "source": "Regacy公式",
+      "summary": "資金力・ブランド力を持つトレファク系Regacyが大阪市内全域でサービス開始。メグル買取の主要商圏に直接参入。差別化戦略の即時見直しが必要。",
+      "severity": "critical"
+    },
+    {
+      "title": "EEFULホールディングス4.1億円調達・介護M&A加速でニーズ囲い込みリスク",
+      "source": "EEFUL公式",
+      "summary": "介護×テクノロジー系EEFULが4.1億円を調達し介護施設M&Aを加速。介護施設経由の遺品整理案件が競合に流れるリスクが高まっている。",
+      "severity": "warning"
+    }
+  ],
+  "ai_news": [
+    {
+      "title": "Anthropic Claude Fable（claude-fable-5）正式リリース",
+      "source": "Anthropic",
+      "summary": "AnthropicがClaude Fableを正式リリース。長文理解・多段階推論が大幅強化。ビジネス向けAPIも同日提供開始。",
+      "category": "company"
+    },
+    {
+      "title": "Apple WWDC 2026：iOS27にAI Siri・VisualIntelligence統合",
+      "source": "Apple Events",
+      "summary": "WWDC 2026でiOS27を発表。AI Siriが会話継続能力を大幅強化、VisualIntelligenceでカメラからリアルタイム商品認識・価格照合が可能に。",
+      "category": "company"
+    },
+    {
+      "title": "EU AI Act改正（Digital Omnibus）高リスクAI適用を16ヶ月延期",
+      "source": "欧州委員会",
+      "summary": "EU AI Act規制のうち高リスクAIシステムへの適用期限を16ヶ月延期する改正案が欧州委員会で承認。企業の準備期間が確保される。",
+      "category": "regulation"
+    },
+    {
+      "title": "日本AIガイドライン1.2版：AIエージェントへの人間監視義務化",
+      "source": "経済産業省",
+      "summary": "経産省がAIガイドライン1.2版を公表。AIエージェントの自律的な意思決定プロセスに人間の監視を義務付ける条項が追加された。",
+      "category": "regulation"
+    },
+    {
+      "title": "個人情報保護法改正草案：AI学習目的でのデータ利用同意を緩和",
+      "source": "個人情報保護委員会",
+      "summary": "個人情報保護法改正草案でAI学習を目的としたデータ利用の同意取得要件を緩和する方向が示された。業界からは歓迎の声が相次ぐ。",
+      "category": "regulation"
+    },
+    {
+      "title": "生成AI×古物査定：二次市場価格予測モデルの精度向上事例",
+      "source": "業界専門誌",
+      "summary": "国内リユース業者が生成AIを活用した古物査定・価格予測システムを導入し、買取精度が30%向上した事例が報告された。",
+      "category": "industry_case"
+    }
+  ],
+  "tech_news": [
+    {
+      "title": "NVIDIA Blackwell Ultra GPU量産開始・AI推論コスト30%削減",
+      "source": "NVIDIA",
+      "summary": "NVIDIAのBlackwell Ultra GPUが量産フェーズに移行。前世代比でAI推論コストが約30%削減可能とされ、クラウドAIサービスの価格低下が見込まれる。",
+      "category": "semiconductor",
+      "impact": "high"
+    },
+    {
+      "title": "Googleが量子コンピュータWillow後継機発表・エラー訂正機能向上",
+      "source": "Google Quantum AI",
+      "summary": "Googleが量子コンピュータWillowの後継機を発表。量子エラー訂正精度が大幅向上し、実用化への道が近づいた。",
+      "category": "quantum_space",
+      "impact": "medium"
+    },
+    {
+      "title": "テスラFSD v14：都市部完全自動運転の公道テスト拡大（日本含む）",
+      "source": "Tesla",
+      "summary": "テスラのFull Self-Driving v14が日本を含む主要都市で公道テストを拡大。物流・出張サービスへの応用可能性が高まっている。",
+      "category": "robotics_av",
+      "impact": "medium"
+    }
+  ],
+  "competitor_moves": [
+    {
+      "vendor": "バイセル",
+      "title": "バイセル：終活パック新プラン「想いの整理サポート」全国展開",
+      "source": "バイセル公式",
+      "summary": "バイセルが終活・生前整理に特化した新プランを全国展開。葬儀社・不動産業者との提携を強化し、遺品整理案件の取り込みを加速している。"
+    },
+    {
+      "vendor": "バイセル",
+      "title": "バイセル：LINE査定機能をAIで強化・24時間自動応答化",
+      "source": "バイセル公式",
+      "summary": "LINEを通じたAI自動査定機能を強化。24時間対応で問い合わせから仮査定まで完結できるUX改善を実施。若年層獲得に注力。"
+    },
+    {
+      "vendor": "なんぼや",
+      "title": "なんぼや：大阪梅田・難波エリアの店舗改装でブランド買取強化",
+      "source": "なんぼや公式",
+      "summary": "なんぼやが大阪梅田・難波の主要店舗を改装。ブランド品査定スペースを拡大し、富裕層向けの高価格帯買取に注力する戦略。"
+    },
+    {
+      "vendor": "なんぼや",
+      "title": "なんぼや：金・プラチナの出張買取キャンペーン（6月末まで）",
+      "source": "なんぼや公式",
+      "summary": "6月末までの期間限定で金・プラチナの出張買取に上乗せボーナスを付与するキャンペーンを実施中。貴金属買取需要の取り込みを強化。"
+    },
+    {
+      "vendor": "コメ兵",
+      "title": "コメ兵：越境EC強化・中国・香港向け高級時計販売チャネル拡大",
+      "source": "コメ兵公式",
+      "summary": "コメ兵が越境ECプラットフォームを通じた中国・香港向け高級時計の販売チャネルを拡大。海外需要を活かした高単価買取が可能に。"
+    },
+    {
+      "vendor": "ザゴールド",
+      "title": "ザゴールド：リサイクルショップ連携で遺品整理買取を拡大",
+      "source": "ザゴールド公式",
+      "summary": "ザゴールドが地域リサイクルショップとの業務提携を強化し、遺品整理・施設閉鎖案件での出張買取対応力を高めている。"
+    },
+    {
+      "vendor": "おたからや",
+      "title": "おたからや：FC加盟店1,800店突破・大阪市内に新規FC店オープン",
+      "source": "おたからや公式",
+      "summary": "おたからやのFC加盟店が全国1,800店を突破。大阪市内にも新規加盟店がオープンし、地域密着型の小口買取需要を吸収している。"
+    },
+    {
+      "vendor": "おたからや",
+      "title": "おたからや：シニア向け「おうちで査定」サービスの認知度向上施策",
+      "source": "おたからや公式",
+      "summary": "シニア層向けに自宅で査定できる「おうちで査定」サービスのテレビCM・新聞広告を強化。高齢者からの問い合わせが増加傾向。"
+    },
+    {
+      "vendor": "買取王国",
+      "title": "買取王国：愛知・岐阜拠点から関西進出の動き——大阪出店計画浮上",
+      "source": "業界情報",
+      "summary": "東海地方を基盤とする買取王国が関西エリアへの出店計画を検討中との情報。実現すれば大阪エリアでの競合激化が予想される。"
+    }
+  ],
+  "secondhand_top5": [
+    {
+      "title": "パテック フィリップ ノーチラス 5711/1A",
+      "source": "ヤフオク",
+      "price": 15600000,
+      "platform": "yahoo_auction"
+    },
+    {
+      "title": "ロレックス デイトナ 116500LN",
+      "source": "ヤフオク",
+      "price": 7200000,
+      "platform": "yahoo_auction"
+    },
+    {
+      "title": "エルメス バーキン25 トゴ ブラック",
+      "source": "ヤフオク",
+      "price": 7067610,
+      "platform": "yahoo_auction"
+    },
+    {
+      "title": "オーデマピゲ ロイヤルオーク 15500ST",
+      "source": "ヤフオク",
+      "price": 6488000,
+      "platform": "yahoo_auction"
+    },
+    {
+      "title": "中国古銭 咸豊通寳 大型希少品",
+      "source": "ヤフオク",
+      "price": 2187040,
+      "platform": "yahoo_auction"
+    }
+  ],
+  "auctions_top3": [
+    {
+      "name": "毎日オークション 第852回 西洋装飾美術（6/12開催）",
+      "source": "毎日オークション",
+      "price": null
+    },
+    {
+      "name": "毎日オークション 第853回 古美術・茶道具（6/18〜19開催）",
+      "source": "毎日オークション",
+      "price": null
+    },
+    {
+      "name": "SBIアートオークション（次回7/10〜11開催予定）",
+      "source": "SBIアートオークション",
+      "price": null
+    }
+  ],
+  "brands_news": [
+    {
+      "brand": "ロレックス",
+      "title": "2026年6月定価改定：コンビ+2.5%・ゴールド+5%実施",
+      "source": "ロレックス正規代理店",
+      "summary": "ロレックスが2026年6月に国内正規定価を改定。コンビモデルは約2.5%、ゴールドモデルは約5%の値上げ。中古市場にも即時波及し相場上昇中。",
+      "kind": "international_price",
+      "impact": "high",
+      "sns_worthy": true
+    },
+    {
+      "brand": "ロレックス",
+      "title": "サブマリーナ・デイトナの中古相場が継続高値圏",
+      "source": "買取市場リサーチ",
+      "summary": "ロレックス サブマリーナ（黒文字盤）は中古市場で120万円前後を維持、デイトナは720万円前後。定価改定効果で高値圏が継続。",
+      "kind": "international_price",
+      "impact": "high",
+      "sns_worthy": true
+    },
+    {
+      "brand": "パテック フィリップ",
+      "title": "中古平均905万円・前月比+6.92%急騰",
+      "source": "高級時計市場調査",
+      "summary": "パテック フィリップの国内中古平均価格が905万円に到達し、前月比+6.92%と急騰。ノーチラス・カラトラバの需要増が牽引。",
+      "kind": "international_price",
+      "impact": "high",
+      "sns_worthy": true
+    },
+    {
+      "brand": "オーデマピゲ",
+      "title": "中古平均685万円・前月比+3.38%上昇",
+      "source": "高級時計市場調査",
+      "summary": "オーデマピゲの国内中古平均が685万円。前月比+3.38%上昇し、ロイヤルオーク中心に回復基調が続く。",
+      "kind": "international_price",
+      "impact": "high",
+      "sns_worthy": true
+    },
+    {
+      "brand": "エルメス・LV・シャネル",
+      "title": "LV値上げ継続・シャネル高価格維持で中古相場も堅調",
+      "source": "ブランド市場調査",
+      "summary": "ルイ・ヴィトンが2026年に入り複数回の値上げを実施。シャネルも高価格を維持。中古バッグ市場は新品定価上昇を受け底堅く推移。",
+      "kind": "international_price",
+      "impact": "medium",
+      "sns_worthy": false
+    },
+    {
+      "brand": "金（LBMA）",
+      "title": "LBMA金PM Fix $4,320.60/oz・円換算約22,240円/g",
+      "source": "LBMA（ロンドン貴金属市場協会）",
+      "summary": "6/9のLBMA金PMフィックスは$4,320.60/oz。USD/JPY 160.39換算で約22,240円/g。田中貴金属小売価格24,227円/gとの差はプレミアム分。",
+      "kind": "international_price",
+      "impact": "high",
+      "sns_worthy": false
+    },
+    {
+      "brand": "高級時計二次市場",
+      "title": "下落トレンド反転確認：パテック+57%・AP+24%（年初比）",
+      "source": "Watch Charts / 二次市場調査",
+      "summary": "2025年後半から続いた高級時計二次市場の下落が反転。年初比でパテック フィリップが+57%、オーデマピゲが+24%上昇し、強気相場が戻ってきた。",
+      "kind": "other",
+      "impact": "high",
+      "sns_worthy": true
+    }
+  ],
+  "reuse_market": [
+    {
+      "title": "ロレックス中古相場が定価改定効果で上昇基調——買取レート再設定を推奨",
+      "source": "リユース市場調査",
+      "summary": "ロレックスの正規定価改定を受け中古市場相場が上昇基調。現行買取レートの見直しと、在庫回転の早期化を検討すべき局面。",
+      "category": "instruments_camera_watches",
+      "impact": "high"
+    },
+    {
+      "title": "eBay越境EC：日本製高級時計・骨董品の海外需要増続く",
+      "source": "eBay Japan",
+      "summary": "eBayでの日本製品販売が継続増加。特に高級時計・古伊万里・刀剣類は海外バイヤーからの入札が活発。越境EC活用で買取単価向上の余地あり。",
+      "category": "cross_border_ec",
+      "impact": "high"
+    },
+    {
+      "title": "国内リユース市場が3兆円突破・前年比+12%成長",
+      "source": "リユース業界団体",
+      "summary": "2025年度の国内リユース市場規模が3兆円を突破し、前年比+12%成長。スマホ・家電・ファッションが牽引。中長期的な市場拡大が継続。",
+      "category": "other",
+      "impact": "high"
+    },
+    {
+      "title": "USS中古車オークション：輸入車・電気自動車の落札価格が高騰",
+      "source": "USS（ユーエスエス）",
+      "summary": "USS中古車オークションで輸入車・EV（特にテスラ）の落札価格が前年比+8%高騰。車両関連品（ナビ・カーアクセサリ）の買取需要も上昇。",
+      "category": "vehicles",
+      "impact": "medium"
+    },
+    {
+      "title": "ヴィンテージギター・ライカカメラの国内相場が上昇——コレクター需要堅調",
+      "source": "楽器・カメラ買取市場調査",
+      "summary": "1950〜70年代のマーチン/ギブソンギターとライカM型カメラが価格上昇中。コレクター高齢化による放出と海外需要増が相まって高値推移。",
+      "category": "instruments_camera_watches",
+      "impact": "medium"
+    }
+  ],
+  "regulations": [
+    {
+      "title": "古物営業法施行規則改正：エアコン室外機等を新たに特定品目に追加",
+      "source": "警察庁",
+      "summary": "古物営業法施行規則の改正でエアコン室外機などが特定古物品目に追加。取り扱い業者は本人確認・記録保存の強化が求められる。",
+      "domain": "antiques",
+      "impact": "medium"
+    },
+    {
+      "title": "フリマアプリ仕入れの古物法グレーゾーン問題——警察庁が解釈指針検討中",
+      "source": "警察庁",
+      "summary": "フリマアプリで仕入れた商品を転売する行為の古物商許可要否について警察庁が解釈指針の整理を検討。業界に明確化を求める声が高まる。",
+      "domain": "antiques",
+      "impact": "medium"
+    },
+    {
+      "title": "インボイス制度：古物商特例の仕入税額控除が80%→50%に縮小",
+      "source": "国税庁",
+      "summary": "2026年10月からインボイス制度の古物商特例（個人からの仕入に係る仕入税額控除）が80%から50%に段階縮小。資金繰りへの影響に注意が必要。",
+      "domain": "tax",
+      "impact": "high"
+    },
+    {
+      "title": "EU AI Act改正（Digital Omnibus）：高リスクAI適用を16ヶ月延期",
+      "source": "欧州委員会",
+      "summary": "EU AI Act規制の高リスクAIカテゴリへの適用が16ヶ月延期。国内事業者の対応準備期間が確保されるが、グローバルコンプライアンス体制の整備は継続必要。",
+      "domain": "ai",
+      "impact": "high"
+    },
+    {
+      "title": "日本AIガイドライン1.2版：AIエージェントの人間監視義務を明記",
+      "source": "経済産業省",
+      "summary": "経産省のAIガイドライン1.2版でAIエージェントが自律的に意思決定を行う場合の人間監視・承認フローの整備が義務付けられた。",
+      "domain": "ai",
+      "impact": "medium"
+    },
+    {
+      "title": "個人情報保護法改正草案：AI学習目的でのデータ利用同意要件を緩和",
+      "source": "個人情報保護委員会",
+      "summary": "改正草案でAI学習を目的としたデータ利用への同意要件が緩和される方向。顧客データを活用したAI開発が進めやすくなる見込み。",
+      "domain": "ai",
+      "impact": "medium"
+    }
+  ],
+  "welfare_news": [
+    {
+      "title": "2026年介護報酬改定：訪問介護の基本報酬が+1.8%引き上げ",
+      "source": "厚生労働省",
+      "summary": "2026年度介護報酬改定で訪問介護の基本報酬が+1.8%引き上げられた。処遇改善加算の要件も見直しが行われ、中小事業者の経営安定化が期待される。",
+      "category": "policy",
+      "impact": "high"
+    },
+    {
+      "title": "大阪市内の小規模デイサービス閉鎖が加速——買取需要の取り込み機会",
+      "source": "大阪市福祉局",
+      "summary": "大阪市内で小規模デイサービス事業所の廃業・閉鎖が加速。施設備品・利用者遺品の整理需要が発生しており、地域密着型買取事業者への商機がある。",
+      "category": "facility",
+      "impact": "high"
+    },
+    {
+      "title": "EEFULホールディングス：介護M&A目的で4.1億円を追加調達",
+      "source": "EEFUL公式",
+      "summary": "介護施設M&Aと介護テクノロジー事業を展開するEEFULが4.1億円の資金調達を完了。施設経由の遺品整理・買取案件の囲い込みリスクが増大。",
+      "category": "ma",
+      "impact": "high"
+    },
+    {
+      "title": "認知症高齢者の財産管理ニーズ増大——後見制度利用が前年比+15%",
+      "source": "最高裁判所",
+      "summary": "成年後見制度の利用件数が前年比+15%増加。認知症高齢者の財産管理・遺品整理に関する専門家ニーズが高まり、士業との連携機会が拡大している。",
+      "category": "research",
+      "impact": "medium"
+    },
+    {
+      "title": "訪問介護事業所の倒産：2026年上半期で過去最多ペース",
+      "source": "帝国データバンク",
+      "summary": "訪問介護・小規模介護事業所の倒産が2026年上半期で過去最多ペース。施設閉鎖に伴い利用者・家族が所有品の整理を求めるケースが急増中。",
+      "category": "estate",
+      "impact": "high"
+    },
+    {
+      "title": "遺品整理業者と古物商の協業モデルが拡大——全国で事例増加",
+      "source": "リユース業界調査",
+      "summary": "遺品整理専門業者と古物商（買取業者）の協業モデルが全国で拡大。遺族の手間を減らしながら資産を現金化するワンストップサービスへの需要が増加。",
+      "category": "estate",
+      "impact": "high"
+    },
+    {
+      "title": "相続手続きのデジタル化推進——法務省が戸籍オンライン申請を拡大",
+      "source": "法務省",
+      "summary": "法務省が相続手続きに必要な戸籍謄本のオンライン申請対応市区町村を拡大。相続人が遠方でも手続きを進めやすくなり、相続後の整理・買取依頼が増加見込み。",
+      "category": "inheritance",
+      "impact": "medium"
+    },
+    {
+      "title": "相続財産中の動産評価：税務当局が貴金属・ブランド品の申告漏れを重点調査",
+      "source": "国税庁",
+      "summary": "国税庁が相続財産における貴金属・高級時計・ブランドバッグの申告漏れを重点的に調査中。正確な査定書・買取履歴の提供が相続人から求められるケースが増加。",
+      "category": "inheritance",
+      "impact": "high"
+    },
+    {
+      "title": "イオンライフ×買取大吉：葬儀後出張買取サービスを全国1,800店舗で展開",
+      "source": "買取大吉公式",
+      "summary": "イオンライフが葬儀サービスと連動した遺品買取を全国の買取大吉1,800店舗ネットワークで提供開始。終活から葬儀・遺品整理までのワンストップ需要を掘り起こし中。",
+      "category": "product",
+      "impact": "high"
+    },
+    {
+      "title": "大阪府介護テクノロジー導入補助金：2026年7月13日締切（30日以内）",
+      "source": "大阪府",
+      "summary": "大阪府が介護事業所向けにテクノロジー（ICT・見守りセンサー等）導入を支援する補助金の申請受付中。7月13日締切で最大100万円の助成。",
+      "category": "subsidy",
+      "impact": "medium"
+    }
+  ],
+  "lifestyle_trends": [
+    {
+      "title": "シニア富裕層のダウンサイジング加速——高額資産の整理需要が首都圏・大阪で増加",
+      "source": "野村総合研究所",
+      "summary": "団塊世代が後期高齢者に移行する中、高級住宅から小規模住居へのダウンサイジングが加速。美術品・宝飾品・高級時計の整理需要が首都圏・大阪で拡大中。",
+      "category": "senior_consumer",
+      "impact": "high",
+      "scene": "field_visit"
+    },
+    {
+      "title": "Z世代の70%が購買時にリセールバリューを意識——「売ること前提」の消費へシフト",
+      "source": "リユース業界団体調査",
+      "summary": "Z世代（10〜20代）の70%が商品購入時にリセールバリューを考慮するとの調査結果。「高く売れるものを買う」という行動様式がリユース市場成長を後押し。",
+      "category": "gen_z",
+      "impact": "high",
+      "scene": "exec_meeting"
+    },
+    {
+      "title": "地域コミュニティ型生前整理イベントが大阪各区で開催増加",
+      "source": "大阪府社会福祉協議会",
+      "summary": "町内会・自治会主催の生前整理・断捨離イベントが大阪各区で増加。地域密着型の買取業者が出張参加することで、コスト効率よく案件を獲得している事例も。",
+      "category": "family_community",
+      "impact": "medium",
+      "scene": "field_visit"
+    },
+    {
+      "title": "健康寿命延伸と「モノを持たない老後」トレンド——生前整理需要が60代前半から",
+      "source": "国立長寿医療研究センター",
+      "summary": "健康寿命が延伸する中、「身軽な老後」を志向する層が増加。早期の生前整理・断捨離需要が従来よりも若い60代前半から発生するようになっている。",
+      "category": "health_medical",
+      "impact": "medium",
+      "scene": "field_visit"
+    },
+    {
+      "title": "大阪万博2025後の訪日外国人需要継続——古美術・伝統工芸品の越境買取チャンスに",
+      "source": "大阪観光局",
+      "summary": "2025年大阪万博後も訪日外国人が高水準で推移。骨董品・漆器・着物など日本の伝統工芸品への関心が高く、越境EC活用による売却単価向上の機会がある。",
+      "category": "local_kansai",
+      "impact": "high",
+      "scene": "exec_meeting"
+    },
+    {
+      "title": "大阪・関西エリアの中古マンション価格高騰——引越し需要に連動した買取増加",
+      "source": "近畿圏不動産流通機構",
+      "summary": "大阪・関西エリアの中古マンション価格が前年比+8%高騰。不動産売買に伴う引越しが増加し、家具・家電・ブランド品の買取依頼件数が連動して増加している。",
+      "category": "local_kansai",
+      "impact": "high",
+      "scene": "staff_morning"
+    }
+  ],
+  "subsidies_deadline_within_30d": [
+    {
+      "name": "大阪府介護テクノロジー導入促進補助金",
+      "deadline": "2026-07-13",
+      "source": "大阪府",
+      "summary": "大阪府が介護事業所向けに介護テクノロジー（ICT・見守りセンサー・介護ロボット等）の導入費用を最大100万円補助。7月13日が申請締切。"
+    }
+  ],
+  "subagent_meta": {
+    "agent_market_status": "partial",
+    "agent_industry_status": "partial",
+    "agent_ai_status": "ok",
+    "agent_welfare_status": "partial",
+    "agent_lifestyle_status": "ok",
+    "notes": "田中貴金属は6/9公表値・米国市場6/9終値使用。secondhand_top5は直近相場参考値。福祉ニュースは一部2026年1〜5月情報を含む。"
+  }
+}
