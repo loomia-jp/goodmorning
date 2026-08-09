@@ -1,0 +1,581 @@
+{
+  "schema_version": "1.2",
+  "date": "2026-08-09",
+  "weekday": "Sun",
+  "captured_at": "2026-08-09T08:56:44+09:00",
+  "market": {
+    "gold_jpy_g": 23590,
+    "platinum_jpy_g": 9475,
+    "silver_jpy_g": null,
+    "usdjpy": 158.22,
+    "eurjpy": 182.33,
+    "nikkei": 65606.71,
+    "topix": 4074.93,
+    "valuence_9270": 1960,
+    "komehyo_2780": 5200,
+    "geo_2681": null,
+    "gold_dod_pct": -0.51,
+    "platinum_dod_pct": -0.86,
+    "silver_dod_pct": null,
+    "gold_wow_trend": "上昇",
+    "platinum_wow_trend": "乱高下（週内8890〜9895円のレンジ）",
+    "silver_wow_trend": null,
+    "nydow": 54036.93,
+    "nasdaq": 26690.62,
+    "sp500": 7757.64,
+    "nydow_dod_pct": 0.28,
+    "nasdaq_dod_pct": 1.3,
+    "sp500_dod_pct": 0.62,
+    "btc_jpy": 10183723,
+    "eth_jpy": null,
+    "btc_dod_pct": -0.08,
+    "eth_dod_pct": null,
+    "wti_usd_bbl": null,
+    "copper_usd_lb": null,
+    "wheat_usd_bu": null
+  },
+  "weather_osaka": {
+    "main": "曇時々晴（熱中症警戒アラート発表中）",
+    "temp_high": 35,
+    "temp_low": 27,
+    "rain_prob": 15,
+    "am_pm_note": "午前は曇りがちで比較的過ごしやすいが、午後にかけて晴れ間が広がり気温上昇。大阪府含む近畿地方全域に熱中症警戒アラート発表中（WBGT31以上、特別警戒の発表はなし）。翌日以降も猛暑予報で残暑が続く見込み。訪問査定は午前中心・水分塩分補給を徹底。"
+  },
+  "kpi": {
+    "visits": null,
+    "deals": null,
+    "revenue_jpy": null
+  },
+  "highlights": [
+    {
+      "title": "金相場、週内乱高下ながら高値圏を維持",
+      "impact": "high",
+      "source": "https://gold.tanaka.co.jp/commodity/souba/d-gold.php",
+      "summary": "田中貴金属の金価格は23,590円/g（前日比-0.51%）。8/5〜8/7は1g当たり1,500円超変動する乱高下となったが、週足では上昇トレンドを維持。",
+      "sales_hook": "「価格が高いうちに」を軸に、本日中の査定・売却をSNSで告知"
+    },
+    {
+      "title": "おたからや、リユース売上ランキング2026で初のトップ3入り（対前年219%）",
+      "impact": "high",
+      "source": "https://prtimes.jp/main/html/rd/p/000000304.000080252.html",
+      "summary": "8/4にイオンモール新利府へ新店舗（世界1,930店舗以上）を出店。8/5発表のランキングで売上高2,030億円・対前年比219%と急拡大、初の3位入り。",
+      "sales_hook": "「店舗を構えないぶんの家賃コストを査定額に還元」を差別化トークとして強化"
+    },
+    {
+      "title": "介護保険 補足給付、2026年8月1日から負担限度額を引き上げ",
+      "impact": "high",
+      "source": "https://www.yurokyo.or.jp/info/view/6566",
+      "summary": "特養・老健等の低所得入所者向け食費・居住費の負担限度額が8/1から引き上げ。施設入居の費用負担が増加し、入居準備のための実家整理ニーズが高まる見込み。",
+      "sales_hook": "「施設入居準備の生前整理・出張買取」訴求DMを本日中に士業・ケアマネ経由で展開"
+    },
+    {
+      "title": "2026年度税制改正、貸付用不動産の相続税評価見直し・教育資金贈与特例が終了",
+      "impact": "high",
+      "source": "https://go.sbisec.co.jp/consult/inheritance_column/column_detail_13839.html",
+      "summary": "2027年1月以後の相続・贈与から貸付用不動産等の評価方法が厳格化。教育資金一括贈与の非課税措置は2026年3月で終了しており、生前整理の駆け込み需要が見込まれる。",
+      "sales_hook": "相続専門税理士・司法書士と連携し「今のうちの生前整理」提案を強化"
+    },
+    {
+      "title": "AI画像鑑定サービス「フェイクバスターズ」、法人向けメニュー提供開始",
+      "impact": "high",
+      "source": "https://www.watch.impress.co.jp/docs/news/2084606.html",
+      "summary": "最短30分でブランド品・時計・トレカ等9カテゴリ250ブランド以上のAI真贋判定が可能な法人向けサービスが登場。コメ兵も自社開発AIを買取フローに拡大導入中。",
+      "sales_hook": "出張査定タブレットへのAI真贋判定導入を検討し、査定スピード・精度の差別化材料に"
+    },
+    {
+      "title": "Z世代の51.5%が「売れる前提」で購入、循環型消費が定着",
+      "impact": "high",
+      "source": "https://markezine.jp/article/detail/43347",
+      "summary": "メルカリ調査でZ世代の51.5%が保有物を「手軽に売れて現金化しやすいもの」と回答（バブル世代の約2.8倍）。購入前に転売価格を確認する行動も一般化。",
+      "sales_hook": "若年層向けSNS発信で「メグル買取なら高額品もまとめて即金化」を訴求"
+    },
+    {
+      "title": "大阪府に熱中症警戒アラート発表中（8/9）",
+      "impact": "high",
+      "source": "https://www.wbgt.env.go.jp/alert.php",
+      "summary": "環境省熱中症予防情報サイトによると、8/9朝時点で大阪府含む近畿地方全域に熱中症警戒アラート発表中（WBGT31以上）。特別警戒の発表はなし。",
+      "sales_hook": "訪問査定員の水分補給徹底と、高齢客への声かけトークに活用"
+    }
+  ],
+  "alerts": [
+    {
+      "title": "遺品整理業界へ新規参入が増加、価格競争・トラブルリスクが拡大",
+      "severity": "warning",
+      "source": "https://www.kamakura-net.co.jp/newstopics/11375/",
+      "summary": "生前整理・遺品整理市場は5,000億円超、年10%以上の成長見込み。古物商許可なしでも開業できる業態のため新規参入が相次いでおり、適正事業者としての差別化訴求が必要。"
+    },
+    {
+      "title": "葬儀会社・金融機関・不動産会社が異業種から相続領域・終活市場へ進出",
+      "severity": "warning",
+      "source": "https://www.samika.jp/news/post/column20260330",
+      "summary": "葬儀会社・銀行・保険会社・不動産会社が士業と提携し相続分野の顧客接点を狙う動きが継続。中長期的に遺品整理・買取領域まで垂直統合される可能性があり、士業との送客パートナー化を急ぐ必要あり。"
+    }
+  ],
+  "ai_news": [
+    {
+      "title": "Google DeepMind、Hassabis氏がCEO退任・幹部4名が新興企業「Discovery Loop」設立",
+      "source": "https://www.businesstoday.in/amp/technology/news/story/google-deepmind-announces-major-leadership-changes-demis-hassabis-steps-down-as-ceo-all-details-547553-2026-08-06",
+      "summary": "Hassabis氏はGDM会長兼Alphabet Chief Scientistに専念。Jeff Dean氏ら幹部4名が離脱し新興企業を設立、GOOG株価は発表直後に約4%下落。",
+      "category": "company",
+      "relevance": "low"
+    },
+    {
+      "title": "Anthropic、Claude Opus 5がデフォルトモデルに。Cowork機能をモバイル/Web展開",
+      "source": "https://www.anthropic.com/news",
+      "summary": "Claude Opus 5がClaude Max/Proのデフォルトモデルとなり、チーム協働向けCowork機能がモバイル・Web対応に。オープンソース貢献者向け無償提供も発表。",
+      "category": "company",
+      "relevance": "medium"
+    },
+    {
+      "title": "OpenAI、GPT-5正式発表。Microsoft Azureと企業向け専用インスタンスで提携",
+      "source": "https://www.aitoolduel.com/news/gpt-5-release-august-2026",
+      "summary": "1兆パラメータのマルチモーダルモデルとして発表。企業向け専用インスタンス提供をAzure経由で開始。",
+      "category": "company",
+      "relevance": "low"
+    },
+    {
+      "title": "Arena（旧LMArena）ベンチマークでClaude系モデルが上位を独占",
+      "source": "https://llm-stats.com/benchmarks/lmarena-text",
+      "summary": "Arena Elo上位（約1525〜1531）をClaude系モデルが占有。377モデルをArena Elo・MMLU・HumanEval等で評価するリーダーボードを7/12に再集計。",
+      "category": "benchmark",
+      "relevance": "low"
+    },
+    {
+      "title": "改正個人情報保護法が成立、生成AIプロンプト入力時の目的外利用確認を義務付け",
+      "source": "https://www.optima-solutions.co.jp/support_article/samurai-20260717/",
+      "summary": "2026年7月17日成立。生成AIへのプロンプト入力時、利用目的の範囲内かの確認を義務付ける規定を含む。査定業務でのAI利用時は運用ルール整備が必要。",
+      "category": "regulation",
+      "relevance": "high"
+    },
+    {
+      "title": "IVA「フェイクバスターズ」、法人向けAI画像鑑定サービスを開始",
+      "source": "https://www.watch.impress.co.jp/docs/news/2084606.html",
+      "summary": "最短30分でブランド品・時計・トレカ等9カテゴリ250ブランド以上のAI真贋判定が可能。出張買取の即時鑑定に応用余地大。",
+      "category": "industry_case",
+      "relevance": "high"
+    },
+    {
+      "title": "コメ兵、自社開発AI真贋判定システム（精度99%超）を買取フローに拡大導入",
+      "source": "https://xtech.nikkei.com/atcl/nxt/column/18/00001/05740/",
+      "summary": "画像認識と異常検知技術を核に微細な差異を非破壊で検出。店舗買取フローへの実装を継続拡大中。",
+      "category": "industry_case",
+      "relevance": "high"
+    }
+  ],
+  "tech_news": [
+    {
+      "title": "TSMC、対米関税免除の方向。1000億ドル投資に応じ免除枠設定",
+      "category": "semiconductor",
+      "source": "https://www.nikkei.com/article/DGXZQOCB222ON0S5A820C2000000/",
+      "summary": "トランプ政権の半導体関税でTSMCからの輸入を無関税とする方向。対米投資額に応じて関税免除枠を設定する方針。",
+      "impact": "medium"
+    },
+    {
+      "title": "ispace、SpaceX Starship活用の新月面輸送サービスを発表も、NASA CP-12契約は終了",
+      "category": "quantum_space",
+      "source": "https://sorae.info/space/20260709-ispace-starship.html",
+      "summary": "早ければ2030年開始予定の新月面輸送サービスを発表。一方でNASAとのCP-12月着陸契約は7月に終了。",
+      "impact": "low"
+    },
+    {
+      "title": "Waymo・Teslaが自動運転技術で次フェーズへ、GeminiベースVLA採用等",
+      "category": "robotics_av",
+      "source": "https://xtech.nikkei.com/atcl/nxt/column/18/03367/100800003/",
+      "summary": "Waymoは週間50回以上のロボタクシー運行を10都市以上で達成しGeminiのVLAモデルへ移行。TeslaはFSD v13のE2Eニューラルネットを展開中。",
+      "impact": "low"
+    }
+  ],
+  "competitor_moves": [
+    {
+      "vendor": "バイセル",
+      "title": "「バイセル」ブランドのFC加盟店募集を開始、先着30店ロイヤリティ6ヶ月無料",
+      "source": "https://buysell-technologies.com/pressrelease/202607015363/",
+      "summary": "フォーナイン「WAKABA」のノウハウを活用したFC展開を全国で開始。加盟店急増が見込まれる。",
+      "action_today": "大阪市内・近隣エリアの出店計画を監視し、先回りしたエリア営業・チラシ配布を強化"
+    },
+    {
+      "vendor": "なんぼや（バリュエンスジャパン）",
+      "title": "横浜西口に「修理工房併設」の全国初新店舗をオープン",
+      "source": "https://prtimes.jp/main/html/rd/p/000000747.000020761.html",
+      "summary": "年間45,000点以上の修理実績を活かし、買取と同施設で電池交換・ベルト調整等を即日対応する店舗を開業。",
+      "action_today": "「その場即金・修理待ちなし」を出張買取の差別化トークとして強化"
+    },
+    {
+      "vendor": "コメ兵ホールディングス",
+      "title": "26年3月期、売上高2,217億円（+39.4%）・営業利益92.9億円（+50.4%）と大幅増収増益",
+      "source": "https://www.nikkei.com/nkd/company/kigyo/?scode=2780",
+      "summary": "リユース売上ランキング2026で初の2000億円超え・2位（前年比139%）。",
+      "action_today": "他店査定額との比較を促しつつ、出張の手間なし・即日現金を差別化ポイントに提示"
+    },
+    {
+      "vendor": "おたからや",
+      "title": "イオンモール新利府に新店舗オープン、リユース売上ランキング2026で初のトップ3入り",
+      "source": "https://prtimes.jp/main/html/rd/p/000000304.000080252.html",
+      "summary": "世界1,930店舗以上に拡大。売上高2,030億円（対前年比219%）で初の3位入り。",
+      "action_today": "近隣商圏の出店有無を確認し、既存顧客への「出張限定・査定額保証」キャンペーンを前倒し案内"
+    },
+    {
+      "vendor": "大黒屋ホールディングス",
+      "title": "8月時点で新規プレスリリースなし、直近は5月の質二子玉川買取センター開業のみ",
+      "source": "https://www.e-daikoku.com/date/2026/?term_key=news&t=press_release",
+      "summary": "質業・チケット事業が主軸で8月の新規動向は確認できず。",
+      "action_today": "公式買取参考価格を日次チェックし、出張査定時の即答力を高める"
+    },
+    {
+      "vendor": "ザ・ゴールド",
+      "title": "「真夏のじゃんけんキャンペーン」「和楽器買取強化」を実施中（8月）",
+      "source": "https://www.the-gold.jp/",
+      "summary": "宅配買取返送料無料キャンペーン（8/1〜8/31）、和楽器買取強化キャンペーン（8/1〜9/30）を展開中。",
+      "action_today": "和楽器（ギター・管楽器等）の査定可否を出張査定時に積極案内し対抗"
+    }
+  ],
+  "secondhand_top5": [
+    {
+      "platform": "yahoo_auction",
+      "category": "時計",
+      "title": "ロレックス デイデイト 18238A（買取参考価格ベース）",
+      "price": 2960000,
+      "source": "https://jwc-watch.com/952/",
+      "note": "個別の直近落札事例は確認できず。買取参考価格を参考値として記載"
+    },
+    {
+      "platform": "yahoo_auction",
+      "category": "時計",
+      "title": "腕時計ジャンク帯カテゴリ 過去120日平均落札額（約22,765件成約）",
+      "price": 27730,
+      "source": "https://auctions.yahoo.co.jp/closedsearch/closedsearch/%E8%85%95%E6%99%82%E8%A8%88/0",
+      "note": "高額個別品ではなくジャンク帯の平均値。個別高額事例は特定できず"
+    },
+    {
+      "platform": "mercari",
+      "category": "ブランドバッグ",
+      "title": "エルメス ケリー25 内縫いゴールド・トゴ",
+      "price": 3300000,
+      "source": "https://uridoki.net/brand/kiji_302328/",
+      "note": "直近72時間以内の個別落札一次確認は取れず、査定相場記事からの参考値"
+    },
+    {
+      "platform": "other",
+      "category": "中古車",
+      "title": "USSオートオークション 2026年7月度 平均成約単価",
+      "price": 1345000,
+      "source": "https://www.ussnet.co.jp/ir/library/monthly/index.html",
+      "note": "個別車両ではなく月間平均値。8月度データは未発表"
+    },
+    {
+      "platform": "other",
+      "category": "骨董・美術品",
+      "title": "東京中央オークション（8月開催分、個別結果は非公開）",
+      "price": null,
+      "source": "https://www.chuo-auction.com/jp/auction",
+      "note": "ログイン限定のため個別落札額・商品名は取得不能"
+    }
+  ],
+  "auctions_top3": [
+    {
+      "name": "東京中央オークション（8月開催分）",
+      "price": null,
+      "source": "https://www.chuo-auction.com/jp/auction",
+      "summary": "個別落札結果は非公開、次回開催情報のみ確認できた"
+    },
+    {
+      "name": "毎日オークション「JEWELRY, WATCHES & LUXURY ACCESSORIES」（7/10開催）",
+      "price": null,
+      "source": "https://www.my-auction.co.jp/schedule/result",
+      "summary": "結果はログイン限定のため非公開"
+    },
+    {
+      "name": "シンワオークション（7/18開催）",
+      "price": null,
+      "source": "https://www.shinwa-auction.com/course/result2/",
+      "summary": "詳細はPDF・問い合わせが必要で個別結果は未確認"
+    }
+  ],
+  "brands_news": [
+    {
+      "brand": "ロレックス",
+      "title": "中古相場は安定基調、約3分の2のモデルが定価超で取引",
+      "kind": "international_price",
+      "source": "https://www.chrono24.jp/magazine/",
+      "summary": "2025年4月〜2026年4月の1年間の値上がり率は約2%に鈍化。2023年半ば以降は価格が安定・横ばい傾向。デイトナ等はピーク比15〜25%下落も高値圏で下げ止まり感。",
+      "impact": "high",
+      "sns_worthy": true
+    },
+    {
+      "brand": "パテックフィリップ",
+      "title": "資産性再評価フェーズ、前年比約69%上昇",
+      "kind": "international_price",
+      "source": "https://www.udedokeitoushi.com/markets/51/",
+      "summary": "ノーチラス・アクアノート等スポーツラインが為替・海外需要の影響で上昇基調。全体平均価格は約996万円。",
+      "impact": "high",
+      "sns_worthy": true
+    },
+    {
+      "brand": "エルメス",
+      "title": "バーキン定価改定（2026年2月実施）の影響が継続",
+      "kind": "international_price",
+      "source": "https://daikichi-kaitori.jp/column/hermes-birkin-list-price/",
+      "summary": "バーキン25が201.3万円、バーキン30が223.3万円に改定（約7〜8.6%値上げ）。定価上昇が中古相場の下支え要因に。",
+      "impact": "high",
+      "sns_worthy": true
+    },
+    {
+      "brand": "ルイ・ヴィトン",
+      "title": "2026秋冬ウィメンズコレクション新作バッグを発表",
+      "kind": "new_release",
+      "source": "https://prtimes.jp/main/html/rd/p/000002566.000060591.html",
+      "summary": "8/4に新作発表。新作投入は旧作モデルの型落ち・相場下落要因となりうるため買取強化のタイミング。",
+      "impact": "medium",
+      "sns_worthy": true
+    },
+    {
+      "brand": "金・プラチナ（国際先物）",
+      "title": "NY金先物が乱高下、国内価格との乖離幅は算出用の一次情報を取得できず",
+      "kind": "international_price",
+      "source": "https://www.zaikei.co.jp/article/20260801/863943.html",
+      "summary": "NY金先物は8月に入り一日の変動幅が大きい（8/5に+3.72%急伸等）。国内円建て価格との具体的な乖離幅は次回調査でCOMEX金×ドル円レートとの直接比較が必要。",
+      "impact": "medium",
+      "sns_worthy": false
+    },
+    {
+      "brand": "業界横断（バイセル総研調査）",
+      "title": "中古品売却経験者は直近1年で16.3%、貴金属は7.4%にとどまる",
+      "kind": "other",
+      "source": "https://www.jiji.com/jc/article?k=000000239.000018121&g=prt",
+      "summary": "全国19,440名対象調査。日本のリユース収入推計1兆1,883億円/年。貴金属売却経験者はまだ少なく、掘り起こし余地が大きい。",
+      "impact": "medium",
+      "sns_worthy": true
+    }
+  ],
+  "reuse_market": [
+    {
+      "title": "骨董・美術品の業者間オークション、8月分は個別結果非公開も定期開催が継続",
+      "category": "antiques_art",
+      "source": "https://www.chuo-auction.com/jp/auction",
+      "summary": "東京中央・毎日・シンワの各オークションが定期開催中だが、個別落札結果はログイン限定・非公開が中心。",
+      "impact": "low"
+    },
+    {
+      "title": "中古ギター・ライカカメラは高値安定、買取王国も好決算",
+      "category": "instruments_camera_watches",
+      "source": "https://www.niconico-guitars.com/html/user_data/want/list/gibson.php",
+      "summary": "ギブソン中古はヴィンテージ品で160万円以上の高額品も。ライカQ3は約108万円で高値安定。買取王国は27年2月期Q1経常利益42%増と好調。",
+      "impact": "medium"
+    },
+    {
+      "title": "USSオートオークション、7月度成約単価が前年比106.1%と上昇継続",
+      "category": "vehicles",
+      "source": "https://www.ussnet.co.jp/ir/library/monthly/index.html",
+      "summary": "成約率63.8%、成約車両単価134.5万円（前年比106.1%）。出品・成約台数とも前年超えで市場活況。",
+      "impact": "medium"
+    },
+    {
+      "title": "中古バイク業者間オークション、状態別相場は底上げ継続",
+      "category": "vehicles",
+      "source": "https://motohub.jp/blog/bike-market-forecast-summer-2026",
+      "summary": "新車級平均101.3万円（最高784万円）等、円安以降相場が底上げ。2026年春は取引量60%増だが価格はほぼ横ばい。",
+      "impact": "low"
+    },
+    {
+      "title": "円安を追い風に「Used in Japan」中古品の越境EC需要が拡大",
+      "category": "cross_border_ec",
+      "source": "https://www.ebay.co.jp/info/cbt-blog/cbt-pb15",
+      "summary": "eBay等でヴィンテージ品・フィギュア・レアスニーカー・ハイブランドバッグの海外需要が強い。eBay輸出には古物商許可が法的に必須。",
+      "impact": "medium"
+    }
+  ],
+  "regulations": [
+    {
+      "title": "古物営業法施行規則改正、金属類等の本人確認対象物品を追加（2025年10月施行・継続適用）",
+      "domain": "antiques",
+      "source": "https://www.keishicho.metro.tokyo.lg.jp/tetsuzuki/kobutsu/kaisetsu/kobutsu_sekoukisoku.html",
+      "summary": "1万円未満の買受でも本人確認義務等の対象物品にエアコン室外機・電線・金属製グレーチング等が追加。金属類買取時の本人確認徹底が必要。",
+      "impact": "medium"
+    },
+    {
+      "title": "景品表示法、古物商の買取業務も規制対象として継続適用",
+      "domain": "consumer",
+      "source": "https://recore-pos.com/column_post/s-keihin-hyoji-ho/",
+      "summary": "「高価買取」等の広告表示は実態と一致させる必要あり。違反時は措置命令・課徴金の対象。",
+      "impact": "medium"
+    },
+    {
+      "title": "特商法「訪問購入」規制・クーリングオフ、出張買取の根幹ルールとして継続適用",
+      "domain": "consumer",
+      "source": "https://kaitori-koji.jp/guide/shutcho-kaitori-tokutei-shotorihiki-cooling-off-kanri2",
+      "summary": "書面受領日から8日間クーリングオフ可。不招請勧誘の禁止・書面交付義務等の遵守が必須。",
+      "impact": "high"
+    },
+    {
+      "title": "改正個人情報保護法、生成AI利用時の目的外利用確認を義務付け",
+      "domain": "ai",
+      "source": "https://www.optima-solutions.co.jp/support_article/samurai-20260717/",
+      "summary": "2026年7月17日成立。査定業務で生成AI（OCR・チャットボット等）を使う際は個人情報の利用目的範囲内かの確認が必要。",
+      "impact": "high"
+    },
+    {
+      "title": "2026年度税制改正、貸付用不動産の相続税評価方法を見直し（2027年1月施行）",
+      "domain": "tax",
+      "source": "https://go.sbisec.co.jp/consult/inheritance_column/column_detail_13839.html",
+      "summary": "相続・贈与開始前5年以内取得の貸付用不動産等は取引価額ベースで評価する方式に変更。教育資金一括贈与の非課税措置は2026年3月で終了。",
+      "impact": "high"
+    }
+  ],
+  "welfare_news": [
+    {
+      "title": "介護保険 補足給付（食費・居住費）の負担限度額、2026年8月1日から引き上げ",
+      "category": "policy",
+      "source": "https://www.yurokyo.or.jp/info/view/6566",
+      "summary": "特養・老健・介護医療院等の低所得入所者向け食費・居住費の負担限度額・基準費用額を見直し。",
+      "impact": "high",
+      "lead_opportunity": "施設入居コスト上昇により生前整理ニーズが高まる。施設入居準備の出張買取DMを強化"
+    },
+    {
+      "title": "大阪府「介護分野の職員賃上げ・職場改善支援事業」を令和8年度も継続",
+      "category": "policy",
+      "source": "https://www.pref.osaka.lg.jp/o090080/r8_syoguukaizen.html",
+      "summary": "介護職員の処遇改善加算・賃上げ支援を継続。既存の申請期限は終了済み。",
+      "impact": "medium",
+      "lead_opportunity": "介護事業所との「利用者の生前整理相談を買取業者に取り次ぐ」B2B連携チャネル開拓の話題に"
+    },
+    {
+      "title": "サ高住・有料老人ホームの費用相場、2026年時点で高止まり",
+      "category": "facility",
+      "source": "https://kaigo.homes.co.jp/manual/facilities_comment/list/house/service/cost/",
+      "summary": "サ高住平均月額約11万円（大都市圏約12.7万円）。補足給付引き上げにより低所得層の負担がさらに増加見込み。",
+      "impact": "medium",
+      "lead_opportunity": "入居契約前後のタイミングで「入居費用捻出のための家財・貴金属売却」相談需要を狙う"
+    },
+    {
+      "title": "介護業界M&A、2024年度介護費用が過去最高11兆9,381億円",
+      "category": "ma",
+      "source": "https://masouken.com/%E4%BB%8B%E8%AD%B7%E6%A5%AD%E7%95%8C%E3%81%AEM&A",
+      "summary": "特養・有料老人ホームの譲渡案件がM&Aプラットフォームに複数掲載され継続的に流通。",
+      "impact": "low",
+      "lead_opportunity": "施設の閉鎖・事業譲渡時に発生する残置物撤去・什器処分ニーズを施設運営会社経由で開拓"
+    },
+    {
+      "title": "令和8年度介護報酬改定、訪問介護・訪問看護等の処遇改善加算が2026年6月施行",
+      "category": "home_care",
+      "source": "https://gemmed.ghc-j.com/?p=72494",
+      "summary": "訪問介護は加算率最大28.7%、訪問看護1.8%等の新区分を新設。対象が介護従事者全体に拡大。",
+      "impact": "high",
+      "lead_opportunity": "利用者宅を訪問するケアマネ・訪問看護師との紹介料提携で「家財整理に困る高齢者世帯」の情報を得るチャネルを開拓"
+    },
+    {
+      "title": "高齢者見守り・配食IoTサービスが継続展開",
+      "category": "product",
+      "source": "https://www.dlri.co.jp/report/ld/230334.html",
+      "summary": "配達時安否確認や電気使用量ベースの生活リズム検知IoTサービスが自治体・民間で展開中。",
+      "impact": "low",
+      "lead_opportunity": "見守り事業者と提携し「異変検知→家族連絡→片付け・生前整理相談」の新たな送客導線を構築"
+    },
+    {
+      "title": "レカネマブ皮下注射版、米国で2026年8月下旬発売予定（日本は未承認）",
+      "category": "research",
+      "source": "https://note.com/medcare_design/n/n7b2aea6d650e",
+      "summary": "従来必須だった点滴投与が自宅注射に変わる可能性。日本は2025年11月申請中、8月時点で未承認。",
+      "impact": "medium",
+      "lead_opportunity": "認知症早期診断ニーズの高まりを切り口に「本人の意思確認ができるうちの生前整理」を啓発"
+    },
+    {
+      "title": "生前整理・遺品整理市場は5,000億円超、年10%以上の成長見込み",
+      "category": "estate",
+      "source": "https://www.kamakura-net.co.jp/newstopics/11375/",
+      "summary": "65歳以上人口約3,600万人を背景に需要拡大が継続。古物商許可なしでも開業できることから新規参入が相次いでいる。",
+      "impact": "medium",
+      "lead_opportunity": "古物商許可を保有した適正事業者であることを強調し、無許可・トラブル多発業者との差別化訴求を強化"
+    },
+    {
+      "title": "2026年度税制改正、相続税評価見直しと教育資金贈与特例終了",
+      "category": "inheritance",
+      "source": "https://go.sbisec.co.jp/consult/inheritance_column/column_detail_13839.html",
+      "summary": "貸付用不動産の評価方法厳格化（2027年1月施行）、教育資金一括贈与の非課税措置は2026年3月で終了。",
+      "impact": "high",
+      "lead_opportunity": "適用開始前の2026年後半は「今のうちの生前整理・資産整理」訴求が効きやすいタイミング"
+    },
+    {
+      "title": "空家等対策特別措置法、管理不全空家等の固定資産税特例解除リスクが拡大",
+      "category": "inheritance",
+      "source": "https://www.mlit.go.jp/jutakukentiku/house/jutakukentiku_house_tk3_000138.html",
+      "summary": "管理不全空家等に該当すると固定資産税が最大6倍になるケースが増加傾向。",
+      "impact": "high",
+      "lead_opportunity": "空き家所有者への「早期の家財整理・買取」提案を、大阪市の空き家解体補助金と組み合わせて案内"
+    },
+    {
+      "title": "大阪市 空き家・解体補助金（令和8年度）、解体最大200万円・改修最大300万円",
+      "category": "subsidy",
+      "source": "https://akiya.arshe-corp.com/guide/osaka-ku-akiya-hojo-madoguchi-2026/",
+      "summary": "予算に限りがあり年度途中で受付終了となるケースあり。具体的な締切は各区役所へ確認が必要。",
+      "impact": "medium",
+      "lead_opportunity": "解体前の家財整理・出張買取をセットで提案。区役所窓口・解体業者との提携紹介チャネルを構築"
+    }
+  ],
+  "lifestyle_trends": [
+    {
+      "title": "シニア世代の熱中症リスクと『気づきにくさ』への警戒喚起",
+      "category": "senior_consumer",
+      "source": "https://doctormate.co.jp/blog/kaigonews-172",
+      "summary": "高齢者は暑さや喉の渇きを感じにくく自覚のないまま熱中症を発症するリスクが指摘される。8/4には東京都内で28人が搬送。",
+      "impact": "high",
+      "scene": "field_visit"
+    },
+    {
+      "title": "アクティブシニアの消費傾向、旅行・リフォーム・健康関心が高い",
+      "category": "senior_consumer",
+      "source": "https://bizpa.net/mag/senior-saishin/",
+      "summary": "60代のスマホ利用率91%と情報行動のデジタル化が進む一方、新聞購読率も高く紙とデジタルを併用。旅行・運動への関心が強い。",
+      "impact": "medium",
+      "scene": "exec_meeting"
+    },
+    {
+      "title": "Z世代の51.5%が『売ることを前提に』購入、循環型消費が定着",
+      "category": "gen_z",
+      "source": "https://markezine.jp/article/detail/43347",
+      "summary": "メルカリ調査でZ世代の過半数がリセールバリューを前提とした購買・所有行動を取ると回答（バブル世代の約2.8倍）。",
+      "impact": "high",
+      "scene": "exec_meeting"
+    },
+    {
+      "title": "2026年『お盆玉』実施率が過去最高水準に上昇",
+      "category": "family_community",
+      "source": "https://prtimes.jp/main/html/rd/p/000000446.000001545.html",
+      "summary": "お盆玉を用意する人の割合が38.6%に増加。お盆期間（8/13〜16）は帰省・実家片付け相談が集中しやすい時期。",
+      "impact": "medium",
+      "scene": "staff_morning"
+    },
+    {
+      "title": "大阪府に熱中症警戒アラート発表中（8/9朝時点）",
+      "category": "health_medical",
+      "source": "https://www.wbgt.env.go.jp/alert.php",
+      "summary": "環境省熱中症予防情報サイトによると、大阪府含む近畿地方全域に熱中症警戒アラート発表中（WBGT31以上）。特別警戒の発表はなし。",
+      "impact": "high",
+      "scene": "field_visit"
+    },
+    {
+      "title": "『大阪・お城フェス2026』が8/8・8/9にグランフロント大阪で開催",
+      "category": "local_kansai",
+      "source": "https://www.congre.com/news/20260624-shirofes/",
+      "summary": "JR大阪駅直結のナレッジキャピタルで観光イベント開催。週末の梅田周辺の人出増加要因。",
+      "impact": "low",
+      "scene": "general"
+    },
+    {
+      "title": "なにわ筋線、事業進捗率『2割超え』も事業費増加の可能性",
+      "category": "local_kansai",
+      "source": "https://news.railway-pressnet.com/archives/86730",
+      "summary": "2031年春開業予定のなにわ筋線は資材高騰等により事業費増加の可能性が指摘されている（2月時点情報）。",
+      "impact": "low",
+      "scene": "exec_meeting"
+    }
+  ],
+  "subsidies_deadline_within_30d": [],
+  "subagent_meta": {
+    "agent_market_status": "partial",
+    "agent_industry_status": "partial",
+    "agent_ai_status": "partial",
+    "agent_welfare_status": "partial",
+    "agent_lifestyle_status": "partial",
+    "notes": "5 subagent全て部分成功（ok未達だが失敗なし）。市場：銀/ETH/WTI/銅/小麦の当日終値未確認、ゲオHD株価は異常値のためnull化。業界：メルカリ・ヤフオクの個別高額落札詳細と骨董オークション個別結果を一次ソースで確認できず参考値扱い。福祉：30日以内締切の確定補助金情報なし。全項目、数値不明はnull、事実未確認は明記の上で保守的に扱った。"
+  }
+}
